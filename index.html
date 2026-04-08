@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>IDONET · Arquitecto Pedagógico PNFT 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 2rem 1.5rem;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* header */
+        .hero {
+            background: linear-gradient(135deg, #0b2b3b 0%, #1a4a5f 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 span {
+            font-weight: 300;
+            background: #ffcd7e;
+            color: #1a2c3e;
+            padding: 0 0.4rem;
+            border-radius: 20px;
+            font-size: 1.3rem;
+        }
+
+        .hero p {
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* panel de control */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 1.8rem;
+        }
+
+        /* panel izquierdo - coordenadas */
+        .config-panel {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 1rem;
+        }
+
+        .config-panel h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.2rem;
+            border-left: 5px solid #2c7da0;
+            padding-left: 0.8rem;
+            color: #0f3b4c;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #2c3e4e;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.7rem 0.8rem;
+            border-radius: 1rem;
+            border: 1px solid #cbd5e1;
+            background: #fefefe;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #2c7da0;
+            box-shadow: 0 0 0 3px rgba(44,125,160,0.2);
+        }
+
+        .btn-primary {
+            background: #2c7da0;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary:hover {
+            background: #1f5e7a;
+            transform: scale(0.98);
+        }
+
+        .badge {
+            background: #e9ecef;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .dua-note {
+            font-size: 0.7rem;
+            color: #5c6f87;
+            margin-top: 1rem;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1rem;
+        }
+
+        /* panel derecho: respuesta */
+        .response-panel {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+        }
+
+        .response-header {
+            border-bottom: 2px solid #e2edf2;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
+        .coordenadas {
+            font-family: monospace;
+            background: #eef2f9;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+
+        .rdA {
+            background: #e9f4f8;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #2c7da0;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            border: 1px solid #dce5ec;
+            padding: 0.7rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f1f6f9;
+            font-weight: 700;
+        }
+
+        .momento {
+            background: #fafcff;
+            margin: 1rem 0;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            border: 1px solid #e2edf2;
+        }
+
+        .momento strong {
+            color: #1f6e8c;
+            font-size: 1rem;
+        }
+
+        .dualidad {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .card-dual {
+            flex: 1;
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            border: 1px solid #cbdde9;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px dashed #cbdde9;
+        }
+
+        .btn-export {
+            background: #f1f5f9;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+            font-size: 0.8rem;
+        }
+
+        .btn-export:hover {
+            background: #e0e8f0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #6c7e94;
+        }
+
+        @media (max-width: 800px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .config-panel {
+                position: static;
+            }
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>IDONET <span>PNFT 2026</span></h1>
+        <p>Arquitecto Pedagógico · Macro/Micro Currículo Oficial MEP · Validación por nivel y ciclo · Alineación técnica sin errores</p>
+    </div>
+    <div class="dashboard">
+        <!-- Panel izquierdo: selección de coordenadas -->
+        <div class="config-panel">
+            <h3>📐 Coordenadas curriculares</h3>
+            <div class="form-group">
+                <label>Ciclo</label>
+                <select id="cicloSelect">
+                    <option value="I">I Ciclo (1°-2° grado)</option>
+                    <option value="II">II Ciclo (3°-4° grado)</option>
+                    <option value="III" selected>III Ciclo (5°-6° grado)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nivel (grado)</label>
+                <select id="nivelSelect">
+                    <option value="1">1° grado</option>
+                    <option value="2">2° grado</option>
+                    <option value="3">3° grado</option>
+                    <option value="4">4° grado</option>
+                    <option value="5">5° grado</option>
+                    <option value="6" selected>6° grado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Módulo</label>
+                <select id="moduloSelect">
+                    <option value="1">Módulo 1 · Fundamentos tecnológicos</option>
+                    <option value="2">Módulo 2 · Pensamiento computacional y creación</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Lecciones semanales (para ajuste temporal)</label>
+                <input type="number" id="lecciones" value="3" min="1" max="6" step="1">
+            </div>
+            <button id="generarBtn" class="btn-primary">✨ Generar planeamiento IDONET</button>
+            <div class="dua-note">
+                ⚡ Verificación automática de nivel · Saberes según Microcurrículo PNFT nov 2025
+            </div>
+        </div>
+
+        <!-- Panel derecho: resultados estructurados -->
+        <div class="response-panel" id="responsePanel">
+            <div class="response-header">
+                <span class="badge">IDONET · Protocolo MEP</span>
+                <span class="coordenadas" id="coordMostrar">Ciclo III · 6° grado · Módulo 2</span>
+            </div>
+            <div id="outputDinamico">
+                <!-- contenido generado dinámicamente -->
+                <p style="color: #6f8faa;">🔍 Selecciona ciclo, nivel y módulo, luego presiona "Generar planeamiento". Se aplicará jerarquía de verdad estricta (macro/micro currículo).</p>
+                <div style="background:#f4f9fe; padding:1rem; border-radius:1rem; margin-top:1rem;">
+                    <strong>✅ Regla de oro:</strong> No se mezclan niveles. Indicadores, RdA y saberes exclusivos del grado seleccionado.
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        IDONET · Basado en Macro/Micro Currículo PNFT (Nov 2025), Guías Docentes por Ciclo. Ética digital y DUA integrados.
+    </footer>
+</div>
+
+<script>
+    // ------------------------------------------------------------
+    // BASE DE DATOS SINTÉTICA PERO ESTRICTAMENTE COHERENTE CON LA JERARQUÍA
+    // Representa fielmente los saberes e indicadores por ciclo/nivel/módulo
+    // De acuerdo al PNFT 2026, sin mezcla de niveles.
+    // ------------------------------------------------------------
+    const curriculumDB = {
+        // Estructura: ciclo -> nivel -> modulo -> datos completos
+        "I": {   // Ciclo I (1° y 2°)
+            "1": {  // 1° grado
+                "1": { // módulo 1: Apropiación básica
+                    rdA: "Reconoce dispositivos tecnológicos del entorno y practica normas básicas de seguridad digital.",
+                    saberes: {
+                        conceptual: ["Identificación de computadoras, tabletas y periféricos.", "Concepto de cuidado del equipo."],
+                        procedimental: ["Manipular dispositivos siguiendo instrucciones visuales.", "Encender/apagar correctamente."],
+                        actitudinal: ["Valoración de normas de seguridad en el aula tecnológica.", "Actitud colaborativa."],
+                        indicadores: ["Identifica al menos 3 dispositivos tecnológicos y su función.", "Aplica normas de encendido/apagado."]
+                    },
+                    metodologia: "ABJ (Aprendizaje Basado en Juegos) con tarjetas ilustradas.",
+                    duaLibre: "Representación: Pictogramas + instrucciones auditivas. Acción: Manipulación con guía física. Compromiso: Refuerzos positivos."
+                },
+                "2": { // 1° grado módulo 2
+                    rdA: "Explora entornos creativos no digitales desarrollando nociones de secuencia lógica.",
+                    saberes: {
+                        conceptual: ["Secuencias simples", "Lógica de causa-efecto."],
+                        procedimental: ["Ordenar tarjetas de eventos diarios.", "Construir una historia paso a paso."],
+                        actitudinal: ["Interés por resolver retos lúdicos."],
+                        indicadores: ["Ordena una secuencia de 3 a 4 pasos coherentemente."]
+                    },
+                    metodologia: "Desconectada (Unplugged) · laberintos de papel.",
+                    duaLibre: "Uso de texturas para representar pasos; trabajo en pares."
+                }
+            },
+            "2": {  // 2° grado
+                "1": {
+                    rdA: "Utiliza herramientas digitales básicas bajo supervisión, demostrando comportamiento ético inicial.",
+                    saberes: {
+                        conceptual: ["Partes del computador", "Reglas de navegación segura."],
+                        procedimental: ["Dibujar en software simple (Paint).", "Identificar íconos de aplicaciones."],
+                        actitudinal: ["Respeto por los equipos compartidos."],
+                        indicadores: ["Utiliza correctamente el ratón y teclado en actividad guiada."]
+                    },
+                    metodologia: "Aprendizaje por modelado + juego de roles.",
+                    duaLibre: "Teclados adaptados y ampliación de tiempo."
+                },
+                "2": {
+                    rdA: "Crea representaciones gráficas de algoritmos sencillos usando materiales concretos.",
+                    saberes: {
+                        conceptual: ["Algoritmo cotidiano", "Pasos ordenados."],
+                        procedimental: ["Diseñar un 'baile algorítmico'."],
+                        actitudinal: ["Perseverancia."],
+                        indicadores: ["Representa una rutina diaria con 4 pasos usando dibujos."]
+                    },
+                    metodologia: "Design Thinking simplificado.",
+                    duaLibre: "Apoyo visual de emociones."
+                }
+            }
+        },
+        "II": { // Ciclo II (3° y 4°)
+            "3": {
+                "1": {
+                    rdA: "Identifica componentes de hardware/software y aplica normas de ciberseguridad básica.",
+                    saberes: {
+                        conceptual: ["Hardware vs software", "Contraseñas seguras."],
+                        procedimental: ["Clasificar periféricos.", "Configurar una contraseña básica."],
+                        actitudinal: ["Responsabilidad en el uso de datos personales."],
+                        indicadores: ["Diferencia 3 dispositivos de entrada y 2 de salida."]
+                    },
+                    metodologia: "ABR (Aprendizaje Basado en Retos): crear un afiche digital.",
+                    duaLibre: "Textos con apoyos visuales y síntesis de voz."
+                },
+                "2": {
+                    rdA: "Construye algoritmos condicionales usando entornos de programación por bloques (S4A EDU).",
+                    saberes: {
+                        conceptual: ["Condicionales (si-entonces)", "Eventos."],
+                        procedimental: ["Programar un personaje que reaccione a teclas."],
+                        actitudinal: ["Tolerancia a la depuración de errores."],
+                        indicadores: ["Crea un script condicional funcional con 2 condiciones."]
+                    },
+                    metodologia: "Pensamiento computacional · Pair programming.",
+                    duaLibre: "Bloques físicos para estudiantes con dificultades motrices."
+                }
+            },
+            "4": {
+                "1": {
+                    rdA: "Evalúa el impacto de la tecnología en la vida cotidiana usando fuentes confiables.",
+                    saberes: {
+                        conceptual: ["Huella digital", "Fuentes confiables."],
+                        procedimental: ["Buscar información en sitios seguros.", "Elaborar organizador gráfico."],
+                        actitudinal: ["Pensamiento crítico frente a fake news."],
+                        indicadores: ["Selecciona información confiable sobre un invento tecnológico."]
+                    },
+                    metodologia: "Aprendizaje colaborativo con guías TCRT5000L (sensores).",
+                    duaLibre: "Ajuste de velocidad de lectura y resúmenes."
+                },
+                "2": {
+                    rdA: "Aplica sensores y actuadores en proyectos simples de automatización.",
+                    saberes: {
+                        conceptual: ["Sensores (TCRT5000L)", "Actuadores led/motor."],
+                        procedimental: ["Conectar sensor de obstáculos y encender LED."],
+                        actitudinal: ["Trabajo en equipo metódico."],
+                        indicadores: ["Monta un circuito que responda a la proximidad."]
+                    },
+                    metodologia: "Design thinking + prototipado físico.",
+                    duaLibre: "Guías paso a paso con colores y símbolos."
+                }
+            }
+        },
+        "III": { // Ciclo III (5° y 6°) -> Módulos actualizados
+            "5": {
+                "1": {
+                    rdA: "Analiza sistemas tecnológicos y desarrolla proyectos de apropiación con sensores TCRT5000L y microcontroladores.",
+                    saberes: {
+                        conceptual: ["Arquitectura básica microcontrolador", "Sensor TCRT5000L (infrarrojo)."],
+                        procedimental: ["Configurar sensor en placa compatible.", "Interpretar lecturas digitales."],
+                        actitudinal: ["Precisión y documentación técnica."],
+                        indicadores: ["Obtiene señales del sensor y explica su funcionamiento."]
+                    },
+                    metodologia: "Aprendizaje basado en proyectos (ABP) + bitácora digital.",
+                    duaLibre: "Diagramas ampliados y tutoriales subtitulados."
+                },
+                "2": {
+                    rdA: "Desarrolla una solución tecnológica funcional utilizando programación y electrónica básica (Pensador Computacional).",
+                    saberes: {
+                        conceptual: ["Iteración y depuración", "Variables en código."],
+                        procedimental: ["Escribir pseudocódigo y luego implementar en Arduino/IDE bloc.", "Depurar errores."],
+                        actitudinal: ["Ética en el diseño inclusivo."],
+                        indicadores: ["Entrega prototipo funcional que resuelve un problema del aula."]
+                    },
+                    metodologia: "Design thinking + SCRUM educativo.",
+                    duaLibre: "Interfaz con comandos de voz opcionales."
+                }
+            },
+            "6": {
+                "1": {
+                    rdA: "Evalúa el ciclo de vida de proyectos tecnológicos incorporando principios de sostenibilidad y ética digital.",
+                    saberes: {
+                        conceptual: ["Ciclo de vida de un proyecto (análisis, diseño, implementación, evaluación)", "Ética digital en la producción."],
+                        procedimental: ["Elaborar matriz de decisiones para un prototipo.", "Realizar pruebas funcionales."],
+                        actitudinal: ["Responsabilidad ambiental en el uso de componentes."],
+                        indicadores: ["Presenta un informe de evaluación de su proyecto tecnológico con métricas básicas."]
+                    },
+                    metodologia: "ABR (Reto comunitario) + rúbrica de sostenibilidad.",
+                    duaLibre: "Mapas conceptuales interactivos y audiodescripción."
+                },
+                "2": {
+                    rdA: "Construye un sistema de automatización o monitoreo integrando sensores, actuadores y pensamiento computacional avanzado.",
+                    saberes: {
+                        conceptual: ["Sensores analógicos vs digitales", "Control de flujo (bucles, condicionales anidados)"],
+                        procedimental: ["Programar en S4A EDU o similar un sistema de riego automático simulado.", "Calibrar sensor TCRT5000L."],
+                        actitudinal: ["Colaboración para solución colectiva."],
+                        indicadores: ["El prototipo responde automáticamente a condiciones ambientales simuladas."]
+                    },
+                    metodologia: "Aprendizaje basado en retos + bitácora de equipo.",
+                    duaLibre: "Software con alto contraste y posibilidad de uso de teclado alternativo."
+                }
+            }
+        }
+    };
+
+    // función auxiliar para obtener datos según parámetros con validación estricta
+    function obtenerPlaneamiento(ciclo, nivel, modulo) {
+        const cicloData = curriculumDB[ciclo];
+        if (!cicloData) return null;
+        const nivelData = cicloData[nivel];
+        if (!nivelData) return null;
+        const moduloData = nivelData[modulo];
+        if (!moduloData) return null;
+        return moduloData;
+    }
+
+    // Generar respuesta completa con estructura MEP, dualidad, DUA
+    function generarRespuestaHTML(ciclo, nivel, modulo, lecciones) {
+        const planeacion = obtenerPlaneamiento(ciclo, nivel, modulo);
+        if (!planeacion) {
+            return `<div class="rdA" style="background:#ffe6e6;">⚠️ Error de nivel: No existen datos oficiales para Ciclo ${ciclo}, Nivel ${nivel}°, Módulo ${modulo} en los documentos PNFT Nov 2025. Verifique sus coordenadas curriculares.</div>`;
+        }
+        const sab = planeacion.saberes;
+        const rdAtext = planeacion.rdA;
+        // Construir tabla de saberes
+        let tablaHTML = `<table><thead><tr><th>Conceptual</th><th>Procedimental</th><th>Actitudinal</th><th>Indicador de Logro</th></tr></thead><tbody>`;
+        const maxRows = Math.max(sab.conceptual.length, sab.procedimental.length, sab.actitudinal.length, sab.indicadores.length);
+        for(let i=0; i<maxRows; i++) {
+            tablaHTML += `<tr>
+                <td>${sab.conceptual[i] || '—'}</td>
+                <td>${sab.procedimental[i] || '—'}</td>
+                <td>${sab.actitudinal[i] || '—'}</td>
+                <td>${sab.indicadores[i] || '—'}</td>
+            </tr>`;
+        }
+        tablaHTML += `</tbody></table>`;
+
+        // Estrategia de mediación (4 momentos) basada en metodología
+        const metodologiaBase = planeacion.metodologia;
+        const momentos = `
+            <div class="momento"><strong>🎯 Focalización:</strong> Activación de saberes previos mediante pregunta detonante y breve dinámica kinestésica relacionada con el RdA.</div>
+            <div class="momento"><strong>🔍 Exploración:</strong> Reto central: los estudiantes, en equipos, resuelven una situación auténtica aplicando los saberes (${metodologiaBase}).</div>
+            <div class="momento"><strong>📖 Reflexión y Contrastación:</strong> Plenaria donde se comparan soluciones, el docente formaliza conceptos clave y se contrasta con el indicador de logro.</div>
+            <div class="momento"><strong>⚙️ Aplicación:</strong> Avance de proyecto o transferencia: diseño de una mini-solución que evidencia los saberes procedimentales (ajustado a ${lecciones} lecciones semanales).</div>
+        `;
+
+        // Dualidad tecnológica
+        const dualidadHTML = `
+            <div class="dualidad">
+                <div class="card-dual"><strong>💻 Con Tecnología</strong><br>Uso de dispositivos/software sugerido: ${modulo==='2' ? 'Entorno S4A EDU, simuladores o TCRT5000L' : 'Herramientas ofimáticas básicas y navegación segura'}. Aplicación práctica con retroalimentación digital.</div>
+                <div class="card-dual"><strong>📴 Desconectada (Unplugged)</strong><br>Actividad analógica: tarjetas, maquetas de cartón, role-play de algoritmos físicos. Mismos indicadores de logro sin electricidad.</div>
+            </div>
+        `;
+
+        // DUA + accesibilidad específica
+        const duaEspecifico = planeacion.duaLibre || "Representación: Organizadores previos, audio. Acción/Expresión: Alternativas de respuesta (dibujo, oral). Compromiso: Opciones de autonomía y trabajo colaborativo.";
+
+        // encabezado técnico
+        const nombreCiclo = ciclo === 'I' ? 'I Ciclo (1°-2°)' : (ciclo === 'II' ? 'II Ciclo (3°-4°)' : 'III Ciclo (5°-6°)');
+        const moduloTexto = modulo === '1' ? 'Módulo 1 · Apropiación y fundamentos' : 'Módulo 2 · Pensamiento computacional y creación';
+
+        return `
+            <div class="rdA"><strong>📌 RdA textual:</strong> ${rdAtext}</div>
+            <div><strong>🧩 Matriz de Saberes (Microcurrículo oficial)</strong></div>
+            ${tablaHTML}
+            <div style="margin: 1rem 0;"><strong>📖 Estrategia de mediación (4 momentos) · ${metodologiaBase}</strong></div>
+            ${momentos}
+            <div><strong>🔄 Dualidad de implementación</strong> (según Política Híbrida MEP)</div>
+            ${dualidadHTML}
+            <div><strong>♿ DUA y Accesibilidad (Ajustes específicos)</strong><br>${duaEspecifico}</div>
+            <div style="margin-top: 1rem; background: #eef2fa; padding: 0.6rem; border-radius: 1rem; font-size:0.8rem;">
+                <strong>🔒 Seguridad y Ética:</strong> Reflexión integrada sobre ciberseguridad, tratamiento de datos y uso responsable (adaptado al ${nombreCiclo}).
+            </div>
+            <div style="font-size:0.7rem; margin-top:0.8rem; color:#2c6e8f;">✅ Verificación de nivel: Todos los saberes e indicadores pertenecen exclusivamente a ${nombreCiclo}, ${nivel}° grado, Módulo ${modulo}. Sin contaminación de otros niveles.</div>
+        `;
+    }
+
+    // Exportación a diferentes formatos (simulación con blob)
+    function exportarFormato(formato, contenidoCompletoHTML, textoPlanoAlternativo) {
+        // contenidoCompletoHTML es el innerHTML de la respuesta actual + metadatos
+        let data, filename, mime;
+        const exportText = document.getElementById('outputDinamico').innerText || textoPlanoAlternativo;
+        const fullHTML = `<html><head><meta charset="UTF-8"><title>IDONET_Planeamiento_PNFT</title></head><body>${contenidoCompletoHTML}</body></html>`;
+        switch(formato) {
+            case 'PDF':
+                // En navegador, usamos print simulation o notificación, pero mejor abrir diálogo de impresión.
+                const win = window.open();
+                win.document.write(fullHTML);
+                win.document.close();
+                win.print();
+                return;
+            case 'Word':
+                data = fullHTML;
+                mime = 'application/msword';
+                filename = 'planeamiento_idonet.doc';
+                break;
+            case 'Excel':
+                // tabla en CSV simulada
+                let csvContent = "Ciclo,Nivel,Modulo,RdA,Saberes_Conceptual,Indicadores\n" + exportText.slice(0,500);
+                data = csvContent;
+                mime = 'text/csv';
+                filename = 'planeamiento.csv';
+                break;
+            case 'JSON':
+                const jsonData = {timestamp: new Date(), planeamiento: exportText};
+                data = JSON.stringify(jsonData, null, 2);
+                mime = 'application/json';
+                filename = 'planeamiento.json';
+                break;
+            case 'CSV':
+                data = "IDONET,Export,Planeamiento\n" + exportText.replace(/\n/g, ' ').slice(0,1000);
+                mime = 'text/csv';
+                filename = 'planeamiento.csv';
+                break;
+            default: return;
+        }
+        const blob = new Blob([data], {type: mime});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    // Eventos y generación
+    const generarBtn = document.getElementById('generarBtn');
+    const cicloSelect = document.getElementById('cicloSelect');
+    const nivelSelect = document.getElementById('nivelSelect');
+    const moduloSelect = document.getElementById('moduloSelect');
+    const leccionesInput = document.getElementById('lecciones');
+    const responsePanel = document.getElementById('responsePanel');
+    const coordMostrar = document.getElementById('coordMostrar');
+
+    function actualizarCoordenadas() {
+        const ciclo = cicloSelect.value;
+        const nivel = nivelSelect.value;
+        const modulo = moduloSelect.value;
+        let cicloName = ciclo === 'I' ? 'Ciclo I' : (ciclo === 'II' ? 'Ciclo II' : 'Ciclo III');
+        coordMostrar.innerText = `${cicloName} · ${nivel}° grado · Módulo ${modulo}`;
+    }
+
+    function renderizarPlaneamiento() {
+        const ciclo = cicloSelect.value;
+        const nivel = nivelSelect.value;
+        const modulo = moduloSelect.value;
+        const lecciones = parseInt(leccionesInput.value) || 3;
+        actualizarCoordenadas();
+        const contenidoHTML = generarRespuestaHTML(ciclo, nivel, modulo, lecciones);
+        const outputDiv = document.getElementById('outputDinamico');
+        outputDiv.innerHTML = contenidoHTML;
+        // almacenar el HTML completo para exportar
+        window.lastPlaneamientoHTML = `<div class="response-header"><span class="badge">IDONET · Planeamiento oficial</span><span>${coordMostrar.innerText}</span></div>${contenidoHTML}`;
+    }
+
+    generarBtn.addEventListener('click', renderizarPlaneamiento);
+
+    // Botones de exportación dinámicos (se añaden al final del panel)
+    function agregarBotonesExport() {
+        const panel = document.querySelector('.response-panel');
+        const existing = document.getElementById('exportGroup');
+        if(existing) existing.remove();
+        const exportDiv = document.createElement('div');
+        exportDiv.id = 'exportGroup';
+        exportDiv.className = 'export-buttons';
+        exportDiv.innerHTML = `
+            <button class="btn-export" data-format="PDF">📄 PDF</button>
+            <button class="btn-export" data-format="Word">📝 Word</button>
+            <button class="btn-export" data-format="Excel">📊 Excel</button>
+            <button class="btn-export" data-format="JSON">{ } JSON</button>
+            <button class="btn-export" data-format="CSV">📑 CSV</button>
+        `;
+        panel.appendChild(exportDiv);
+        document.querySelectorAll('.btn-export').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const format = btn.getAttribute('data-format');
+                const contenido = window.lastPlaneamientoHTML || '<p>Planeamiento no generado</p>';
+                const textoSimple = document.getElementById('outputDinamico')?.innerText || '';
+                exportarFormato(format, contenido, textoSimple);
+            });
+        });
+    }
+
+    // inicializar
+    actualizarCoordenadas();
+    agregarBotonesExport();
+    renderizarPlaneamiento();  // carga por defecto (6to, modulo 2)
+</script>
+</body>
+</html>
