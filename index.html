@@ -3,427 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>IDONET · PNFT 2026 · Arquitecto Pedagógico</title>
+    <title>IDONET PRO · PNFT 2026 · Generador Pedagógico Inteligente</title>
+    <!-- Tailwind + Font Awesome + Librerías para exportación y extracción -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #eef2f5;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            padding: 1.5rem;
-            color: #1a2c3e;
-        }
-        .container {
-            max-width: 1500px;
-            margin: 0 auto;
-        }
-        /* header */
-        .hero {
-            background: linear-gradient(135deg, #0b3b3f 0%, #1a5f6e 100%);
-            color: white;
-            padding: 1.2rem 2rem;
-            border-radius: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .hero h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.5px; }
-        .hero h1 span { background: #ffcd7e; color: #1a2c3e; padding: 0 0.5rem; border-radius: 30px; font-size: 1.2rem; }
-        .hero-badge { background: #2c7a4d; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: bold; }
-        /* layout */
-        .dashboard {
-            display: grid;
-            grid-template-columns: 340px 1fr;
-            gap: 1.8rem;
-        }
-        /* panel izquierdo */
-        .config-panel {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            height: fit-content;
-            position: sticky;
-            top: 1rem;
-        }
-        .config-panel h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1.2rem;
-            border-left: 5px solid #2c7da0;
-            padding-left: 0.8rem;
-            color: #0f3b4c;
-        }
-        .form-group { margin-bottom: 1.2rem; }
-        label { font-weight: 600; display: block; margin-bottom: 0.4rem; font-size: 0.85rem; color: #2c3e4e; }
-        select, input, textarea {
-            width: 100%;
-            padding: 0.7rem 0.8rem;
-            border-radius: 1rem;
-            border: 1px solid #cbd5e1;
-            background: #fefefe;
-            font-size: 0.9rem;
-        }
-        .btn-primary {
-            background: #2c7da0;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 0.8rem;
-            border-radius: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            transition: 0.2s;
-        }
-        .btn-secondary {
-            background: #4a6a7e;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-        .badge { background: #e9ecef; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.7rem; display: inline-block; }
-        .recursos-section {
-            margin-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 1rem;
-        }
-        /* panel derecho */
-        .response-panel {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.8rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-        }
-        .response-header {
-            border-bottom: 2px solid #e2edf2;
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .coordenadas { font-family: monospace; background: #eef2f9; padding: 0.3rem 0.8rem; border-radius: 30px; font-size: 0.8rem; }
-        .rdA { background: #e9f4f8; padding: 1rem; border-radius: 1rem; margin-bottom: 1.5rem; border-left: 5px solid #2c7da0; }
-        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.8rem; }
-        th, td { border: 1px solid #dce5ec; padding: 0.6rem; vertical-align: top; }
-        th { background: #f1f6f9; }
-        .momento { background: #fafcff; margin: 1rem 0; padding: 0.8rem 1rem; border-radius: 1rem; border: 1px solid #e2edf2; }
-        .dualidad { display: flex; gap: 1rem; margin: 1rem 0; flex-wrap: wrap; }
-        .card-dual { flex: 1; background: #f8fafc; border-radius: 1rem; padding: 0.8rem; border: 1px solid #cbdde9; }
-        .export-buttons { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1rem; border-top: 2px dashed #cbdde9; }
-        .btn-export { background: #f1f5f9; border: none; padding: 0.4rem 1rem; border-radius: 30px; cursor: pointer; font-size: 0.8rem; }
-        .integracion-sugerencia { background: #fff7e5; border-left: 5px solid #f4b942; padding: 0.8rem; margin: 1rem 0; border-radius: 0.8rem; }
-        @media (max-width: 800px) { .dashboard { grid-template-columns: 1fr; } .config-panel { position: static; } }
+        .drag-over { background-color: #e2e8f0; border: 2px dashed #2c7da0; }
+        .semaphore-green { background-color: #22c55e; color: white; }
+        .semaphore-yellow { background-color: #eab308; color: white; }
+        .semaphore-red { background-color: #ef4444; color: white; }
+        .tab-active { border-bottom: 3px solid #2c7da0; color: #2c7da0; font-weight: bold; }
+        .leccion-item { cursor: grab; }
+        .leccion-item:active { cursor: grabbing; }
     </style>
 </head>
-<body>
-<div class="container">
-    <div class="hero">
-        <h1>IDONET <span>PNFT 2026</span></h1>
-        <div class="hero-badge">📁 Datos oficiales MEP · Preescolar a 9° · Módulos 1 y 2</div>
-    </div>
-    <div class="dashboard">
-        <!-- panel izquierdo -->
-        <div class="config-panel">
-            <h3>📐 Coordenadas curriculares</h3>
-            <div class="form-group">
-                <label>Ciclo</label>
-                <select id="cicloSelect">
-                    <option value="preescolar">Materno Infantil / Transición (0°)</option>
-                    <option value="I">I Ciclo (1°-3°)</option>
-                    <option value="II">II Ciclo (4°-6°)</option>
-                    <option value="III">III Ciclo (7°-9°)</option>
-                </select>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-6 max-w-[1600px]">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-teal-800 to-cyan-700 rounded-2xl p-5 mb-6 text-white shadow-lg flex flex-wrap justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold">IDONET <span class="bg-yellow-400 text-gray-800 px-2 rounded-lg">PNFT 2026</span></h1>
+                <p class="text-sm opacity-90 mt-1">Arquitecto Pedagógico · Lego Curricular · Estrategias reales offline</p>
             </div>
-            <div class="form-group">
-                <label>Nivel (grado)</label>
-                <select id="nivelSelect">
-                    <option value="0">Preescolar / Transición</option>
-                    <option value="1">1° grado</option><option value="2">2° grado</option><option value="3">3° grado</option>
-                    <option value="4">4° grado</option><option value="5">5° grado</option><option value="6">6° grado</option>
-                    <option value="7">7° grado</option><option value="8">8° grado</option><option value="9">9° grado</option>
-                </select>
+            <div class="flex gap-2 mt-2 sm:mt-0">
+                <button id="exportPDFBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-pdf mr-1"></i> PDF</button>
+                <button id="exportWordBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-word mr-1"></i> Word</button>
+                <button id="exportExcelBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-excel mr-1"></i> Excel</button>
+                <button id="exportJSONBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-code mr-1"></i> JSON</button>
             </div>
-            <div class="form-group"><label>Módulo</label><select id="moduloSelect"><option value="1">Módulo 1</option><option value="2">Módulo 2</option></select></div>
-            <div class="form-group"><label>Lecciones semanales</label><input type="number" id="lecciones" value="3" min="1" max="6"></div>
-            <button id="generarBtn" class="btn-primary">✨ Generar planeamiento IDONET</button>
-            
-            <div class="recursos-section">
-                <h4>📂 Recursos didácticos (offline)</h4>
-                <input type="file" id="recursoFileInput" accept=".pdf,.pptx,.ppt,.jpg,.png" multiple>
-                <button id="guardarRecursoBtn" class="btn-secondary" style="margin-top: 0.5rem;">💾 Guardar recurso</button>
-                <div id="listaRecursos" style="margin-top: 0.8rem; font-size: 0.75rem;"></div>
-                <div class="integracion-sugerencia" id="sugerenciaIntegracion" style="margin-top: 1rem;">
-                    💡 <strong>Integración sugerida</strong><br>
-                    <span id="sugerenciaTexto">Selecciona saberes para ver ideas de proyecto.</span>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Panel izquierdo - Configuración y recursos -->
+            <div class="lg:w-1/3 bg-white rounded-2xl shadow-md p-5 h-fit sticky top-4">
+                <h3 class="text-xl font-semibold border-l-4 border-cyan-600 pl-3 mb-4">📐 Coordenadas curriculares</h3>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Ciclo</label>
+                    <select id="cicloSelect" class="w-full mt-1 p-2 border rounded-xl">
+                        <option value="preescolar">Preescolar / Transición (0°)</option>
+                        <option value="I">I Ciclo (1°-3°)</option>
+                        <option value="II">II Ciclo (4°-6°)</option>
+                        <option value="III">III Ciclo (7°-9°)</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Nivel</label>
+                    <select id="nivelSelect" class="w-full mt-1 p-2 border rounded-xl">
+                        <option value="0">0° - Preescolar</option>
+                        <option value="1">1°</option><option value="2">2°</option><option value="3">3°</option>
+                        <option value="4">4°</option><option value="5">5°</option><option value="6">6°</option>
+                        <option value="7">7°</option><option value="8">8°</option><option value="9">9°</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Módulo(s)</label>
+                    <div class="flex gap-4 mt-1">
+                        <label><input type="checkbox" id="modulo1Check" class="mr-1"> Módulo 1</label>
+                        <label><input type="checkbox" id="modulo2Check" class="mr-1"> Módulo 2</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium">Lecciones semanales: <span id="leccionesValor">3</span></label>
+                    <input type="range" id="leccionesSlider" min="1" max="6" value="3" class="w-full">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium">Saberes a integrar (Lego)</label>
+                    <div id="saberesContainer" class="mt-2 space-y-1 max-h-60 overflow-y-auto border rounded-xl p-2"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium">Subir recursos (PDF, PPT, imágenes)</label>
+                    <input type="file" id="recursoFileInput" multiple accept=".pdf,.pptx,.ppt,.jpg,.png" class="w-full text-sm">
+                    <div id="listaRecursos" class="mt-2 text-xs max-h-32 overflow-y-auto"></div>
+                    <button id="extraerTextoBtn" class="mt-2 bg-gray-200 px-3 py-1 rounded-full text-sm"><i class="fas fa-file-alt"></i> Extraer texto de seleccionados</button>
+                </div>
+                <button id="generarBtn" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 rounded-xl transition"><i class="fas fa-magic mr-2"></i> Generar planeamiento</button>
+                <div class="mt-4 pt-4 border-t">
+                    <h4 class="font-semibold text-sm">🔗 Herramientas externas</h4>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <button id="teachyBtn" class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-robot"></i> Teachy.ai</button>
+                        <button id="geniallyBtn" class="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-magic"></i> Genially</button>
+                        <button id="chatgptBtn" class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"><i class="fab fa-chatgpt"></i> ChatGPT</button>
+                        <button id="geminiBtn" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-brain"></i> Gemini</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel derecho - Resultados -->
+            <div class="lg:w-2/3 bg-white rounded-2xl shadow-md p-5">
+                <div class="border-b pb-2 mb-4 flex justify-between items-center flex-wrap">
+                    <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"><i class="fas fa-check-circle"></i> Planeamiento oficial PNFT</span>
+                    <span id="coordMostrar" class="text-sm text-gray-500 font-mono">Ciclo · Nivel · Módulo</span>
+                </div>
+                <div id="outputDinamico" class="space-y-4">
+                    <div class="bg-blue-50 p-4 rounded-xl text-center text-gray-600">Selecciona ciclo, nivel, módulos y saberes. La app generará estrategias reales usando metodologías activas.</div>
                 </div>
             </div>
         </div>
 
-        <!-- panel derecho -->
-        <div class="response-panel">
-            <div class="response-header"><span class="badge">IDONET · Protocolo MEP</span><span class="coordenadas" id="coordMostrar">Ciclo · Nivel · Módulo</span></div>
-            <div id="outputDinamico">
-                <p style="color:#6f8faa;">🔍 Seleccione ciclo, nivel y módulo, luego presione "Generar planeamiento". Los datos provienen directamente del Microcurrículo PNFT 2026 (documentos oficiales).</p>
-                <div style="background:#f4f9fe; padding:1rem; border-radius:1rem;">✅ Sin mezcla de niveles · Saberes validados · Exportación disponible.</div>
+        <!-- Matriz semanal y evaluación (sección extra, se puede mostrar/ocultar) -->
+        <div class="mt-6 bg-white rounded-2xl shadow-md p-5">
+            <div class="flex gap-4 border-b pb-2">
+                <button id="tabMatrizBtn" class="tab-btn px-4 py-2 font-semibold">📅 Matriz semanal</button>
+                <button id="tabEvaluacionBtn" class="tab-btn px-4 py-2 font-semibold">📊 Evaluación</button>
+                <button id="tabPromptBtn" class="tab-btn px-4 py-2 font-semibold">📝 Prompt IA</button>
+            </div>
+            <div id="tabMatriz" class="tab-contenido pt-4">
+                <p class="text-sm text-gray-600 mb-2">Arrastra las lecciones para reajustar fechas (feriados/suspensiones).</p>
+                <div id="matrizSemanal" class="grid grid-cols-7 gap-2 text-center text-sm"></div>
+                <button id="guardarMatrizBtn" class="mt-3 bg-green-600 text-white px-4 py-1 rounded-full text-sm">Guardar ajuste</button>
+            </div>
+            <div id="tabEvaluacion" class="tab-contenido pt-4 hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border text-sm" id="tablaEvaluacion">
+                        <thead class="bg-gray-100"><tr><th>Estudiante</th><th>Cotidiano (50%)</th><th>Tareas (10%)</th><th>Prueba (15%)</th><th>Proyecto (15%)</th><th>Asistencia (10%)</th><th>Promedio</th><th>Condición</th></tr></thead>
+                        <tbody id="cuerpoEvaluacion"></tbody>
+                    </table>
+                </div>
+                <button id="agregarEstudianteBtn" class="mt-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">+ Agregar estudiante</button>
+                <button id="exportarActasBtn" class="ml-2 bg-gray-500 text-white px-3 py-1 rounded-full text-sm">Exportar actas</button>
+            </div>
+            <div id="tabPrompt" class="tab-contenido pt-4 hidden">
+                <textarea id="promptGenerado" rows="8" class="w-full border rounded-xl p-3 font-mono text-sm" readonly placeholder="Aquí aparecerá el prompt maestro C.R.E.A. para copiar a IA externa."></textarea>
+                <button id="copiarPromptBtn" class="mt-2 bg-cyan-600 text-white px-4 py-1 rounded-full text-sm">Copiar prompt</button>
             </div>
         </div>
     </div>
-    <footer style="text-align:center; margin-top:2rem; font-size:0.7rem;">IDONET · Basado en Macro/Micro Currículo MEP 2025-2026 · Integración de recursos offline y sugerencias de robótica/sensores.</footer>
-</div>
 
-<script>
-    // --------------------------------------------------------------
-    // BASE DE DATOS REAL SEGÚN DOCUMENTOS OFICIALES PNFT 2026
-    // Incluye Preescolar (0°), 1° a 9°, Módulos 1 y 2 con RdA, saberes conceptuales, indicadores.
-    // --------------------------------------------------------------
-    const curriculumDB = {
-        "0": { "1": { // Preescolar Módulo 1 (básico/óptimo integrado)
-            rdA: "Identifica los dispositivos digitales considerando características funcionales, experimentando su utilidad y reconociendo la autoría, durante la accesibilidad, interacción y comunicación en la creación de recursos digitales.",
-            areas: ["Apropiación tecnológica y Digital", "Programación y Algoritmos"],
-            saberes: {
-                conceptual: ["Computadora", "Software", "Herramientas de creación de contenido multimedia", "Entornos de programación iconográfico", "Lateralidad y orientación espacial", "Evento"],
-                procedimental: ["Reconoce patrones", "Transfiere", "Programa", "Comunica", "Colabora", "Piensa de forma creativa"],
-                actitudinal: ["Aprender del error", "Flexibilidad para manejar problemas", "Tolerancia a la frustración"],
-                indicadores: [
-                    "Identificar qué es una computadora y algunas características.",
-                    "Reconocer elementos visuales básicos del software (iconos, botones).",
-                    "Reconocer herramientas multimedia: editor gráfico, grabadora.",
-                    "Reconocer entorno de programación iconográfico (bloques: desplazamiento, sonido).",
-                    "Reconocer lateralidad y orientación espacial en secuencias de acciones.",
-                    "Reconocer que un evento desencadena una acción (causa-efecto)."
-                ]
+    <script>
+        // ======================== BASE DE DATOS CURRICULAR (extraída de documentos oficiales) ========================
+        const curriculumDB = {
+            "0": { // Preescolar
+                "1": { rdA: "Identifica dispositivos digitales, explora su utilidad y reconoce autoría.", 
+                       saberes: ["Computadora", "Software", "Herramientas multimedia", "Programación iconográfica", "Lateralidad", "Evento"],
+                       indicadores: ["Identificar qué es una computadora", "Reconocer iconos, botones", "Usar editor gráfico/grabadora", "Interactuar con bloques", "Orientación espacial", "Causa-efecto"],
+                       metodologia: "ABJ", dualibre: "Actividades unplugged con tarjetas" },
+                "2": { rdA: "Ordena secuencias con conceptos de programación (dato, evento, estado, ciclos).",
+                       saberes: ["Conexión bluetooth", "Estado", "Algoritmo", "Dato", "Estructuras repetitivas", "Robot"],
+                       indicadores: ["Reconocer bluetooth", "Cambiar propiedades de objetos", "Secuencia ordenada", "Identificar dato", "Ciclos finitos/infinitos", "Reconocer robot"],
+                       metodologia: "ABJ", dualibre: "Juegos de simulación" }
             },
-            metodologia: "ABJ (Aprendizaje Basado en Juegos) + actividades unplugged",
-            dualibre: "Pictogramas, apoyos visuales, instrucciones auditivas."
-        }, "2": { // Preescolar Módulo 2
-            rdA: "Ordena secuencias integrando conceptos de programación como dato, evento, estado, ciclos y nociones de lateralidad, utilizando programación iconográfica.",
-            areas: ["Programación y Algoritmos", "Computación física y Robótica", "Ciencia de datos e IA"],
-            saberes: {
-                conceptual: ["Conexión entre dispositivos (bluetooth)", "Estado", "Algoritmo", "Dato", "Estructuras repetitivas", "Robot", "Estrategias para presentar datos"],
-                procedimental: ["Reconoce patrones", "Transfiere", "Programa", "Comunica", "Colabora"],
-                actitudinal: ["Aprender del error", "Flexibilidad", "Tolerancia a la frustración"],
-                indicadores: ["Reconocer conexión bluetooth", "Reconocer concepto de estado", "Reconocer algoritmo como secuencia ordenada", "Identificar dato en contexto físico/digital", "Reconocer ciclos finitos e infinitos", "Reconocer robot y sus usos", "Reconocer gráficos pictóricos"]
-            },
-            metodologia: "ABR / Design Thinking adaptado",
-            dualibre: "Actividades desconectadas con tarjetas, simulación de robots con materiales reciclados."
-        }},
-        "1": { "1": { rdA: "Selecciona los dispositivos digitales y herramientas de productividad, mediante el uso de software y hardware, en la creación de archivos y contenido multimedia.",
-            saberes: { conceptual: ["Computadora","Hardware","Software","Entornos de programación iconográfico","Reconocimiento de patrones","Estado","Algoritmo","Evento"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Programa","Comunica","Colabora"],
-                actitudinal: ["Gusto por la precisión","Aprender del error","Flexibilidad","Tolerancia a la frustración"],
-                indicadores: ["Reconocer la computadora como herramienta tecnológica","Identificar hardware básico (entrada/salida)","Identificar elementos básicos de interfaz de software","Reconocer entorno iconográfico","Reconocer patrones de movimiento","Reconocer estado de objeto digital","Identificar algoritmo en vida diaria","Reconocer evento causa-efecto"] },
-            metodologia: "ABJ + aprendizaje por descubrimiento", dualibre: "Uso de teclados adaptados, actividades kinestésicas." },
-            "2": { rdA: "Selecciona conceptos de programación como dato, estructuras repetitivas, y reconoce fundamentos de IA.",
-            saberes: { conceptual: ["Herramientas de creación multimedia (audio, imagen)","Conexión bluetooth","Internet","Estructuras repetitivas","Dato","Fundamentos de IA","Asistentes virtuales"],
-                procedimental: ["Reconoce patrones","Abstrae","Transfiere","Programa","Colabora"], actitudinal: ["Gusto por la precisión","Aprender del error","Flexibilidad"],
-                indicadores: ["Utilizar herramientas de creación de audios/imágenes","Reconocer bluetooth como conexión","Reconocer dispositivos para navegación internet","Reconocer ciclos finitos e infinitos","Identificar dato en contextos físicos/digitales","Reconocer fundamentos IA","Reconocer qué es un asistente virtual"] },
-            metodologia: "ABJ", dualibre: "Grabación de sonidos con apps sencillas o actividades sin tecnología." }
-        },
-        "2": { "1": { rdA: "Utiliza herramientas de productividad y entornos de programación por bloques para resolver problemas.",
-            saberes: { conceptual: ["Hardware","Software","Herramienta de productividad (procesador de texto)","Herramientas multimedia (audio, gráficos)","Entorno programación bloques","Algoritmo","Dato","Variable","Evento"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Depura","Programa"], actitudinal: ["Gusto por precisión","Aprender del error","Tolerancia"],
-                indicadores: ["Identificar funcionamiento y cuidado del hardware","Explorar software según tarea","Usar procesador de texto básico","Usar grabadora de audio y editores gráficos","Aplicar entorno de programación por bloques","Diseñar algoritmo en lenguaje natural","Clasificar dato numérico/texto","Identificar variable en contextos cotidianos","Reconocer evento en programación"] },
-            metodologia: "ABR", dualibre: "Mapas de algoritmos con tarjetas." },
-            "2": { rdA: "Aplica estructuras repetitivas, condicionales y operadores en entornos de programación por bloques.",
-            saberes: { conceptual: ["Conexión wifi","Internet","Estructuras repetitivas","Estructuras condicionales","Operadores aritméticos","Operador relacional","Fundamentos IA","Asistentes virtuales"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Programa","Depura"], actitudinal: ["Gusto por precisión","Aprender del error","Flexibilidad"],
-                indicadores: ["Reconectar wifi como conexión","Aplicar normas básicas navegación internet","Identificar estructuras repetitivas","Aplicar condicionales simples","Reconocer operadores suma/resta","Reconocer operador relacional 'igual que'","Describir fundamentos IA","Reconocer uso de asistentes virtuales"] },
-            metodologia: "Design Thinking básico", dualibre: "Juegos de mesa con condiciones." }
-        },
-        "3": { "1": { rdA: "Crea algoritmos que integran estructuras de control y manejo de variables en programación por bloques.",
-            saberes: { conceptual: ["Hardware (entrada,procesamiento,almacenamiento,salida)","Redes de comunicación","Gestión de archivos","Herramienta de productividad (editor presentaciones)","Algoritmo","Variable","Operadores aritméticos/relacionales"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Formula algoritmos","Programa","Depura"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Explicar funciones básicas hardware","Describir red local","Reconocer gestión de archivos (carpetas)","Usar editor de presentaciones","Reconocer estructura algoritmo","Usar variables en programación","Utilizar operadores aritméticos (multiplicación, división) y relacionales"] },
-            metodologia: "ABR", dualibre: "Diagramas de flujo en papel." },
-            "2": { rdA: "Aplica herramientas de creación multimedia y conceptos de ciudadanía digital, identificando desafíos de la IA.",
-            saberes: { conceptual: ["Herramientas de creación video","Navegador","Buscador","Netiqueta","Comunicación asincrónica","Huella digital","Software malicioso","Riesgos en línea","Medidas seguridad web","Desafíos IA"],
-                procedimental: ["Abstrae","Generaliza","Transfiere","Comunica","Colabora","Maneja tecnologías ética y segura"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad"],
-                indicadores: ["Aplicar creación/edición de videos","Identificar navegador y buscador","Identificar normas netiqueta","Identificar correo electrónico como comunicación asincrónica","Reconocer huella digital","Reconocer virus como software malicioso","Reconocer riesgos en línea (perfiles falsos)","Reconocer control parental","Identificar desafíos de la IA"] },
-            metodologia: "ABJ", dualibre: "Carteles de netiqueta, reflexión sin internet." }
-        },
-        "4": { "1": { rdA: "Utiliza entornos de programación por bloques y pseudocódigo, gestionando variables y estructuras repetitivas.",
-            saberes: { conceptual: ["Hardware (clasificación)","Software","Redes comunicación","Conexión dispositivos","Gestión archivos","Herramienta productividad","Entorno programación bloques","Estado","Algoritmo pseudocódigo","Dato","Variable","Estructuras repetitivas","Eventos"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Modulariza","Formula algoritmos","Depura","Programa"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Clasificar hardware (computacionales/periféricos)","Reconocer tipos de software","Reconocer red local","Reconocer conexión física/inalámbrica","Organizar archivos y carpetas","Usar procesador texto/presentaciones","Utilizar entorno de programación por bloques","Identificar estado de objetos","Usar pseudocódigo","Organizar datos numéricos/texto","Gestionar variables","Utilizar estructuras repetitivas","Utilizar eventos causa-efecto"] },
-            metodologia: "ABR / Design Thinking", dualibre: "Actividades con tarjetas de comandos." },
-            "2": { rdA: "Aplica fundamentos de IA y herramientas de comunicación digital con ética y seguridad.",
-            saberes: { conceptual: ["Herramientas multimedia (editor gráfico)","Navegador","Buscador","Internet","Netiqueta","Comunicación chat","Huella digital","Contraseñas seguras","Hackeo","Software malicioso","Antivirus","Estructuras condicionales","Operadores aritméticos/relacionales","Fundamentos IA","Asistentes virtuales"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Programa","Comunica","Manejo ético"], actitudinal: ["Gusto precisión","Aprender del error","Tolerancia"],
-                indicadores: ["Aplicar editor gráfico","Usar navegadores/buscadores","Identificar dispositivos conectados a internet","Aplicar normas netiqueta","Identificar chat como herramienta sincrónica/asincrónica","Identificar usos huella digital","Identificar contraseña segura","Identificar hackeo, phishing","Identificar virus informático","Identificar función antivirus","Utilizar estructuras condicionales simples y compuestas","Utilizar operadores aritméticos/relacionales","Identificar fundamentos IA","Explicar aporte de asistentes virtuales"] },
-            metodologia: "ABJ + gamificación", dualibre: "Simulación de roles sobre seguridad digital." }
-        },
-        "5": { "1": { rdA: "Introduce la computación física, circuitos y microcontroladores mediante programación por bloques.",
-            saberes: { conceptual: ["Hardware (mixto)","Software","Conexión dispositivos","Sistema operativo","Herramienta productividad (hoja cálculo)","Herramientas multimedia (audio/video)","Entorno programación bloques computación física","Lógica programación","Algoritmo diagrama flujo","Computación física","Circuito eléctrico","Fundamentos electrónica","Microcontrolador","Herramientas generativas","Desafíos IA"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Modulariza","Formula algoritmos","Remezcla","Depura","Programa"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Identificar hardware mixto (impresora multifuncional)","Identificar software de ofimática","Identificar formas de conexión","Identificar elementos barra de tareas","Identificar funcionalidad hoja cálculo","Elaborar contenido audio/video","Utilizar entorno programación para computación física","Reconocer proposiciones lógicas","Aplicar diagramas de flujo","Reconocer componentes computación física","Identificar componentes circuito eléctrico","Identificar fundamentos electrónica (pines, señales)","Reconocer microcontrolador","Reconocer herramientas generativas","Reconocer desafíos IA"] },
-            metodologia: "Design Thinking + ABR", dualibre: "Simuladores de circuitos (papel) o Tinkercad offline." },
-            "2": { rdA: "Construye prototipos con sensores y actuadores, aplicando colecciones de datos y operadores lógicos.",
-            saberes: { conceptual: ["Herramienta productividad (hoja cálculo)","Buscador","Derechos autor","Dato (booleano)","Variable","Colección de datos","Estructuras condicionales múltiples","Operadores lógicos","Procedimientos/funciones","Sensor","Actuador","Domótica","Dato (ciencias de datos)","Recolección datos","Almacenamiento datos","Visualización datos"],
-                procedimental: ["Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Programa","Colabora"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Identificar hoja de cálculo como productividad","Realizar búsquedas eficientes","Reconocer derechos de autor","Utilizar dato booleano","Aplicar gestión de variables","Organizar colecciones de datos (listas)","Aplicar condicionales múltiples","Reconocer operadores lógicos (Y,O)","Reconocer procedimientos/funciones","Identificar sensores (conexión VCC/GND)","Identificar actuadores","Identificar usos domótica","Identificar dato numérico/texto","Reconocer técnicas recolección","Identificar almacenamiento de datos","Identificar visualización con gráficos"] },
-            metodologia: "ABR + Design Thinking", dualibre: "Maquetas de cartón simulando sensores." }
-        },
-        "6": { "1": { rdA: "Analiza componentes internos del hardware, aplica lógica de tablas de verdad y construye prototipos de computación física.",
-            saberes: { conceptual: ["Hardware (RAM,mother,disco)","Conexión IP","Redes comunicación","Gestión archivos (compresión)","Sistema operativo","Herramientas multimedia","Lógica programación tablas verdad","Procedimientos/funciones","Computación física","Prototipos"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Depura","Programa"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Analizar componentes internos hardware","Explicar direcciones IP","Describir tipos de redes (fija,móvil, satelital)","Analizar gestión archivos (tamaño, extensión, compresión)","Identificar elementos barra de tareas","Crear contenido multimedia","Aplicar lógica tablas verdad (conjunción/disyunción)","Emplear procedimientos/funciones","Aplicar computación física en soluciones","Diseñar prototipos automatizados"] },
-            metodologia: "ABR + Design Thinking", dualibre: "Juegos de lógica con tarjetas." },
-            "2": { rdA: "Gestiona su huella digital, aplica técnicas de ciencia de datos y reconoce IoT y criptomonedas.",
-            saberes: { conceptual: ["Herramienta productividad","Internet","Comunicación sincrónica/asincrónica","Almacenamiento nube","Referencias bibliográficas","IoT","Moneda virtual","Huella digital","Contraseñas seguras","Software malicioso","Riesgos en línea","Medidas seguridad web","Dato (registros)","Recolección datos","Almacenamiento datos","Estrategias presentar datos","Visualización datos"],
-                procedimental: ["Abstrae","Generaliza","Transfiere","Comunica","Colabora","Manejo ético"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Utilizar herramienta productividad (local/nube)","Identificar funcionamiento básico internet","Aplicar comunicación sincrónica/asincrónica","Crear archivos en la nube con permisos","Aplicar formato referencias bibliográficas","Reconocer aplicaciones IoT","Reconocer monedas virtuales","Aplicar medidas huella digital","Reconocer importancia contraseñas seguras","Identificar propagación software malicioso","Identificar riesgos en línea","Identificar medidas seguridad web (HTTPS)","Aplicar registros como datos","Seleccionar técnicas recolección","Aplicar almacenamiento de datos","Crear gráficos de barras/lineales","Aplicar visualización de datos"] },
-            metodologia: "ABJ / ABR", dualibre: "Infografías de seguridad digital." }
-        },
-        "7": { "1": { rdA: "Combina herramientas digitales y conceptos de programación (estructuras condicionales, repetitivas) para resolver problemas reales.",
-            saberes: { conceptual: ["Computadora","Hardware","Software","Redes comunicación","Sistema operativo","Gestión archivos","Herramientas multimedia (editor gráfico)","Entorno programación textual/bloques","Lógica programación","Algoritmo","Dato","Variable","Estructuras condicionales","Estructuras repetitivas","Operadores aritméticos/relacionales/lógicos","Evento"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Remezcla","Depura","Programa","Comunica","Colabora"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Aplicar reglas cuidado computadora","Clasificar tipos computadoras","Distinguir tipos software","Identificar tipos redes (módem,router)","Identificar categorías SO","Aplicar propiedades gestión archivos","Diseñar productos con editor gráfico","Reconocer entorno programación","Identificar lógica programación (tablas verdad)","Reconocer algoritmo estructura entrada-proceso-salida","Identificar tipos dato","Gestionar variables","Aplicar estructuras condicionales","Aplicar estructuras repetitivas","Aplicar operadores aritméticos/relacionales/lógicos","Aplicar evento"] },
-            metodologia: "Design Thinking", dualibre: "Pseudocódigo en papel." },
-            "2": { rdA: "Analiza datos, utiliza herramientas generativas y aplica procedimientos/funciones en programación.",
-            saberes: { conceptual: ["Herramienta productividad (procesador, presentaciones)","Internet","Navegador/buscador","Netiqueta","Comunicación colaboración","Almacenamiento nube","Referencias bibliográficas","Criptomonedas","Contraseñas seguras","Software malicioso","Riesgos línea","Operadores lógicos","Procedimientos/funciones","Dato (ciencias datos)","Fundamentos IA","Asistentes virtuales"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Programa","Comunica","Manejo ético"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Aplicar procesador texto/presentaciones","Reconocer funcionamiento internet","Utilizar navegador/buscador","Aplicar netiqueta","Utilizar comunicación sincrónica/asincrónica","Usar almacenamiento nube","Aplicar formatos referencias","Reconocer utilidad criptomonedas","Crear contraseñas seguras","Reconocer características software malicioso","Identificar riesgos (grooming,phishing)","Aplicar operadores lógicos","Aplicar procedimientos/funciones","Identificar tipos dato (numérico,texto,ubicación)","Reconocer fundamentos IA","Identificar asistentes virtuales"] },
-            metodologia: "ABR + Design Thinking", dualibre: "Debates sobre ética digital sin conexión." }
-        },
-        "8": { "1": { rdA: "Aplica fundamentos de robótica, mecánica y electrónica en la construcción de prototipos.",
-            saberes: { conceptual: ["Hardware (componentes internos)","Software","Redes comunicación","Conexión dispositivos","Sistema Operativo","Gestión archivos (compresión)","Herramientas edición audio/video","IoT","Entorno programación textual/bloques robótica","Robot","Robótica","Mecánica aplicada","Mecanismos","Circuito eléctrico","Fundamentos electrónica","Microcontrolador"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Depura","Programa","Colabora"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Analizar funcionamiento hardware","Analizar tipos software","Identificar funciones almacenamiento redes","Distinguir conexión física/inalámbrica","Reconocer características SO (libre/pago)","Aplicar compresión/descompresión archivos","Utilizar edición audio/video","Analizar aplicaciones IoT","Aplicar entorno programación para mecanismos robóticos","Reconocer robot componentes","Diferenciar computación física y robótica","Emplear principios mecánica","Reconocer tipos mecanismos","Identificar componentes circuito eléctrico","Identificar fundamentos electrónica (pines, señales)","Comprender microcontrolador"] },
-            metodologia: "Design Thinking + ABR", dualibre: "Simulación con materiales de provecho." },
-            "2": { rdA: "Utiliza hojas de cálculo, gestiona colecciones de datos y aplica herramientas generativas de IA.",
-            saberes: { conceptual: ["Herramienta productividad (hoja cálculo)","Buscador","Plataformas creación contenido","Licencia","Hackeo","Software malicioso","Antivirus","Colección de datos","Sensor","Actuador","Recolección datos","Fundamentos IA","Herramientas generativas"],
-                procedimental: ["Abstrae","Generaliza","Transfiere","Modulariza","Programa","Colabora","Manejo ético"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Utilizar hoja cálculo organización datos","Utilizar buscador fuentes confiables","Utilizar plataformas (infografías, diagramas)","Reconocer licencia digital","Reconocer hackeo y tipos","Aplicar medidas protección software malicioso","Gestionar colección de datos (listas/arreglos)","Utilizar sensor (conexión VCC/GND)","Utilizar actuador","Aplicar técnicas recolección de datos","Reconocer fundamentos IA","Utilizar herramientas generativas (texto, imagen, audio)"] },
-            metodologia: "ABJ + ABR", dualibre: "Construcción de encuestas en papel." }
-        },
-        "9": { "1": { rdA: "Diseña soluciones automatizadas integrando microcontroladores, sensores y actuadores, analizando domótica.",
-            saberes: { conceptual: ["Entorno programación textual/bloques robótica","Algoritmo","Movimiento mecanismos","Microcontrolador","Sensor","Actuador","Domótica","Prototipos","Dato","Almacenamiento datos"],
-                procedimental: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Depura","Programa","Colabora"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Diseñar soluciones automatizadas en entorno programación","Diseñar algoritmo (pseudocódigo/ diagrama flujo)","Identificar movimiento entrada/salida mecanismos","Aplicar funciones microcontrolador (pines,VCC,GND)","Integrar sensor en prototipo","Integrar actuador programado","Analizar usos domótica","Construir prototipos con microcontrolador","Reconocer importancia organización dato","Reconocer ciclo de vida del dato"] },
-            metodologia: "Design Thinking", dualibre: "Prototipos de cartón con simulación." },
-            "2": { rdA: "Aplica herramientas generativas de IA, analiza riesgos en línea y optimiza sistemas operativos.",
-            saberes: { conceptual: ["Redes comunicación (protocolos)","Sistema Operativo (optimización)","Herramienta productividad (gestor BD)","Herramientas creación multimedia (modelado 3D)","Plataformas creación contenido","Derechos autor y licenciamiento","Huella digital","Riesgos en línea","Herramientas generativas","Desafíos IA"],
-                procedimental: ["Abstrae","Generaliza","Transfiere","Comunica","Colabora","Manejo ético"], actitudinal: ["Gusto precisión","Aprender del error","Flexibilidad","Tolerancia"],
-                indicadores: ["Reconocer arquitectura redes (HTTP,HTTPS,TCP/IP)","Aplicar técnicas optimización SO","Utilizar gestor BD (tablas, relaciones)","Utilizar herramientas modelado 3D","Crear encuestas/formularios","Reconocer derechos autor y licencias","Analizar huella digital","Analizar riesgos en línea (ciberacoso, sexting)","Aplicar herramientas generativas IA","Reconocer desafíos IA (sesgos, manipulación)"] },
-            metodologia: "ABR", dualibre: "Análisis de casos éticos offline." }
+            "1": { "1": { rdA: "Selecciona dispositivos y herramientas de productividad usando hardware/software.", saberes: ["Computadora","Hardware","Software","Programación iconográfica","Patrones","Estado","Algoritmo","Evento"], indicadores: ["Reconocer herramienta tecnológica","Identificar periféricos","Interfaz de usuario","Bloques desplazamiento","Patrones movimiento","Estado objeto","Algoritmo cotidiano","Evento causa-efecto"], metodologia: "ABJ", dualibre: "Tarjetas de secuencias" },
+                     "2": { rdA: "Selecciona conceptos de programación (estructuras repetitivas, dato, IA).", saberes: ["Herramientas multimedia audio/imagen","Bluetooth","Internet","Estructuras repetitivas","Dato","Fundamentos IA","Asistentes virtuales"], indicadores: ["Crear audios/imágenes","Reconectar bluetooth","Dispositivos internet","Ciclos finitos/infinitos","Identificar dato","Reconocer IA","Asistente virtual"], metodologia: "ABJ", dualibre: "Juegos de roles" } },
+            "2": { "1": { rdA: "Utiliza herramientas de productividad y programación por bloques.", saberes: ["Hardware","Software","Procesador texto","Herramientas multimedia","Programación bloques","Algoritmo","Dato","Variable","Evento"], indicadores: ["Funcionamiento hardware","Explorar software","Usar procesador texto","Grabadora audio/editor gráfico","Programar por bloques","Algoritmo lenguaje natural","Clasificar dato numérico/texto","Identificar variable","Evento programación"], metodologia: "ABJ", dualibre: "Mapas de algoritmos" },
+                     "2": { rdA: "Aplica estructuras repetitivas, condicionales y operadores.", saberes: ["Conexión wifi","Internet","Estructuras repetitivas","Condicionales","Operadores aritméticos","Operador relacional","Fundamentos IA","Asistentes virtuales"], indicadores: ["Reconocer wifi","Navegación segura","Identificar ciclos","Aplicar condicionales","Suma/resta","Operador igual que","Describir IA","Uso asistentes"], metodologia: "ABR", dualibre: "Juegos de mesa" } },
+            "3": { "1": { rdA: "Crea algoritmos con estructuras de control y variables.", saberes: ["Hardware (entrada,proceso,salida)","Redes","Gestión archivos","Editor presentaciones","Algoritmo","Variable","Operadores aritméticos/relacionales"], indicadores: ["Funciones hardware","Red local","Carpetas/subcarpetas","Usar presentaciones","Estructura algoritmo","Usar variable","Multiplicación, división, comparadores"], metodologia: "ABR", dualibre: "Diagramas de flujo" },
+                     "2": { rdA: "Aplica herramientas multimedia, ciudadanía digital y desafíos IA.", saberes: ["Herramientas video","Navegador","Buscador","Netiqueta","Correo electrónico","Huella digital","Software malicioso","Riesgos línea","Control parental","Desafíos IA"], indicadores: ["Crear/editar videos","Identificar navegador","Buscar información","Normas netiqueta","Usar correo","Reconocer huella","Virus informático","Perfiles falsos","Control parental","Desafíos IA"], metodologia: "ABR", dualibre: "Carteles de seguridad" } },
+            "4": { "1": { rdA: "Usa programación por bloques, pseudocódigo, variables, estructuras repetitivas.", saberes: ["Hardware (clasificación)","Software","Redes","Conexión dispositivos","Gestión archivos","Herramientas productividad","Entorno bloques","Estado","Pseudocódigo","Dato","Variable","Estructuras repetitivas","Eventos"], indicadores: ["Clasificar hardware","Tipos software","Red local","Conexión física/inalámbrica","Organizar archivos","Procesador texto/presentaciones","Programar por bloques","Estado objetos","Usar pseudocódigo","Datos numéricos/texto","Gestionar variables","Repeticiones controladas","Eventos causa-efecto"], metodologia: "ABR", dualibre: "Tarjetas de comandos" },
+                     "2": { rdA: "Aplica fundamentos IA, comunicación digital ética.", saberes: ["Editor gráfico","Navegador","Buscador","Internet","Netiqueta","Chat","Huella digital","Contraseñas seguras","Hackeo","Software malicioso","Antivirus","Condicionales","Operadores","Fundamentos IA","Asistentes virtuales"], indicadores: ["Usar editor gráfico","Navegadores/buscadores","Dispositivos internet","Netiqueta","Chat sincrónico/asincrónico","Huella digital","Contraseña segura","Hackeo, phishing","Virus informático","Función antivirus","Condicionales simples/compuestas","Operadores aritméticos/relacionales","Fundamentos IA","Aporte asistentes"], metodologia: "ABR", dualibre: "Simulación de roles" } },
+            "5": { "1": { rdA: "Introduce computación física, circuitos, microcontroladores.", saberes: ["Hardware mixto","Software ofimática","Conexión dispositivos","Sistema operativo","Hoja cálculo","Multimedia audio/video","Programación bloques computación física","Lógica","Diagrama flujo","Computación física","Circuito eléctrico","Electrónica","Microcontrolador","Herramientas generativas","Desafíos IA"], indicadores: ["Hardware mixto","Software ofimática","Conexión física/inalámbrica","Barra tareas","Usar hoja cálculo","Crear audio/video","Programar bloques","Proposiciones lógicas","Diagramas flujo","Componentes computación física","Circuito eléctrico","Pines, señales","Microcontrolador","Herramientas generativas","Desafíos IA"], metodologia: "Design Thinking", dualibre: "Simuladores de circuitos" },
+                     "2": { rdA: "Construye prototipos con sensores/actuadores y colecciones de datos.", saberes: ["Hoja cálculo","Buscador","Derechos autor","Dato booleano","Variable","Colección datos","Condicionales múltiples","Operadores lógicos","Procedimientos/funciones","Sensor","Actuador","Domótica","Dato","Recolección datos","Almacenamiento","Visualización"], indicadores: ["Hoja cálculo","Búsquedas eficientes","Derechos autor","Dato booleano","Variables","Listas/arreglos","Condicionales múltiples","Operadores Y/O","Procedimientos/funciones","Sensor VCC/GND","Actuador","Domótica","Dato numérico/texto","Técnicas recolección","Almacenamiento datos","Gráficos"], metodologia: "Design Thinking", dualibre: "Maquetas de cartón" } },
+            "6": { "1": { rdA: "Analiza hardware interno, lógica tablas verdad, prototipos.", saberes: ["Hardware (RAM,mother)","Direcciones IP","Redes comunicación","Gestión archivos compresión","Sistema operativo","Multimedia","Tablas verdad","Procedimientos/funciones","Computación física","Prototipos"], indicadores: ["Componentes internos","Explicar IP","Tipos redes","Compresión/descompresión","Barra tareas","Crear multimedia","Tablas verdad conjunción/disyunción","Funciones/procedimientos","Computación física","Diseñar prototipos"], metodologia: "Design Thinking", dualibre: "Juegos de lógica" },
+                     "2": { rdA: "Gestiona huella digital, ciencia de datos, IoT.", saberes: ["Herramienta productividad","Internet","Comunicación síncrona/asíncrona","Nube","Referencias bibliográficas","IoT","Moneda virtual","Huella digital","Contraseñas seguras","Software malicioso","Riesgos línea","HTTPS","Dato registros","Recolección","Almacenamiento","Estrategias presentación","Visualización"], indicadores: ["Herramienta ofimática","Funcionamiento internet","Correo, chats, videollamadas","Archivos en la nube","Referencias bibliográficas","Aplicaciones IoT","Monedas virtuales","Medidas huella digital","Doble factor","Propagación malware","Ciberacoso","HTTPS","Registros en tablas","Técnicas recolección","Almacenamiento","Gráficos barras/lineales","Visualización"], metodologia: "ABR", dualibre: "Infografías" } },
+            "7": { "1": { rdA: "Combina herramientas digitales y estructuras de programación.", saberes: ["Computadora","Hardware","Software","Redes","SO","Gestión archivos","Editor gráfico","Entorno programación","Lógica","Algoritmo","Dato","Variable","Condicionales","Repetitivas","Operadores","Evento"], indicadores: ["Cuidado computadora","Clasificar computadoras","Tipos software","Redes (módem,router)","Categorías SO","Propiedades archivos","Diseño gráfico","Reconocer entorno","Tablas verdad","Estructura entrada-proceso-salida","Tipos dato","Declarar variables","Condicionales","Ciclos","Operadores aritméticos/relacionales/lógicos","Evento"], metodologia: "Design Thinking", dualibre: "Pseudocódigo en papel" },
+                     "2": { rdA: "Analiza datos, herramientas generativas y funciones.", saberes: ["Procesador texto/presentaciones","Internet","Navegador/buscador","Netiqueta","Comunicación colaboración","Nube","Referencias","Criptomonedas","Contraseñas","Software malicioso","Riesgos","Operadores lógicos","Procedimientos/funciones","Dato (ciencias)","Fundamentos IA","Asistentes virtuales"], indicadores: ["Usar procesador/presentaciones","Funcionamiento internet","Navegador/buscador","Netiqueta","Correo, chats, videollamadas","Almacenamiento nube","Referencias bibliográficas","Criptomonedas","Generar contraseñas","Software malicioso","Grooming, phishing","Operadores lógicos","Procedimientos/funciones","Tipos dato (numérico,texto,ubicación)","Concepto IA","Asistentes virtuales"], metodologia: "Design Thinking", dualibre: "Debates ética" } },
+            "8": { "1": { rdA: "Aplica robótica, mecánica y electrónica en prototipos.", saberes: ["Hardware interno","Software","Redes","Conexión dispositivos","SO","Compresión archivos","Edición audio/video","IoT","Programación robótica","Robot","Robótica","Mecánica","Mecanismos","Circuito eléctrico","Electrónica","Microcontrolador"], indicadores: ["Funcionamiento hardware","Tipos software","Unidades almacenamiento","Conexión física/inalámbrica","Software libre/pago","Compresión/descompresión","Edición audio/video","IoT","Programar mecanismos","Componentes robot","Diferenciar computación física","Principios mecánica","Tipos mecanismos","Componentes circuito","Pines, señales","Microcontrolador"], metodologia: "Design Thinking", dualibre: "Materiales reciclados" },
+                     "2": { rdA: "Usa hoja cálculo, colecciones de datos y herramientas IA.", saberes: ["Hoja cálculo","Buscador","Plataformas contenido","Licencia","Hackeo","Software malicioso","Antivirus","Colección datos","Sensor","Actuador","Recolección datos","Fundamentos IA","Herramientas generativas"], indicadores: ["Organizar datos","Búsqueda confiable","Infografías/diagramas","Licencia digital","Tipos hacker","Medidas protección","Antivirus","Listas/arreglos","Sensor VCC/GND","Actuador","Técnicas recolección","Cómo funciona IA","Herramientas generativas texto/imagen/audio"], metodologia: "Design Thinking", dualibre: "Encuestas en papel" } },
+            "9": { "1": { rdA: "Diseña soluciones automatizadas con microcontroladores y domótica.", saberes: ["Entorno programación robótica","Algoritmo","Movimiento mecanismos","Microcontrolador","Sensor","Actuador","Domótica","Prototipos","Dato","Almacenamiento datos"], indicadores: ["Diseñar automatizaciones","Algoritmo pseudocódigo/flujo","Movimiento entrada/salida","Funciones microcontrolador","Integrar sensor","Actuador programado","Usos domótica","Construir prototipos","Organización dato","Ciclo de vida dato"], metodologia: "Design Thinking", dualibre: "Prototipos cartón" },
+                     "2": { rdA: "Aplica herramientas IA, optimiza SO y analiza riesgos.", saberes: ["Redes protocolos (HTTP,HTTPS,TCP/IP)","Optimización SO","Gestor BD","Modelado 3D","Encuestas/formularios","Derechos autor","Huella digital","Riesgos línea","Herramientas generativas","Desafíos IA"], indicadores: ["Arquitectura redes","Optimizar memoria/disco","Tablas y relaciones","Modelado 3D","Crear encuestas","Derechos autor","Analizar huella digital","Ciberacoso, sexting","Aplicar herramientas generativas","Sesgos, manipulación"], metodologia: "Design Thinking", dualibre: "Casos éticos" } }
+        };
+
+        // Estado global
+        let currentPlaneamiento = null;
+        let recursosSubidos = [];
+        let textosExtraidos = [];
+
+        // DOM elements
+        const cicloSelect = document.getElementById('cicloSelect');
+        const nivelSelect = document.getElementById('nivelSelect');
+        const modulo1Check = document.getElementById('modulo1Check');
+        const modulo2Check = document.getElementById('modulo2Check');
+        const leccionesSlider = document.getElementById('leccionesSlider');
+        const leccionesValor = document.getElementById('leccionesValor');
+        const saberesContainer = document.getElementById('saberesContainer');
+        const generarBtn = document.getElementById('generarBtn');
+        const output = document.getElementById('outputDinamico');
+        const coordMostrar = document.getElementById('coordMostrar');
+        const recursoFileInput = document.getElementById('recursoFileInput');
+        const listaRecursosDiv = document.getElementById('listaRecursos');
+        const extraerTextoBtn = document.getElementById('extraerTextoBtn');
+
+        leccionesSlider.addEventListener('input', () => leccionesValor.innerText = leccionesSlider.value);
+
+        function cargarSaberes() {
+            const ciclo = cicloSelect.value;
+            const nivel = nivelSelect.value;
+            let saberesSet = new Set();
+            if (modulo1Check.checked && curriculumDB[nivel] && curriculumDB[nivel]["1"]) {
+                curriculumDB[nivel]["1"].saberes.forEach(s => saberesSet.add(s));
+            }
+            if (modulo2Check.checked && curriculumDB[nivel] && curriculumDB[nivel]["2"]) {
+                curriculumDB[nivel]["2"].saberes.forEach(s => saberesSet.add(s));
+            }
+            saberesContainer.innerHTML = '';
+            if (saberesSet.size === 0) {
+                saberesContainer.innerHTML = '<div class="text-gray-400 text-sm">Selecciona al menos un módulo</div>';
+                return;
+            }
+            saberesSet.forEach(saber => {
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-2 text-sm';
+                label.innerHTML = `<input type="checkbox" class="saber-check" value="${saber}"> ${saber}`;
+                saberesContainer.appendChild(label);
+            });
         }
-    };
 
-    // Helper para obtener datos
-    function obtenerDatosNivelModulo(cicloKey, nivel, modulo) {
-        if (!curriculumDB[nivel]) return null;
-        const moduloData = curriculumDB[nivel][modulo];
-        if (!moduloData) return null;
-        return moduloData;
-    }
+        cicloSelect.addEventListener('change', cargarSaberes);
+        nivelSelect.addEventListener('change', cargarSaberes);
+        modulo1Check.addEventListener('change', cargarSaberes);
+        modulo2Check.addEventListener('change', cargarSaberes);
 
-    // Generar planeamiento HTML
-    function generarPlaneamientoHTML(nivel, modulo, lecciones, datos) {
-        if (!datos) return `<div class="rdA" style="background:#ffe6e6;">⚠️ No hay datos curriculares oficiales para este nivel/módulo. Verifique la selección.</div>`;
-        const sab = datos.saberes;
-        const tablaRows = Math.max(sab.conceptual.length, sab.indicadores.length);
-        let tablaHTML = `<table><thead><tr><th>Conceptual</th><th>Procedimental</th><th>Actitudinal</th><th>Indicador de Logro</th></tr></thead><tbody>`;
-        for(let i=0; i<tablaRows; i++) {
-            tablaHTML += `<tr><td>${sab.conceptual[i] || '—'}</td><td>${sab.procedimental[i] || '—'}</td><td>${sab.actitudinal[i] || '—'}</td><td>${sab.indicadores[i] || '—'}</td></tr>`;
+        function getMetodologiaPorCiclo(ciclo) {
+            if (ciclo === 'preescolar' || ciclo === 'I') return 'ABJ (Aprendizaje Basado en Juegos)';
+            if (ciclo === 'II') return 'ABR (Aprendizaje Basado en Retos)';
+            return 'Design Thinking';
         }
-        tablaHTML += `</tbody></table>`;
-        const momentos = `
-            <div class="momento"><strong>🎯 Focalización:</strong> Activación de saberes previos mediante pregunta detonante y dinámica lúdica relacionada con el RdA.</div>
-            <div class="momento"><strong>🔍 Exploración:</strong> Reto central (metodología ${datos.metodologia}) donde los estudiantes aplican saberes conceptuales y procedimentales.</div>
-            <div class="momento"><strong>📖 Reflexión y Contrastación:</strong> Plenaria, comparación de soluciones y formalización de conceptos clave.</div>
-            <div class="momento"><strong>⚙️ Aplicación:</strong> Avance de proyecto o transferencia (ajustado a ${lecciones} lecciones semanales).</div>
-        `;
-        const dualidad = `<div class="dualidad"><div class="card-dual"><strong>💻 Con Tecnología</strong><br>Uso de dispositivos/software sugerido: entornos de programación, simuladores, herramientas ofimáticas.</div><div class="card-dual"><strong>📴 Desconectada (Unplugged)</strong><br>Actividades analógicas: tarjetas, juegos de roles, diagramas en papel, maquetas.</div></div>`;
-        const seguridad = `<div style="margin-top:1rem; background:#eef2fa; padding:0.6rem; border-radius:1rem;"><strong>🔒 Seguridad y Ética digital:</strong> Reflexión sobre ciberseguridad, uso responsable de datos y netiqueta adaptada al nivel.</div>`;
-        return `
-            <div class="rdA"><strong>📌 RdA:</strong> ${datos.rdA}</div>
-            <div><strong>🧩 Matriz de Saberes (Microcurrículo oficial)</strong></div>
-            ${tablaHTML}
-            <div><strong>📖 Estrategia de mediación (4 momentos)</strong></div>
-            ${momentos}
-            <div><strong>🔄 Dualidad de implementación</strong></div>
-            ${dualidad}
-            <div><strong>♿ DUA y Accesibilidad:</strong> ${datos.duaLibre} · Representación múltiple, acción/expresión y compromiso.</div>
-            ${seguridad}
-            <div style="font-size:0.7rem; margin-top:0.8rem;">✅ Verificación de nivel: saberes e indicadores exclusivos del grado ${nivel}, módulo ${modulo}. Sin mezcla de niveles.</div>
-        `;
-    }
 
-    // Gestión de recursos offline (IndexedDB)
-    let recursosGuardados = [];
-    function cargarRecursosStorage() { const r = localStorage.getItem('recursos_idonet'); if(r) recursosGuardados = JSON.parse(r); actualizarListaRecursos(); }
-    function guardarRecursoStorage(nombre) { recursosGuardados.push({nombre, fecha: new Date().toLocaleDateString()}); localStorage.setItem('recursos_idonet', JSON.stringify(recursosGuardados)); actualizarListaRecursos(); }
-    function actualizarListaRecursos() { const div = document.getElementById('listaRecursos'); if(div) div.innerHTML = recursosGuardados.map(r => `<div>📄 ${r.nombre} (${r.fecha})</div>`).join('') || '<div>No hay recursos guardados</div>'; }
+        function generarEstrategia(saberesSeleccionados, ciclo, nivel, modulo, lecciones) {
+            const metodologia = getMetodologiaPorCiclo(ciclo);
+            const datosMod = curriculumDB[nivel] && curriculumDB[nivel][modulo] ? curriculumDB[nivel][modulo] : null;
+            const rdA = datosMod ? datosMod.rdA : "RdA no disponible";
+            const indicadores = datosMod ? datosMod.indicadores : [];
+            const dualibre = datosMod ? datosMod.duaLibre : "Actividades adaptadas al contexto";
+            
+            const saberesList = saberesSeleccionados.join(', ');
+            const integracionRecursos = textosExtraidos.length ? `\n📄 RECURSOS DEL DOCENTE (texto extraído): ${textosExtraidos.join(' · ')}` : '';
+            
+            let estrategiaHTML = `<div class="bg-blue-50 p-4 rounded-xl mb-4"><strong>📌 RdA:</strong> ${rdA}</div>`;
+            estrategiaHTML += `<div class="mb-4"><strong>🧩 Saberes integrados:</strong> ${saberesList}</div>`;
+            estrategiaHTML += `<div class="mb-4"><strong>📖 Metodología activa:</strong> ${metodologia}</div>`;
+            estrategiaHTML += `<div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div class="border p-3 rounded-xl"><strong>💻 Con tecnología</strong><br>Usar simuladores, programación por bloques, sensores TCRT5000L, micro:bit, Arduino. Actividad sugerida: Diseñar un prototipo que integre ${saberesList.slice(0,2).join(' y ')}.</div>
+                <div class="border p-3 rounded-xl"><strong>📴 Desconectada (Unplugged)</strong><br>${duaLibre}. Juegos de roles, tarjetas, diagramas en papel, maquetas.</div>
+            </div>`;
+            estrategiaHTML += `<div class="bg-gray-50 p-3 rounded-xl"><strong>♿ DUA y accesibilidad:</strong> Representación visual y auditiva, opciones de respuesta (dibujo, oral, digital), trabajo colaborativo y tiempos flexibles.</div>`;
+            estrategiaHTML += `<div class="mt-4 text-xs text-gray-500">${integracionRecursos}</div>`;
+            return { html: estrategiaHTML, textoPlano: `RdA: ${rdA}\nSaberes: ${saberesList}\nMetodología: ${metodologia}\nDualidad: con/sin tecnología\nDUA: representación, acción/expresión, compromiso.` };
+        }
 
-    document.getElementById('guardarRecursoBtn').addEventListener('click', () => {
-        const files = document.getElementById('recursoFileInput').files;
-        if(files.length) { for(let f of files) guardarRecursoStorage(f.name); alert(`Recursos guardados: ${files.length} archivos`); }
-        else alert("Seleccione al menos un archivo PDF/PPT/imagen");
-    });
+        function generarPromptMaestro(saberesSeleccionados, ciclo, nivel, lecciones) {
+            const metodologia = getMetodologiaPorCiclo(ciclo);
+            const recursosTexto = textosExtraidos.length ? `\nRECURSOS SUBIDOS POR EL DOCENTE (texto extraído): ${textosExtraidos.join(' | ')}` : '';
+            return `[CONTEXTO]: Actúa como asesor instruccional del PNFT 2026. Nivel: ${nivel}°, Ciclo: ${ciclo}. Lecciones semanales: ${lecciones}.
+[SABERES A INTEGRAR]: ${saberesSeleccionados.join(', ')}.
+[REQUISITOS]: Metodología ${metodologia}. Genera una estrategia de mediación de ${lecciones*40} minutos, con dualidad tecnológica (con tecnología / desconectada). Incluye principios DUA.
+[RECURSOS]:${recursosTexto}
+[EJECUCIÓN]: Estructura en Focalización (10%), Exploración (50%), Reflexión (20%), Aplicación (20%). Entrega tabla con momentos, actividades, saberes procedimentales/actitudinales y recursos.`;
+        }
 
-    // Sugerencia integración sensores/robótica
-    function actualizarSugerenciaIntegracion(nivel, modulo) {
-        const sugerenciaSpan = document.getElementById('sugerenciaTexto');
-        if(nivel >=5 && nivel <=9 && modulo==1) sugerenciaSpan.innerText = "🔧 Integración sugerida: Sensor TCRT5000L + piezo + ultrasonido para sistema de alarma. Puede combinar con programación por bloques y prototipo de domótica.";
-        else if(nivel>=7 && modulo==2) sugerenciaSpan.innerText = "🤖 Sugerencia: Usar colecciones de datos y sensores para crear un dashboard con monitoreo ambiental (humedad, temperatura) usando micro:bit o Arduino.";
-        else sugerenciaSpan.innerText = "💡 Seleccione módulos de robótica o ciencia de datos para ver ideas de proyectos integradores con sensores/actuadores.";
-    }
+        generarBtn.addEventListener('click', () => {
+            const ciclo = cicloSelect.value;
+            const nivel = nivelSelect.value;
+            const mod1 = modulo1Check.checked;
+            const mod2 = modulo2Check.checked;
+            if (!mod1 && !mod2) { alert("Selecciona al menos un módulo"); return; }
+            const saberesCheck = document.querySelectorAll('.saber-check:checked');
+            const saberesSeleccionados = Array.from(saberesCheck).map(cb => cb.value);
+            if (saberesSeleccionados.length === 0) { alert("Selecciona al menos un saber conceptual"); return; }
+            const lecciones = leccionesSlider.value;
+            const moduloMostrar = `${mod1 ? 'Módulo 1' : ''} ${mod2 ? 'Módulo 2' : ''}`.trim();
+            coordMostrar.innerText = `${ciclo} · ${nivel}° · ${moduloMostrar}`;
+            
+            // Tomar datos del primer módulo para estructura (RdA, indicadores)
+            const moduloRef = mod1 ? "1" : "2";
+            const datos = curriculumDB[nivel] && curriculumDB[nivel][moduloRef] ? curriculumDB[nivel][moduloRef] : null;
+            const indicadores = datos ? datos.indicadores : [];
+            const rdA = datos ? datos.rdA : "RdA no disponible";
+            
+            const estrategia = generarEstrategia(saberesSeleccionados, ciclo, nivel, moduloRef, lecciones);
+            const prompt = generarPromptMaestro(saberesSeleccionados, ciclo, nivel, lecciones);
+            document.getElementById('promptGenerado').value = prompt;
+            
+            let tablaIndicadores = `<table class="min-w-full border text-sm"><thead class="bg-gray-100"><tr><th>Saber conceptual</th><th>Indicador de logro</th></tr></thead><tbody>`;
+            saberesSeleccionados.forEach((saber, idx) => {
+                tablaIndicadores += `<tr><td class="border p-1">${saber}</td><td class="border p-1">${indicadores[idx] || "Indicador asociado según currículo"}</td></tr>`;
+            });
+            tablaIndicadores += `</tbody></table>`;
+            
+            output.innerHTML = `<div class="rdA bg-blue-50 p-3 rounded-xl mb-3"><strong>📌 RdA del ciclo:</strong> ${rdA}</div>
+                                ${estrategia.html}
+                                <div class="mt-4"><strong>📊 Indicadores de logro asociados</strong>${tablaIndicadores}</div>
+                                <div class="mt-4 text-right text-xs"><button id="copiarPlaneamientoBtn" class="bg-gray-200 px-3 py-1 rounded-full">Copiar planeamiento</button></div>`;
+            document.getElementById('copiarPlaneamientoBtn')?.addEventListener('click', () => {
+                navigator.clipboard.writeText(estrategia.textoPlano);
+                alert("Planeamiento copiado al portapapeles");
+            });
+            currentPlaneamiento = estrategia;
+        });
 
-    // Eventos
-    const cicloSelect = document.getElementById('cicloSelect');
-    const nivelSelect = document.getElementById('nivelSelect');
-    const moduloSelect = document.getElementById('moduloSelect');
-    const leccionesInput = document.getElementById('lecciones');
-    const generarBtn = document.getElementById('generarBtn');
-    const coordMostrar = document.getElementById('coordMostrar');
+        // Gestión de recursos offline (IndexedDB simulado con localStorage)
+        function actualizarListaRecursos() {
+            listaRecursosDiv.innerHTML = recursosSubidos.map((r, i) => `<div class="flex justify-between items-center"><span>📄 ${r.name}</span><button class="text-red-500 text-xs eliminar-recurso" data-idx="${i}">🗑️</button></div>`).join('');
+            document.querySelectorAll('.eliminar-recurso').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = e.target.getAttribute('data-idx');
+                    recursosSubidos.splice(idx, 1);
+                    localStorage.setItem('recursos_idonet', JSON.stringify(recursosSubidos));
+                    actualizarListaRecursos();
+                });
+            });
+        }
+        recursoFileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            files.forEach(f => recursosSubidos.push({ name: f.name, file: f }));
+            localStorage.setItem('recursos_idonet', JSON.stringify(recursosSubidos.map(r => ({ name: r.name }))));
+            actualizarListaRecursos();
+        });
+        extraerTextoBtn.addEventListener('click', async () => {
+            textosExtraidos = [];
+            for (let r of recursosSubidos) {
+                if (r.name.endsWith('.pdf')) {
+                    const arrayBuffer = await r.file.arrayBuffer();
+                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    let texto = "";
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const content = await page.getTextContent();
+                        texto += content.items.map(item => item.str).join(" ");
+                    }
+                    textosExtraidos.push(`PDF "${r.name}": ${texto.substring(0, 500)}...`);
+                } else if (r.name.endsWith('.pptx')) {
+                    textosExtraidos.push(`PPT "${r.name}": (extracción automática limitada, revisa manualmente el contenido)`);
+                } else {
+                    textosExtraidos.push(`Imagen "${r.name}": no se extrae texto automático.`);
+                }
+            }
+            alert(`Texto extraído de ${textosExtraidos.length} archivos. Se usará en la generación de estrategias.`);
+        });
+        // Cargar recursos previos
+        const stored = localStorage.getItem('recursos_idonet');
+        if (stored) recursosSubidos = JSON.parse(stored).map(r => ({ name: r.name, file: null }));
+        actualizarListaRecursos();
 
-    function actualizarCoordenadas() { coordMostrar.innerText = `${cicloSelect.value} · ${nivelSelect.value}° · Módulo ${moduloSelect.value}`; }
-    function renderizar() {
-        const ciclo = cicloSelect.value;
-        let nivelRaw = nivelSelect.value;
-        const modulo = moduloSelect.value;
-        const lecciones = parseInt(leccionesInput.value) || 3;
-        actualizarCoordenadas();
-        const datos = obtenerDatosNivelModulo(ciclo, nivelRaw, modulo);
-        const htmlContenido = generarPlaneamientoHTML(nivelRaw, modulo, lecciones, datos);
-        document.getElementById('outputDinamico').innerHTML = htmlContenido;
-        actualizarSugerenciaIntegracion(parseInt(nivelRaw), modulo);
-        window.lastPlaneamientoHTML = htmlContenido;
-    }
+        // Enlaces externos
+        document.getElementById('teachyBtn').onclick = () => { window.open('https://teachy.ai/es', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado. Pégalo en Teachy.ai"); };
+        document.getElementById('geniallyBtn').onclick = () => { window.open('https://app.genial.ly/editor', '_blank'); navigator.clipboard.writeText(currentPlaneamiento?.textoPlano || "Estrategia IDONET"); alert("Texto copiado para Genially"); };
+        document.getElementById('chatgptBtn').onclick = () => { window.open('https://chat.openai.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado a ChatGPT"); };
+        document.getElementById('geminiBtn').onclick = () => { window.open('https://gemini.google.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado a Gemini"); };
+        document.getElementById('copiarPromptBtn').onclick = () => { navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
 
-    generarBtn.addEventListener('click', renderizar);
-    cargarRecursosStorage();
-    renderizar();
+        // Tabs matriz/evaluación
+        const tabMatrizBtn = document.getElementById('tabMatrizBtn');
+        const tabEvaluacionBtn = document.getElementById('tabEvaluacionBtn');
+        const tabPromptBtn = document.getElementById('tabPromptBtn');
+        const divMatriz = document.getElementById('tabMatriz');
+        const divEvaluacion = document.getElementById('tabEvaluacion');
+        const divPrompt = document.getElementById('tabPrompt');
+        [tabMatrizBtn, tabEvaluacionBtn, tabPromptBtn].forEach(btn => btn.classList.add('tab-btn'));
+        tabMatrizBtn.onclick = () => { divMatriz.classList.remove('hidden'); divEvaluacion.classList.add('hidden'); divPrompt.classList.add('hidden'); };
+        tabEvaluacionBtn.onclick = () => { divMatriz.classList.add('hidden'); divEvaluacion.classList.remove('hidden'); divPrompt.classList.add('hidden'); };
+        tabPromptBtn.onclick = () => { divMatriz.classList.add('hidden'); divEvaluacion.classList.add('hidden'); divPrompt.classList.remove('hidden'); };
+        divEvaluacion.classList.add('hidden'); divPrompt.classList.add('hidden');
 
-    // Exportación
-    function exportarFormato(formato) {
-        const contenido = document.getElementById('outputDinamico').innerText || "Planeamiento IDONET";
-        let data, mime, filename;
-        if(formato === 'PDF') { window.print(); return; }
-        if(formato === 'Word') { data = `<html><body>${contenido}</body></html>`; mime = 'application/msword'; filename = 'planeamiento.doc'; }
-        else if(formato === 'Excel') { data = "Ciclo,Nivel,Modulo,RdA\n"+contenido.slice(0,800); mime = 'text/csv'; filename = 'planeamiento.csv'; }
-        else if(formato === 'JSON') { data = JSON.stringify({planeamiento: contenido, timestamp: new Date()}); mime = 'application/json'; filename = 'planeamiento.json'; }
-        else if(formato === 'CSV') { data = contenido.replace(/\n/g,';'); mime = 'text/csv'; filename = 'planeamiento.csv'; }
-        const blob = new Blob([data], {type: mime});
-        const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); URL.revokeObjectURL(link.href);
-    }
-    document.querySelectorAll('.btn-export').forEach(btn => btn.addEventListener('click', (e) => exportarFormato(btn.getAttribute('data-format'))));
-    // Añadir botones export dinámicos
-    const panel = document.querySelector('.response-panel');
-    const exportDiv = document.createElement('div'); exportDiv.className = 'export-buttons';
-    exportDiv.innerHTML = `<button class="btn-export" data-format="PDF">📄 PDF</button><button class="btn-export" data-format="Word">📝 Word</button><button class="btn-export" data-format="Excel">📊 Excel</button><button class="btn-export" data-format="JSON">{ } JSON</button><button class="btn-export" data-format="CSV">📑 CSV</button>`;
-    panel.appendChild(exportDiv);
-    document.querySelectorAll('.btn-export').forEach(btn => btn.addEventListener('click', (e) => exportarFormato(btn.getAttribute('data-format'))));
-</script>
+        // Matriz semanal dinámica
+        function renderMatriz() {
+            const dias = ['Lun','Mar','Mié','Jue','Vie'];
+            const matrizDiv = document.getElementById('matrizSemanal');
+            matrizDiv.innerHTML = dias.map(dia => `<div class="font-bold p-2 bg-gray-100 rounded">${dia}</div>`).join('');
+            for (let i=0; i<5; i++) {
+                const leccionDiv = document.createElement('div');
+                leccionDiv.className = 'p-2 bg-white border rounded shadow-sm leccion-item';
+                leccionDiv.draggable = true;
+                leccionDiv.innerText = `Lección ${i+1}`;
+                matrizDiv.appendChild(leccionDiv);
+            }
+        }
+        renderMatriz();
+        document.getElementById('guardarMatrizBtn').onclick = () => alert("Ajuste de matriz guardado localmente (simulado).");
+
+        // Evaluación con semáforo
+        let estudiantes = JSON.parse(localStorage.getItem('estudiantes_idonet')) || [{nombre:"Ana Pérez", cot:45, tar:9, pru:14, proy:12, asis:9}];
+        function renderEvaluacion() {
+            const tbody = document.getElementById('cuerpoEvaluacion');
+            tbody.innerHTML = '';
+            estudiantes.forEach(est => {
+                const promedio = (est.cot * 0.5 + est.tar * 0.1 + est.pru * 0.15 + est.proy * 0.15 + est.asis * 0.1).toFixed(2);
+                let condicion = "", color = "";
+                if (promedio >= 70) { condicion = "Aprobado"; color = "semaphore-green"; }
+                else if (promedio >= 60) { condicion = "Aplazado"; color = "semaphore-yellow"; }
+                else { condicion = "Reprobado"; color = "semaphore-red"; }
+                tbody.innerHTML += `<tr><td class="border p-1">${est.nombre}</td>
+                    <td class="border p-1"><input type="number" class="nota-cot" value="${est.cot}" step="1" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="nota-tar" value="${est.tar}" step="1" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="nota-pru" value="${est.pru}" step="1" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="nota-proy" value="${est.proy}" step="1" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="nota-asis" value="${est.asis}" step="1" style="width:60px"></td>
+                    <td class="border p-1 font-bold ${color}">${promedio}</td>
+                    <td class="border p-1 ${color}">${condicion}</td></tr>`;
+            });
+            document.querySelectorAll('.nota-cot, .nota-tar, .nota-pru, .nota-proy, .nota-asis').forEach(inp => {
+                inp.addEventListener('change', (e) => {
+                    const row = e.target.closest('tr');
+                    const idx = row.rowIndex - 1;
+                    estudiantes[idx].cot = parseInt(row.querySelector('.nota-cot').value) || 0;
+                    estudiantes[idx].tar = parseInt(row.querySelector('.nota-tar').value) || 0;
+                    estudiantes[idx].pru = parseInt(row.querySelector('.nota-pru').value) || 0;
+                    estudiantes[idx].proy = parseInt(row.querySelector('.nota-proy').value) || 0;
+                    estudiantes[idx].asis = parseInt(row.querySelector('.nota-asis').value) || 0;
+                    localStorage.setItem('estudiantes_idonet', JSON.stringify(estudiantes));
+                    renderEvaluacion();
+                });
+            });
+        }
+        document.getElementById('agregarEstudianteBtn').onclick = () => {
+            estudiantes.push({nombre:"Nuevo estudiante", cot:0, tar:0, pru:0, proy:0, asis:0});
+            localStorage.setItem('estudiantes_idonet', JSON.stringify(estudiantes));
+            renderEvaluacion();
+        };
+        renderEvaluacion();
+
+        // Exportaciones
+        document.getElementById('exportPDFBtn').onclick = () => window.print();
+        document.getElementById('exportWordBtn').onclick = () => {
+            const blob = new Blob([output.innerText], {type: 'application/msword'});
+            const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'planeamiento.doc'; link.click();
+        };
+        document.getElementById('exportExcelBtn').onclick = () => {
+            const ws = XLSX.utils.table_to_sheet(document.getElementById('tablaEvaluacion'));
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Evaluacion");
+            XLSX.writeFile(wb, "evaluacion.xlsx");
+        };
+        document.getElementById('exportJSONBtn').onclick = () => {
+            const data = JSON.stringify({planeamiento: currentPlaneamiento, estudiantes, recursos: recursosSubidos}, null, 2);
+            const blob = new Blob([data], {type: 'application/json'}); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'datos_idonet.json'; link.click();
+        };
+        cargarSaberes();
+    </script>
 </body>
 </html>
