@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>IDONET PRO · PNFT 2026 · Arquitecto Pedagógico Completo</title>
-    <!-- Tailwind + Font Awesome + Librerías externas -->
+    <title>IDONET · PNFT 2026 · Arquitecto Pedagógico Completo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pptxjs@1.7.0/dist/pptx.js"></script>
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         .drag-over { background-color: #e2e8f0; border: 2px dashed #2c7da0; }
@@ -25,88 +23,44 @@
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="container mx-auto px-4 py-6 max-w-[1600px]">
-        <!-- Header -->
+        <!-- Cabecera -->
         <div class="bg-gradient-to-r from-teal-800 to-cyan-700 rounded-2xl p-5 mb-6 text-white shadow-lg flex flex-wrap justify-between items-center">
             <div>
                 <h1 class="text-3xl font-bold">IDONET <span class="bg-yellow-400 text-gray-800 px-2 rounded-lg">PNFT 2026</span></h1>
-                <p class="text-sm opacity-90 mt-1">Arquitecto Pedagógico · Currículo completo · Lego curricular · Sin costo</p>
+                <p class="text-sm opacity-90">Arquitecto Pedagógico · Datos oficiales MEP · Lego curricular · Offline</p>
             </div>
-            <div class="flex gap-2 mt-2 sm:mt-0 flex-wrap">
-                <button id="exportPDFBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-pdf mr-1"></i> PDF</button>
-                <button id="exportWordBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-word mr-1"></i> Word</button>
-                <button id="exportExcelBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-excel mr-1"></i> Excel</button>
-                <button id="exportHTMLBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fab fa-html5 mr-1"></i> HTML</button>
-                <button id="exportJSONBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-code mr-1"></i> JSON</button>
+            <div class="flex gap-2 flex-wrap mt-2 sm:mt-0">
+                <button id="exportPDFBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button id="exportWordBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-word"></i> Word</button>
+                <button id="exportExcelBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-excel"></i> Excel</button>
+                <button id="exportHTMLBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fab fa-html5"></i> HTML</button>
+                <button id="exportJSONBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-code"></i> JSON</button>
             </div>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-6">
-            <!-- Panel izquierdo - Configuración -->
+            <!-- Panel izquierdo: configuración -->
             <div class="lg:w-1/3 bg-white rounded-2xl shadow-md p-5 h-fit sticky top-4">
                 <h3 class="text-xl font-semibold border-l-4 border-cyan-600 pl-3 mb-4">📐 Coordenadas curriculares</h3>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Ciclo</label>
-                    <select id="cicloSelect" class="w-full p-2 border rounded-xl">
-                        <option value="preescolar">Preescolar / Transición (0°)</option>
-                        <option value="I">I Ciclo (1°-3°)</option>
-                        <option value="II">II Ciclo (4°-6°)</option>
-                        <option value="III">III Ciclo (7°-9°)</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Nivel</label>
-                    <select id="nivelSelect" class="w-full p-2 border rounded-xl">
-                        <option value="0">0° - Preescolar</option>
-                        <option value="1">1°</option><option value="2">2°</option><option value="3">3°</option>
-                        <option value="4">4°</option><option value="5">5°</option><option value="6">6°</option>
-                        <option value="7">7°</option><option value="8">8°</option><option value="9">9°</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Módulo(s)</label>
-                    <div class="flex gap-4"><label><input type="checkbox" id="modulo1Check"> Módulo 1</label><label><input type="checkbox" id="modulo2Check"> Módulo 2</label></div>
-                </div>
-                <div class="mb-4">
-                    <label>Lecciones semanales: <span id="leccionesValor">3</span></label>
-                    <input type="range" id="leccionesSlider" min="1" max="6" value="3" class="w-full">
-                </div>
-                <div class="mb-4">
-                    <label>Saberes a integrar (Lego)</label>
-                    <div id="saberesContainer" class="mt-2 space-y-1 max-h-60 overflow-y-auto border rounded-xl p-2"></div>
-                </div>
-                <div class="mb-4">
-                    <label>Subir recursos (PDF, PPT, imágenes)</label>
-                    <input type="file" id="recursoFileInput" multiple accept=".pdf,.pptx,.ppt,.jpg,.png" class="w-full text-sm">
-                    <div id="listaRecursos" class="mt-2 text-xs max-h-32 overflow-y-auto"></div>
-                    <button id="extraerTextoBtn" class="mt-2 bg-gray-200 px-3 py-1 rounded-full text-sm"><i class="fas fa-file-alt"></i> Extraer texto</button>
-                </div>
+                <div class="mb-4"><label class="block text-sm font-medium">Ciclo</label><select id="cicloSelect" class="w-full p-2 border rounded-xl"><option value="preescolar">Preescolar / Transición (0°)</option><option value="I">I Ciclo (1°-3°)</option><option value="II">II Ciclo (4°-6°)</option><option value="III">III Ciclo (7°-9°)</option></select></div>
+                <div class="mb-4"><label class="block text-sm font-medium">Nivel</label><select id="nivelSelect" class="w-full p-2 border rounded-xl"><option value="0">0° - Preescolar</option><option value="1">1°</option><option value="2">2°</option><option value="3">3°</option><option value="4">4°</option><option value="5">5°</option><option value="6">6°</option><option value="7">7°</option><option value="8">8°</option><option value="9">9°</option></select></div>
+                <div class="mb-4"><label class="block text-sm font-medium">Módulo(s)</label><div class="flex gap-4"><label><input type="checkbox" id="modulo1Check"> Módulo 1</label><label><input type="checkbox" id="modulo2Check"> Módulo 2</label></div></div>
+                <div class="mb-4"><label>Lecciones semanales: <span id="leccionesValor">3</span></label><input type="range" id="leccionesSlider" min="1" max="6" value="3" class="w-full"></div>
+                <div class="mb-4"><label>Saberes a integrar (Lego)</label><div id="saberesContainer" class="mt-2 space-y-1 max-h-60 overflow-y-auto border rounded-xl p-2"></div></div>
+                <div class="mb-4"><label>Subir recursos (PDF, PPT, imágenes)</label><input type="file" id="recursoFileInput" multiple accept=".pdf,.pptx,.ppt,.jpg,.png" class="w-full text-sm"><div id="listaRecursos" class="mt-2 text-xs max-h-32 overflow-y-auto"></div><button id="extraerTextoBtn" class="mt-2 bg-gray-200 px-3 py-1 rounded-full text-sm"><i class="fas fa-file-alt"></i> Extraer texto</button></div>
                 <button id="generarBtn" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 rounded-xl transition"><i class="fas fa-magic mr-2"></i> Generar planeamiento</button>
-                <div class="mt-4 pt-4 border-t">
-                    <h4 class="font-semibold text-sm">🔗 Herramientas externas</h4>
-                    <div class="flex flex-wrap gap-2 mt-2">
-                        <button id="teachyBtn" class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-robot"></i> Teachy.ai</button>
-                        <button id="geniallyBtn" class="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-magic"></i> Genially</button>
-                        <button id="chatgptBtn" class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"><i class="fab fa-chatgpt"></i> ChatGPT</button>
-                        <button id="geminiBtn" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-brain"></i> Gemini</button>
-                    </div>
-                </div>
+                <div class="mt-4 pt-4 border-t"><h4 class="font-semibold text-sm">🔗 Herramientas externas</h4><div class="flex flex-wrap gap-2 mt-2"><button id="teachyBtn" class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-robot"></i> Teachy.ai</button><button id="geniallyBtn" class="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-magic"></i> Genially</button><button id="chatgptBtn" class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"><i class="fab fa-chatgpt"></i> ChatGPT</button><button id="geminiBtn" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-brain"></i> Gemini</button></div></div>
             </div>
 
-            <!-- Panel derecho - Resultados (editables) -->
+            <!-- Panel derecho: planeamiento editable -->
             <div class="lg:w-2/3 bg-white rounded-2xl shadow-md p-5">
-                <div class="border-b pb-2 mb-4 flex justify-between items-center flex-wrap">
-                    <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"><i class="fas fa-check-circle"></i> Planeamiento oficial PNFT</span>
-                    <span id="coordMostrar" class="text-sm text-gray-500 font-mono">Ciclo · Nivel · Módulo</span>
-                </div>
+                <div class="border-b pb-2 mb-4 flex justify-between items-center flex-wrap"><span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"><i class="fas fa-check-circle"></i> Planeamiento oficial PNFT</span><span id="coordMostrar" class="text-sm text-gray-500 font-mono">Ciclo · Nivel · Módulo</span></div>
                 <div id="outputDinamico" contenteditable="true" class="space-y-4 min-h-[400px] border rounded-xl p-4 bg-gray-50"></div>
-                <div class="flex gap-2 mt-3">
-                    <button id="guardarEdicion" class="bg-green-600 text-white px-3 py-1 rounded-full text-sm"><i class="fas fa-save"></i> Guardar edición</button>
-                    <button id="restablecerEdicion" class="bg-gray-400 text-white px-3 py-1 rounded-full text-sm">Restablecer</button>
-                </div>
+                <div class="flex gap-2 mt-3"><button id="guardarEdicion" class="bg-green-600 text-white px-3 py-1 rounded-full text-sm"><i class="fas fa-save"></i> Guardar edición</button><button id="restablecerEdicion" class="bg-gray-400 text-white px-3 py-1 rounded-full text-sm">Restablecer</button></div>
             </div>
         </div>
 
-        <!-- Secciones inferiores: Matriz, Evaluación, Prompt -->
+        <!-- Secciones inferiores -->
         <div class="mt-6 bg-white rounded-2xl shadow-md p-5">
             <div class="flex gap-4 border-b pb-2">
                 <button id="tabMatrizBtn" class="tab-btn px-4 py-2 font-semibold">📅 Matriz semanal</button>
@@ -114,28 +68,15 @@
                 <button id="tabPromptBtn" class="tab-btn px-4 py-2 font-semibold">📝 Prompt IA</button>
                 <button id="tabJuegosBtn" class="tab-btn px-4 py-2 font-semibold">🎲 Juegos inclusión</button>
             </div>
-            <div id="tabMatriz" class="tab-contenido pt-4">
-                <p class="text-sm text-gray-600 mb-2">Arrastra las lecciones a los días para reajustar fechas (feriados/suspensiones).</p>
-                <div id="matrizSemanal" class="grid grid-cols-7 gap-2 text-center text-sm"></div>
-                <button id="guardarMatrizBtn" class="mt-3 bg-green-600 text-white px-4 py-1 rounded-full text-sm">Guardar matriz</button>
-            </div>
-            <div id="tabEvaluacion" class="tab-contenido pt-4 hidden">
-                <div class="overflow-x-auto"><table class="min-w-full border text-sm" id="tablaEvaluacion"><thead class="bg-gray-100"><tr><th>Estudiante</th><th>Cotidiano (50%)</th><th>Tareas (10%)</th><th>Prueba (15%)</th><th>Proyecto (15%)</th><th>Asistencia (10%)</th><th>Promedio</th><th>Condición</th></tr></thead><tbody id="cuerpoEvaluacion"></tbody></table></div>
-                <button id="agregarEstudianteBtn" class="mt-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">+ Agregar estudiante</button>
-                <button id="exportarActasBtn" class="ml-2 bg-gray-500 text-white px-3 py-1 rounded-full text-sm">Exportar acta</button>
-            </div>
-            <div id="tabPrompt" class="tab-contenido pt-4 hidden">
-                <textarea id="promptGenerado" rows="8" class="w-full border rounded-xl p-3 font-mono text-sm" readonly placeholder="Prompt maestro C.R.E.A."></textarea>
-                <button id="copiarPromptBtn" class="mt-2 bg-cyan-600 text-white px-4 py-1 rounded-full text-sm">Copiar prompt</button>
-            </div>
-            <div id="tabJuegos" class="tab-contenido pt-4 hidden">
-                <div id="listaJuegos" class="grid md:grid-cols-2 gap-3"></div>
-            </div>
+            <div id="tabMatriz" class="tab-contenido pt-4"><p class="text-sm text-gray-600 mb-2">Arrastra las lecciones a los días para reajustar fechas.</p><div id="matrizSemanal" class="grid grid-cols-7 gap-2 text-center text-sm"></div><button id="guardarMatrizBtn" class="mt-3 bg-green-600 text-white px-4 py-1 rounded-full text-sm">Guardar matriz</button></div>
+            <div id="tabEvaluacion" class="tab-contenido pt-4 hidden"><div class="overflow-x-auto"><table class="min-w-full border text-sm" id="tablaEvaluacion"><thead class="bg-gray-100"><tr><th>Estudiante</th><th>Cotidiano (50%)</th><th>Tareas (10%)</th><th>Prueba (15%)</th><th>Proyecto (15%)</th><th>Asistencia (10%)</th><th>Promedio</th><th>Condición</th></tr></thead><tbody id="cuerpoEvaluacion"></tbody></table></div><button id="agregarEstudianteBtn" class="mt-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">+ Agregar estudiante</button><button id="exportarActasBtn" class="ml-2 bg-gray-500 text-white px-3 py-1 rounded-full text-sm">Exportar acta</button></div>
+            <div id="tabPrompt" class="tab-contenido pt-4 hidden"><textarea id="promptGenerado" rows="8" class="w-full border rounded-xl p-3 font-mono text-sm" readonly></textarea><button id="copiarPromptBtn" class="mt-2 bg-cyan-600 text-white px-4 py-1 rounded-full text-sm">Copiar prompt</button></div>
+            <div id="tabJuegos" class="tab-contenido pt-4 hidden"><div id="listaJuegos" class="grid md:grid-cols-2 gap-3"></div></div>
         </div>
     </div>
 
     <script>
-        // ======================== DATOS CURRICULARES COMPLETOS (extraídos de documentos oficiales) ========================
+        // ======================== DATOS COMPLETOS PNFT 2026 (extraídos de documentos oficiales) ========================
         const PNFT = {
             rda: {
                 preescolar: { Apropiacion: "Identifica los dispositivos digitales considerando características funcionales, experimentando su utilidad y reconociendo la autoría, durante la accesibilidad, interacción y comunicación en la creación de recursos digitales.", Programacion: "Ordena secuencias integrando conceptos de programación como dato, evento, estado, ciclos, así como nociones de lateralidad y orientación espacial, en la solución de desafíos propuestos, utilizando la programación iconográfica por bloques.", Robotica: "Reconoce el funcionamiento de los robots, así como sus componentes (cuerpo, sistema sensorial, sistemas de control), al clasificarlos por su uso y programarlos para resolver retos.", DatosIA: "Reconoce los conceptos básicos relacionados con la recopilación, organización e interpretación de datos, mediante gráficos pictóricos en la resolución de problemas." },
@@ -169,11 +110,7 @@
             },
             procedimentales: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Remezcla","Depura","Programa","Comunica","Colabora","Piensa de forma creativa","Maneja las tecnologías de forma ética y segura"],
             actitudinales: ["Gusto por la precisión","Aprender del error","Flexibilidad para manejar problemas","Tolerancia a la frustración"],
-            ejes: {
-                "Pensamiento computacional": "Desarrolla habilidades de pensamiento algorítmico, abstracción, descomposición y reconocimiento de patrones para resolver problemas.",
-                "Ciudadanía y ética digital": "Promueve el uso responsable, seguro y ético de la tecnología, respetando la privacidad y los derechos de autor.",
-                "Emprendimiento e innovación": "Fomenta la creatividad, la planificación, la colaboración y la capacidad de innovar para generar soluciones tecnológicas."
-            },
+            ejes: { "Pensamiento computacional": "Desarrolla habilidades de pensamiento algorítmico, abstracción, descomposición y reconocimiento de patrones para resolver problemas.", "Ciudadanía y ética digital": "Promueve el uso responsable, seguro y ético de la tecnología, respetando la privacidad y los derechos de autor.", "Emprendimiento e innovación": "Fomenta la creatividad, la planificación, la colaboración y la capacidad de innovar para generar soluciones tecnológicas." },
             metodologiaPorCiclo: { "preescolar": "ABJ (Aprendizaje Basado en Juegos)", "I": "ABJ (Aprendizaje Basado en Juegos)", "II": "ABR (Aprendizaje Basado en Retos)", "III": "Design Thinking" },
             dualibre: { "preescolar": "Actividades unplugged con tarjetas, juegos de roles, canciones", "I": "Tarjetas de secuencias, juegos de mesa adaptados, dramatizaciones", "II": "Diagramas en papel, maquetas, simulaciones con materiales reciclados", "III": "Prototipos de cartón, pseudocódigo en papel, debates éticos" },
             juegos: [
@@ -197,11 +134,10 @@
 
         // Variables globales
         let currentPlaneamientoHTML = "";
-        let currentPlaneamientoTexto = "";
-        let recursosSubidos = [];   // array de { name, blob, textoExtraido }
-        let db; // IndexedDB
+        let recursosSubidos = [];
+        let db;
 
-        // Inicializar IndexedDB
+        // IndexedDB para persistencia de archivos
         const requestDB = indexedDB.open('IDONETRecursos', 1);
         requestDB.onupgradeneeded = (e) => { db = e.target.result; db.createObjectStore('archivos', { keyPath: 'nombre' }); };
         requestDB.onsuccess = (e) => { db = e.target.result; cargarRecursosDesdeDB(); };
@@ -228,59 +164,32 @@
         function actualizarListaRecursos() {
             const div = document.getElementById('listaRecursos');
             div.innerHTML = recursosSubidos.map((r, i) => `<div class="flex justify-between"><span>📄 ${r.name}</span><button class="text-red-500 eliminar-recurso" data-idx="${i}">🗑️</button></div>`).join('');
-            document.querySelectorAll('.eliminar-recurso').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const idx = parseInt(e.target.getAttribute('data-idx'));
-                    const nombre = recursosSubidos[idx].name;
-                    const tx = db.transaction(['archivos'], 'readwrite');
-                    tx.objectStore('archivos').delete(nombre);
-                    recursosSubidos.splice(idx,1);
-                    actualizarListaRecursos();
-                });
-            });
+            document.querySelectorAll('.eliminar-recurso').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(e.target.dataset.idx); const nombre = recursosSubidos[idx].name; const tx = db.transaction(['archivos'], 'readwrite'); tx.objectStore('archivos').delete(nombre); recursosSubidos.splice(idx,1); actualizarListaRecursos(); }));
         }
 
-        document.getElementById('recursoFileInput').addEventListener('change', async (e) => {
-            for (let file of e.target.files) {
-                await guardarRecursoEnDB(file);
-            }
-        });
-
+        document.getElementById('recursoFileInput').addEventListener('change', async (e) => { for (let file of e.target.files) await guardarRecursoEnDB(file); });
         document.getElementById('extraerTextoBtn').onclick = async () => {
-            for (let i=0; i<recursosSubidos.length; i++) {
-                let r = recursosSubidos[i];
+            for (let r of recursosSubidos) {
                 if (r.name.endsWith('.pdf')) {
                     const pdf = await pdfjsLib.getDocument({ data: r.blob }).promise;
                     let texto = "";
-                    for (let p=1; p<=pdf.numPages; p++) {
-                        const page = await pdf.getPage(p);
-                        const content = await page.getTextContent();
-                        texto += content.items.map(item => item.str).join(" ");
-                    }
+                    for (let p=1; p<=pdf.numPages; p++) { const page = await pdf.getPage(p); const content = await page.getTextContent(); texto += content.items.map(item => item.str).join(" "); }
                     r.texto = texto.substring(0, 2000);
-                    const tx = db.transaction(['archivos'], 'readwrite');
-                    tx.objectStore('archivos').put({ nombre: r.name, blob: r.blob, tipo: r.tipo, texto: r.texto });
-                } else if (r.name.endsWith('.pptx')) {
-                    // Extracción básica con pptxjs (simulada por ahora, pero funcional)
-                    r.texto = "PPT extraído: revisa manualmente el contenido de las diapositivas.";
-                    const tx = db.transaction(['archivos'], 'readwrite');
-                    tx.objectStore('archivos').put({ nombre: r.name, blob: r.blob, tipo: r.tipo, texto: r.texto });
-                } else {
-                    r.texto = "Imagen sin texto extraíble.";
-                }
+                    const tx = db.transaction(['archivos'], 'readwrite'); tx.objectStore('archivos').put({ nombre: r.name, blob: r.blob, tipo: r.tipo, texto: r.texto });
+                } else if (r.name.endsWith('.pptx')) { r.texto = "PPT extraído: revisa manualmente el contenido de las diapositivas."; }
+                else { r.texto = "Imagen sin texto extraíble."; }
             }
             alert("Texto extraído de los archivos (donde fue posible).");
             actualizarListaRecursos();
         };
 
-        // Cargar saberes según módulos seleccionados
         function cargarSaberes() {
             const nivel = document.getElementById('nivelSelect').value;
             const mod1 = document.getElementById('modulo1Check').checked;
             const mod2 = document.getElementById('modulo2Check').checked;
             let saberesSet = new Set();
-            if (mod1 && PNFT.saberes[nivel] && PNFT.saberes[nivel]["1"]) PNFT.saberes[nivel]["1"].forEach(s => saberesSet.add(s));
-            if (mod2 && PNFT.saberes[nivel] && PNFT.saberes[nivel]["2"]) PNFT.saberes[nivel]["2"].forEach(s => saberesSet.add(s));
+            if (mod1 && PNFT.saberes[nivel]?.["1"]) PNFT.saberes[nivel]["1"].forEach(s => saberesSet.add(s));
+            if (mod2 && PNFT.saberes[nivel]?.["2"]) PNFT.saberes[nivel]["2"].forEach(s => saberesSet.add(s));
             const container = document.getElementById('saberesContainer');
             container.innerHTML = '';
             if (saberesSet.size === 0) { container.innerHTML = '<div class="text-gray-400">Selecciona al menos un módulo</div>'; return; }
@@ -293,7 +202,6 @@
         document.getElementById('modulo2Check').addEventListener('change', cargarSaberes);
         document.getElementById('leccionesSlider').addEventListener('input', (e) => document.getElementById('leccionesValor').innerText = e.target.value);
 
-        // Generar planeamiento completo con datos reales
         function generarPlaneamiento() {
             const ciclo = document.getElementById('cicloSelect').value;
             const nivel = document.getElementById('nivelSelect').value;
@@ -307,48 +215,25 @@
             const metodologia = PNFT.metodologiaPorCiclo[ciclo];
             const dualibre = PNFT.dualibre[ciclo];
             const rdaObj = PNFT.rda[ciclo];
-            const rdaTexto = `Apropiación: ${rdaObj.Apropiacion}<br>Programación: ${rdaObj.Programacion}<br>Robótica: ${rdaObj.Robotica}<br>Datos/IA: ${rdaObj.DatosIA}`;
-            // Construir tabla de indicadores
+            const rdaTexto = `📌 Apropiación: ${rdaObj.Apropiacion}<br>📌 Programación: ${rdaObj.Programacion}<br>📌 Robótica: ${rdaObj.Robotica}<br>📌 Datos/IA: ${rdaObj.DatosIA}`;
             let tablaIndicadores = `<table class="min-w-full border text-sm"><thead class="bg-gray-100"><tr><th>Saber conceptual</th><th>Indicador de logro</th></tr></thead><tbody>`;
             const indicadoresNivel = PNFT.indicadores[nivel] ? (mod1 ? PNFT.indicadores[nivel]["1"] : PNFT.indicadores[nivel]["2"]) : [];
-            saberesSeleccionados.forEach((s, idx) => {
-                const indicador = indicadoresNivel[idx] || "Indicador asociado según currículo oficial";
-                tablaIndicadores += `<tr><td class="border p-1">${s}</td><td class="border p-1">${indicador}</td></tr>`;
-            });
+            saberesSeleccionados.forEach((s, idx) => { tablaIndicadores += `<tr><td class="border p-1">${s}</td><td class="border p-1">${indicadoresNivel[idx] || "Indicador asociado"}</td></tr>`; });
             tablaIndicadores += `</tbody></table>`;
-
-            const procedimentalesHTML = `<div class="mt-3"><strong>Saberes procedimentales (prácticas del pensador computacional):</strong> ${PNFT.procedimentales.join(", ")}</div>`;
-            const actitudinalesHTML = `<div class="mt-1"><strong>Saberes actitudinales:</strong> ${PNFT.actitudinales.join(", ")}</div>`;
-            const ejesHTML = `<div class="mt-2"><strong>Ejes transversales:</strong><br>${Object.entries(PNFT.ejes).map(([k,v]) => `<strong>${k}:</strong> ${v}`).join("<br>")}</div>`;
-
-            // Integración de recursos extraídos
-            let recursosTexto = recursosSubidos.filter(r => r.texto).map(r => `📄 ${r.name}: ${r.texto.substring(0, 300)}...`).join('<br>');
-            let recursosSeccion = recursosTexto ? `<div class="mt-3 bg-yellow-50 p-2 rounded"><strong>📂 Texto extraído de tus recursos:</strong><br>${recursosTexto}</div>` : "";
-
-            const html = `<div class="bg-blue-50 p-3 rounded-xl"><strong>📌 Resultados de Aprendizaje (RdA) por área:</strong><br>${rdaTexto}</div>
+            const recursosTexto = recursosSubidos.filter(r => r.texto).map(r => `📄 ${r.name}: ${r.texto.substring(0,200)}...`).join('<br>');
+            const html = `<div class="bg-blue-50 p-3 rounded-xl">${rdaTexto}</div>
                           <div class="mt-3"><strong>🧩 Saberes integrados:</strong> ${saberesSeleccionados.join(", ")}</div>
                           <div class="mt-2"><strong>📖 Metodología activa:</strong> ${metodologia}</div>
-                          <div class="grid md:grid-cols-2 gap-4 mt-3">
-                            <div class="border p-3 rounded-xl"><strong>💻 Con tecnología</strong><br>Usar simuladores, programación por bloques, sensores, micro:bit, Arduino. Actividad sugerida: ${saberesSeleccionados.slice(0,2).join(" y ")} aplicado a un proyecto real.</div>
-                            <div class="border p-3 rounded-xl"><strong>📴 Desconectada (Unplugged)</strong><br>${duaLibre}. Juegos de roles, tarjetas, diagramas en papel, maquetas.</div>
-                          </div>
+                          <div class="grid md:grid-cols-2 gap-4 mt-3"><div class="border p-3 rounded-xl"><strong>💻 Con tecnología</strong><br>Usar simuladores, programación por bloques, sensores, micro:bit, Arduino. Actividad sugerida: ${saberesSeleccionados.slice(0,2).join(" y ")} aplicado a un proyecto real.</div><div class="border p-3 rounded-xl"><strong>📴 Desconectada (Unplugged)</strong><br>${duaLibre}</div></div>
                           <div class="bg-gray-50 p-3 rounded-xl mt-3"><strong>♿ DUA y accesibilidad:</strong> Representación múltiple (visual, auditiva, kinestésica), acción/expresión (dibujo, oral, digital), compromiso (colaboración, autonomía).</div>
-                          ${procedimentalesHTML}
-                          ${actitudinalesHTML}
-                          ${ejesHTML}
-                          ${recursosSeccion}
+                          <div class="mt-3"><strong>Saberes procedimentales:</strong> ${PNFT.procedimentales.join(", ")}</div>
+                          <div class="mt-1"><strong>Saberes actitudinales:</strong> ${PNFT.actitudinales.join(", ")}</div>
+                          <div class="mt-2"><strong>Ejes transversales:</strong><br>${Object.entries(PNFT.ejes).map(([k,v]) => `<strong>${k}:</strong> ${v}`).join("<br>")}</div>
+                          ${recursosTexto ? `<div class="mt-3 bg-yellow-50 p-2 rounded"><strong>📂 Texto extraído de tus recursos:</strong><br>${recursosTexto}</div>` : ""}
                           <div class="mt-4"><strong>📊 Indicadores de logro</strong>${tablaIndicadores}</div>`;
             currentPlaneamientoHTML = html;
-            currentPlaneamientoTexto = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
             document.getElementById('outputDinamico').innerHTML = html;
-            // Generar prompt maestro
-            const prompt = `[CONTEXTO] Eres asesor PNFT 2026. Nivel: ${nivel}°, ciclo ${ciclo}, ${lecciones} lecciones/semana.
-[SABERES] ${saberesSeleccionados.join(", ")}.
-[METODOLOGÍA] ${metodologia}.
-[RECURSOS DOCENTE] ${recursosSubidos.filter(r=>r.texto).map(r=>r.name+": "+r.texto.substring(0,200)).join(" | ")}
-[DUALIDAD] Tecnológica y desconectada.
-[DUA] Representación, acción/expresión, compromiso.
-[ENTREGA] Genera una estrategia de mediación en 4 momentos (focalización, exploración, reflexión, aplicación) con actividades concretas, evaluación formativa y recursos sugeridos.`;
+            const prompt = `[CONTEXTO] PNFT 2026. Nivel: ${nivel}°, ciclo ${ciclo}, ${lecciones} lecciones/semana.\n[SABERES] ${saberesSeleccionados.join(", ")}.\n[METODOLOGÍA] ${metodologia}.\n[RECURSOS] ${recursosSubidos.filter(r=>r.texto).map(r=>r.name+": "+r.texto.substring(0,200)).join(" | ")}\n[DUALIDAD] Tecnológica y desconectada.\n[DUA] Representación, acción/expresión, compromiso.\n[ENTREGA] Genera una estrategia de mediación en 4 momentos (focalización, exploración, reflexión, aplicación) con actividades concretas.`;
             document.getElementById('promptGenerado').value = prompt;
         }
 
@@ -358,12 +243,12 @@
 
         // Exportaciones
         document.getElementById('exportPDFBtn').onclick = () => window.print();
-        document.getElementById('exportWordBtn').onclick = () => { const blob = new Blob([currentPlaneamientoTexto], {type: 'application/msword'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'planeamiento.doc'; a.click(); };
+        document.getElementById('exportWordBtn').onclick = () => { const blob = new Blob([document.getElementById('outputDinamico').innerText], {type:'application/msword'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'planeamiento.doc'; a.click(); };
         document.getElementById('exportExcelBtn').onclick = () => { const ws = XLSX.utils.table_to_sheet(document.getElementById('tablaEvaluacion')); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Evaluacion"); XLSX.writeFile(wb, "evaluacion.xlsx"); };
         document.getElementById('exportHTMLBtn').onclick = () => { const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Planeamiento IDONET</title><style>body{font-family:sans-serif;padding:2rem}</style></head><body>${currentPlaneamientoHTML}</body></html>`; const blob = new Blob([html], {type:'text/html'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'planeamiento.html'; a.click(); };
         document.getElementById('exportJSONBtn').onclick = () => { const data = JSON.stringify({planeamiento: currentPlaneamientoHTML, estudiantes: estudiantes}, null,2); const blob = new Blob([data], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'datos_idonet.json'; a.click(); };
 
-        // Evaluación con semáforo
+        // Evaluación
         let estudiantes = JSON.parse(localStorage.getItem('estudiantes_idonet')) || [{nombre:"Ana Pérez", cot:45, tar:9, pru:14, proy:12, asis:9}];
         function renderEvaluacion() {
             const tbody = document.getElementById('cuerpoEvaluacion');
@@ -374,75 +259,39 @@
                 if (promedio >= 70) { condicion = "Aprobado"; color = "semaphore-green"; }
                 else if (promedio >= 60) { condicion = "Aplazado"; color = "semaphore-yellow"; }
                 else { condicion = "Reprobado"; color = "semaphore-red"; }
-                tbody.innerHTML += `<tr><td class="border p-1"><input type="text" class="nombre-est" value="${est.nombre}" data-idx="${idx}" style="width:100px"></td>
-                    <td><input type="number" class="nota-cot" value="${est.cot}" data-idx="${idx}" style="width:60px"></td>
-                    <td><input type="number" class="nota-tar" value="${est.tar}" data-idx="${idx}" style="width:60px"></td>
-                    <td><input type="number" class="nota-pru" value="${est.pru}" data-idx="${idx}" style="width:60px"></td>
-                    <td><input type="number" class="nota-proy" value="${est.proy}" data-idx="${idx}" style="width:60px"></td>
-                    <td><input type="number" class="nota-asis" value="${est.asis}" data-idx="${idx}" style="width:60px"></td>
-                    <td class="font-bold ${color}">${promedio}</td><td class="${color}">${condicion}</td></tr>`;
+                tbody.innerHTML += `<tr><td class="border p-1"><input type="text" class="nombre-est" value="${est.nombre}" data-idx="${idx}" style="width:100px"></td><td class="border p-1"><input type="number" class="nota-cot" value="${est.cot}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-tar" value="${est.tar}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-pru" value="${est.pru}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-proy" value="${est.proy}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-asis" value="${est.asis}" data-idx="${idx}" style="width:60px"></td><td class="font-bold ${color}">${promedio}</td><td class="${color}">${condicion}</td></tr>`;
             });
-            document.querySelectorAll('.nota-cot, .nota-tar, .nota-pru, .nota-proy, .nota-asis, .nombre-est').forEach(inp => {
-                inp.addEventListener('change', (e) => {
-                    const idx = parseInt(e.target.dataset.idx);
-                    if (e.target.classList.contains('nombre-est')) estudiantes[idx].nombre = e.target.value;
-                    if (e.target.classList.contains('nota-cot')) estudiantes[idx].cot = parseFloat(e.target.value) || 0;
-                    if (e.target.classList.contains('nota-tar')) estudiantes[idx].tar = parseFloat(e.target.value) || 0;
-                    if (e.target.classList.contains('nota-pru')) estudiantes[idx].pru = parseFloat(e.target.value) || 0;
-                    if (e.target.classList.contains('nota-proy')) estudiantes[idx].proy = parseFloat(e.target.value) || 0;
-                    if (e.target.classList.contains('nota-asis')) estudiantes[idx].asis = parseFloat(e.target.value) || 0;
-                    localStorage.setItem('estudiantes_idonet', JSON.stringify(estudiantes));
-                    renderEvaluacion();
-                });
-            });
+            document.querySelectorAll('.nota-cot, .nota-tar, .nota-pru, .nota-proy, .nota-asis, .nombre-est').forEach(inp => inp.addEventListener('change', (e) => { const idx = parseInt(e.target.dataset.idx); if (e.target.classList.contains('nombre-est')) estudiantes[idx].nombre = e.target.value; if (e.target.classList.contains('nota-cot')) estudiantes[idx].cot = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-tar')) estudiantes[idx].tar = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-pru')) estudiantes[idx].pru = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-proy')) estudiantes[idx].proy = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-asis')) estudiantes[idx].asis = parseFloat(e.target.value) || 0; localStorage.setItem('estudiantes_idonet', JSON.stringify(estudiantes)); renderEvaluacion(); }));
         }
         document.getElementById('agregarEstudianteBtn').onclick = () => { estudiantes.push({nombre:"Nuevo", cot:0, tar:0, pru:0, proy:0, asis:0}); localStorage.setItem('estudiantes_idonet', JSON.stringify(estudiantes)); renderEvaluacion(); };
         document.getElementById('exportarActasBtn').onclick = () => { const ws = XLSX.utils.table_to_sheet(document.getElementById('tablaEvaluacion')); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Acta"); XLSX.writeFile(wb, "acta_evaluacion.xlsx"); };
         renderEvaluacion();
 
-        // Matriz semanal arrastrable real
+        // Matriz arrastrable real
         function renderMatriz() {
             const dias = ['Lun','Mar','Mié','Jue','Vie'];
             const matrizDiv = document.getElementById('matrizSemanal');
             matrizDiv.innerHTML = dias.map(d => `<div class="font-bold p-2 bg-gray-100 rounded">${d}</div>`).join('');
             for (let i=0; i<5; i++) {
-                const lec = document.createElement('div');
-                lec.className = 'p-2 bg-white border rounded shadow-sm leccion-item';
-                lec.setAttribute('draggable', 'true');
-                lec.innerText = `Lección ${i+1}`;
+                const lec = document.createElement('div'); lec.className = 'p-2 bg-white border rounded shadow-sm leccion-item'; lec.setAttribute('draggable', 'true'); lec.innerText = `Lección ${i+1}`;
                 lec.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', lec.innerText));
                 matrizDiv.appendChild(lec);
             }
             const celdas = matrizDiv.querySelectorAll('.leccion-item');
-            celdas.forEach(celda => {
-                celda.addEventListener('dragover', (e) => e.preventDefault());
-                celda.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    const texto = e.dataTransfer.getData('text/plain');
-                    if (celda.innerText !== texto) {
-                        const temp = celda.innerText;
-                        celda.innerText = texto;
-                        const origen = [...celdas].find(c => c.innerText === texto && c !== celda);
-                        if (origen) origen.innerText = temp;
-                    }
-                });
-            });
+            celdas.forEach(celda => { celda.addEventListener('dragover', (e) => e.preventDefault()); celda.addEventListener('drop', (e) => { e.preventDefault(); const texto = e.dataTransfer.getData('text/plain'); if (celda.innerText !== texto) { const temp = celda.innerText; celda.innerText = texto; const origen = [...celdas].find(c => c.innerText === texto && c !== celda); if (origen) origen.innerText = temp; } }); });
         }
         renderMatriz();
         document.getElementById('guardarMatrizBtn').onclick = () => { const orden = [...document.querySelectorAll('#matrizSemanal .leccion-item')].map(c => c.innerText); localStorage.setItem('matrizOrden', JSON.stringify(orden)); alert("Matriz guardada"); };
         const matrizGuardada = localStorage.getItem('matrizOrden');
         if (matrizGuardada) { const orden = JSON.parse(matrizGuardada); const items = document.querySelectorAll('#matrizSemanal .leccion-item'); items.forEach((item, i) => { if(orden[i]) item.innerText = orden[i]; }); }
 
-        // Tabs
-        const tabs = ['Matriz','Evaluacion','Prompt','Juegos'];
-        tabs.forEach(tab => { document.getElementById(`tab${tab}Btn`).onclick = () => { document.querySelectorAll('.tab-contenido').forEach(div => div.classList.add('hidden')); document.getElementById(`tab${tab}`).classList.remove('hidden'); }; });
-        // Juegos
-        const juegosDiv = document.getElementById('listaJuegos');
-        juegosDiv.innerHTML = PNFT.juegos.map(j => `<div class="bg-gray-50 p-3 rounded-xl"><strong>🎮 ${j.nombre}</strong><br>${j.descripcion}<br><span class="text-xs text-gray-500">Valores: ${j.valores}</span></div>`).join('');
+        // Tabs y juegos
+        ['Matriz','Evaluacion','Prompt','Juegos'].forEach(tab => { document.getElementById(`tab${tab}Btn`).onclick = () => { document.querySelectorAll('.tab-contenido').forEach(div => div.classList.add('hidden')); document.getElementById(`tab${tab}`).classList.remove('hidden'); }; });
+        document.getElementById('listaJuegos').innerHTML = PNFT.juegos.map(j => `<div class="bg-gray-50 p-3 rounded-xl"><strong>🎮 ${j.nombre}</strong><br>${j.descripcion}<br><span class="text-xs text-gray-500">Valores: ${j.valores}</span></div>`).join('');
 
         // Botones externos
         document.getElementById('teachyBtn').onclick = () => { window.open('https://teachy.ai/es', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
-        document.getElementById('geniallyBtn').onclick = () => { window.open('https://app.genial.ly/editor', '_blank'); navigator.clipboard.writeText(currentPlaneamientoTexto); alert("Texto copiado para Genially"); };
+        document.getElementById('geniallyBtn').onclick = () => { window.open('https://app.genial.ly/editor', '_blank'); navigator.clipboard.writeText(document.getElementById('outputDinamico').innerText); alert("Texto copiado para Genially"); };
         document.getElementById('chatgptBtn').onclick = () => { window.open('https://chat.openai.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
         document.getElementById('geminiBtn').onclick = () => { window.open('https://gemini.google.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
         document.getElementById('copiarPromptBtn').onclick = () => { navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
