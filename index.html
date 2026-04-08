@@ -3,301 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>IDONET · PNFT 2026 · Arquitecto Pedagógico Completo</title>
+    <title>IDONET · PNFT 2026 · Arquitecto Pedagógico Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <style>
-        .drag-over { background-color: #e2e8f0; border: 2px dashed #2c7da0; }
         .semaphore-green { background-color: #22c55e; color: white; }
         .semaphore-yellow { background-color: #eab308; color: white; }
         .semaphore-red { background-color: #ef4444; color: white; }
-        .tab-active { border-bottom: 3px solid #2c7da0; color: #2c7da0; font-weight: bold; }
-        .leccion-item { cursor: grab; user-select: none; }
-        .leccion-item:active { cursor: grabbing; }
         [contenteditable="true"]:focus { outline: 2px solid #2c7da0; background: #fef9e6; }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="container mx-auto px-4 py-6 max-w-[1600px]">
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-6 max-w-7xl">
         <!-- Cabecera -->
         <div class="bg-gradient-to-r from-teal-800 to-cyan-700 rounded-2xl p-5 mb-6 text-white shadow-lg flex flex-wrap justify-between items-center">
             <div>
                 <h1 class="text-3xl font-bold">IDONET <span class="bg-yellow-400 text-gray-800 px-2 rounded-lg">PNFT 2026</span></h1>
-                <p class="text-sm opacity-90">Arquitecto Pedagógico · Datos oficiales MEP · Lego curricular · Offline</p>
+                <p class="text-sm opacity-90">Datos oficiales MEP · Generador de planeamientos · Evaluación · Sin costos</p>
             </div>
-            <div class="flex gap-2 flex-wrap mt-2 sm:mt-0">
-                <button id="exportPDFBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-pdf"></i> PDF</button>
-                <button id="exportWordBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-word"></i> Word</button>
-                <button id="exportExcelBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-file-excel"></i> Excel</button>
-                <button id="exportHTMLBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fab fa-html5"></i> HTML</button>
-                <button id="exportJSONBtn" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm font-semibold shadow"><i class="fas fa-code"></i> JSON</button>
+            <div class="flex gap-2 flex-wrap">
+                <button id="exportPDF" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm shadow">📄 PDF</button>
+                <button id="exportWord" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm shadow">📝 Word</button>
+                <button id="exportExcel" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm shadow">📊 Excel</button>
+                <button id="exportHTML" class="bg-white text-teal-800 px-3 py-1 rounded-full text-sm shadow">🌐 HTML</button>
             </div>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-6">
             <!-- Panel izquierdo: configuración -->
-            <div class="lg:w-1/3 bg-white rounded-2xl shadow-md p-5 h-fit sticky top-4">
-                <h3 class="text-xl font-semibold border-l-4 border-cyan-600 pl-3 mb-4">📐 Coordenadas curriculares</h3>
-                <div class="mb-4"><label class="block text-sm font-medium">Ciclo</label><select id="cicloSelect" class="w-full p-2 border rounded-xl"><option value="preescolar">Preescolar / Transición (0°)</option><option value="I">I Ciclo (1°-3°)</option><option value="II">II Ciclo (4°-6°)</option><option value="III">III Ciclo (7°-9°)</option></select></div>
-                <div class="mb-4"><label class="block text-sm font-medium">Nivel</label><select id="nivelSelect" class="w-full p-2 border rounded-xl"><option value="0">0° - Preescolar</option><option value="1">1°</option><option value="2">2°</option><option value="3">3°</option><option value="4">4°</option><option value="5">5°</option><option value="6">6°</option><option value="7">7°</option><option value="8">8°</option><option value="9">9°</option></select></div>
-                <div class="mb-4"><label class="block text-sm font-medium">Módulo(s)</label><div class="flex gap-4"><label><input type="checkbox" id="modulo1Check"> Módulo 1</label><label><input type="checkbox" id="modulo2Check"> Módulo 2</label></div></div>
-                <div class="mb-4"><label>Lecciones semanales: <span id="leccionesValor">3</span></label><input type="range" id="leccionesSlider" min="1" max="6" value="3" class="w-full"></div>
-                <div class="mb-4"><label>Saberes a integrar (Lego)</label><div id="saberesContainer" class="mt-2 space-y-1 max-h-60 overflow-y-auto border rounded-xl p-2"></div></div>
-                <div class="mb-4"><label>Subir recursos (PDF, PPT, imágenes)</label><input type="file" id="recursoFileInput" multiple accept=".pdf,.pptx,.ppt,.jpg,.png" class="w-full text-sm"><div id="listaRecursos" class="mt-2 text-xs max-h-32 overflow-y-auto"></div><button id="extraerTextoBtn" class="mt-2 bg-gray-200 px-3 py-1 rounded-full text-sm"><i class="fas fa-file-alt"></i> Extraer texto</button></div>
-                <button id="generarBtn" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 rounded-xl transition"><i class="fas fa-magic mr-2"></i> Generar planeamiento</button>
-                <div class="mt-4 pt-4 border-t"><h4 class="font-semibold text-sm">🔗 Herramientas externas</h4><div class="flex flex-wrap gap-2 mt-2"><button id="teachyBtn" class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-robot"></i> Teachy.ai</button><button id="geniallyBtn" class="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-magic"></i> Genially</button><button id="chatgptBtn" class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"><i class="fab fa-chatgpt"></i> ChatGPT</button><button id="geminiBtn" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-brain"></i> Gemini</button></div></div>
+            <div class="lg:w-1/3 bg-white rounded-2xl shadow-md p-5 sticky top-4 h-fit">
+                <h3 class="text-xl font-semibold border-l-4 border-cyan-600 pl-3 mb-4">📐 Configuración</h3>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium">Ciclo</label>
+                    <select id="ciclo" class="w-full p-2 border rounded-xl">
+                        <option value="preescolar">Preescolar / Transición (0°)</option>
+                        <option value="I">I Ciclo (1°-3°)</option>
+                        <option value="II">II Ciclo (4°-6°)</option>
+                        <option value="III">III Ciclo (7°-9°)</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium">Nivel</label>
+                    <select id="nivel" class="w-full p-2 border rounded-xl">
+                        <option value="0">0° - Preescolar</option><option value="1">1°</option><option value="2">2°</option><option value="3">3°</option>
+                        <option value="4">4°</option><option value="5">5°</option><option value="6">6°</option>
+                        <option value="7">7°</option><option value="8">8°</option><option value="9">9°</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium">Módulo(s)</label>
+                    <div class="flex gap-4"><label><input type="checkbox" id="mod1"> Módulo 1</label><label><input type="checkbox" id="mod2"> Módulo 2</label></div>
+                </div>
+                <div class="mb-4">
+                    <label>Lecciones semanales: <span id="leccVal">3</span></label>
+                    <input type="range" id="lecciones" min="1" max="6" value="3" class="w-full">
+                </div>
+                <div class="mb-4">
+                    <label>Saberes (selecciona los que integrarás)</label>
+                    <div id="saberesLista" class="mt-2 space-y-1 max-h-60 overflow-y-auto border rounded-xl p-2"></div>
+                </div>
+                <div class="mb-4">
+                    <label>Subir recursos (PDF, PPT, imágenes)</label>
+                    <input type="file" id="recursosFile" multiple accept=".pdf,.pptx,.ppt,.jpg,.png" class="w-full text-sm">
+                    <div id="recursosLista" class="mt-2 text-xs max-h-32 overflow-y-auto"></div>
+                    <button id="extraerTexto" class="mt-2 bg-gray-200 px-3 py-1 rounded-full text-sm">📄 Extraer texto de PDF</button>
+                </div>
+                <button id="generar" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 rounded-xl mt-2">✨ Generar planeamiento</button>
+                <div class="mt-4 pt-4 border-t">
+                    <div class="flex gap-2 flex-wrap">
+                        <button id="btnTeachy" class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">🤖 Teachy.ai</button>
+                        <button id="btnGenially" class="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs">🎨 Genially</button>
+                        <button id="btnChatGPT" class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">💬 ChatGPT</button>
+                        <button id="btnGemini" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">🧠 Gemini</button>
+                    </div>
+                </div>
             </div>
 
             <!-- Panel derecho: planeamiento editable -->
             <div class="lg:w-2/3 bg-white rounded-2xl shadow-md p-5">
-                <div class="border-b pb-2 mb-4 flex justify-between items-center flex-wrap"><span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"><i class="fas fa-check-circle"></i> Planeamiento oficial PNFT</span><span id="coordMostrar" class="text-sm text-gray-500 font-mono">Ciclo · Nivel · Módulo</span></div>
-                <div id="outputDinamico" contenteditable="true" class="space-y-4 min-h-[400px] border rounded-xl p-4 bg-gray-50"></div>
-                <div class="flex gap-2 mt-3"><button id="guardarEdicion" class="bg-green-600 text-white px-3 py-1 rounded-full text-sm"><i class="fas fa-save"></i> Guardar edición</button><button id="restablecerEdicion" class="bg-gray-400 text-white px-3 py-1 rounded-full text-sm">Restablecer</button></div>
+                <div class="border-b pb-2 mb-4 flex justify-between items-center">
+                    <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"><i class="fas fa-check-circle"></i> Planeamiento (editable)</span>
+                    <span id="coordMostrar" class="text-sm text-gray-500">Ciclo · Nivel · Módulo</span>
+                </div>
+                <div id="planeamiento" contenteditable="true" class="space-y-4 min-h-[400px] border rounded-xl p-4 bg-gray-50"></div>
+                <div class="flex gap-2 mt-3"><button id="guardarEdicion" class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">💾 Guardar edición</button><button id="restaurarEdicion" class="bg-gray-400 text-white px-3 py-1 rounded-full text-sm">↺ Restaurar</button></div>
             </div>
         </div>
 
-        <!-- Secciones inferiores -->
+        <!-- Secciones adicionales -->
         <div class="mt-6 bg-white rounded-2xl shadow-md p-5">
             <div class="flex gap-4 border-b pb-2">
-                <button id="tabMatrizBtn" class="tab-btn px-4 py-2 font-semibold">📅 Matriz semanal</button>
-                <button id="tabEvaluacionBtn" class="tab-btn px-4 py-2 font-semibold">📊 Evaluación</button>
-                <button id="tabPromptBtn" class="tab-btn px-4 py-2 font-semibold">📝 Prompt IA</button>
-                <button id="tabJuegosBtn" class="tab-btn px-4 py-2 font-semibold">🎲 Juegos inclusión</button>
+                <button class="tab-btn px-4 py-2 font-semibold" data-tab="evaluacion">📊 Evaluación</button>
+                <button class="tab-btn px-4 py-2 font-semibold" data-tab="prompt">📝 Prompt para IA</button>
+                <button class="tab-btn px-4 py-2 font-semibold" data-tab="juegos">🎲 Juegos de inclusión</button>
             </div>
-            <div id="tabMatriz" class="tab-contenido pt-4"><p class="text-sm text-gray-600 mb-2">Arrastra las lecciones a los días para reajustar fechas.</p><div id="matrizSemanal" class="grid grid-cols-7 gap-2 text-center text-sm"></div><button id="guardarMatrizBtn" class="mt-3 bg-green-600 text-white px-4 py-1 rounded-full text-sm">Guardar matriz</button></div>
-            <div id="tabEvaluacion" class="tab-contenido pt-4 hidden"><div class="overflow-x-auto"><table class="min-w-full border text-sm" id="tablaEvaluacion"><thead class="bg-gray-100"><tr><th>Estudiante</th><th>Cotidiano (50%)</th><th>Tareas (10%)</th><th>Prueba (15%)</th><th>Proyecto (15%)</th><th>Asistencia (10%)</th><th>Promedio</th><th>Condición</th></tr></thead><tbody id="cuerpoEvaluacion"></tbody></table></div><button id="agregarEstudianteBtn" class="mt-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">+ Agregar estudiante</button><button id="exportarActasBtn" class="ml-2 bg-gray-500 text-white px-3 py-1 rounded-full text-sm">Exportar acta</button></div>
-            <div id="tabPrompt" class="tab-contenido pt-4 hidden"><textarea id="promptGenerado" rows="8" class="w-full border rounded-xl p-3 font-mono text-sm" readonly></textarea><button id="copiarPromptBtn" class="mt-2 bg-cyan-600 text-white px-4 py-1 rounded-full text-sm">Copiar prompt</button></div>
-            <div id="tabJuegos" class="tab-contenido pt-4 hidden"><div id="listaJuegos" class="grid md:grid-cols-2 gap-3"></div></div>
+            <div id="evaluacion" class="tab-contenido pt-4">
+                <div class="overflow-x-auto"><table class="min-w-full border text-sm" id="tablaNotas"><thead class="bg-gray-100"><tr><th>Estudiante</th><th>Cotidiano (50%)</th><th>Tareas (10%)</th><th>Prueba (15%)</th><th>Proyecto (15%)</th><th>Asistencia (10%)</th><th>Promedio</th><th>Condición</th></tr></thead><tbody id="cuerpoNotas"></tbody></table></div>
+                <button id="agregarEstudiante" class="mt-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">+ Agregar estudiante</button>
+                <button id="exportarActa" class="ml-2 bg-gray-500 text-white px-3 py-1 rounded-full text-sm">📑 Exportar acta</button>
+            </div>
+            <div id="prompt" class="tab-contenido pt-4 hidden"><textarea id="promptTexto" rows="6" class="w-full border rounded-xl p-3 font-mono text-sm" readonly></textarea><button id="copiarPrompt" class="mt-2 bg-cyan-600 text-white px-4 py-1 rounded-full text-sm">Copiar prompt</button></div>
+            <div id="juegos" class="tab-contenido pt-4 hidden"><div id="juegosLista" class="grid md:grid-cols-2 gap-3"></div></div>
         </div>
     </div>
 
     <script>
-        // ======================== DATOS COMPLETOS PNFT 2026 (extraídos de documentos oficiales) ========================
+        // ======================== DATOS OFICIALES PNFT 2026 (extraídos de documentos) ========================
         const PNFT = {
             rda: {
-                preescolar: { Apropiacion: "Identifica los dispositivos digitales considerando características funcionales, experimentando su utilidad y reconociendo la autoría, durante la accesibilidad, interacción y comunicación en la creación de recursos digitales.", Programacion: "Ordena secuencias integrando conceptos de programación como dato, evento, estado, ciclos, así como nociones de lateralidad y orientación espacial, en la solución de desafíos propuestos, utilizando la programación iconográfica por bloques.", Robotica: "Reconoce el funcionamiento de los robots, así como sus componentes (cuerpo, sistema sensorial, sistemas de control), al clasificarlos por su uso y programarlos para resolver retos.", DatosIA: "Reconoce los conceptos básicos relacionados con la recopilación, organización e interpretación de datos, mediante gráficos pictóricos en la resolución de problemas." },
-                I: { Apropiacion: "Selecciona los dispositivos digitales y herramientas de productividad, mediante el uso de software y hardware, en la creación de archivos, creación y edición de contenido multimedia, aprovechando Internet y respetando la propiedad intelectual.", Programacion: "Selecciona conceptos de programación como dato, secuencia, evento, estado, variables, operadores aritméticos y relacionales, condicionales simples, ciclo finito e infinito, en la programación por bloques.", Robotica: "No aplica para este ciclo.", DatosIA: "Reconoce los fundamentos de la inteligencia artificial y su presencia en la vida cotidiana, mediante ejemplos concretos como asistentes virtuales." },
-                II: { Apropiacion: "Selecciona la configuración de programas locales y en línea para su correcto uso al crear, buscar, compartir, organizar y administrar información de manera comprensiva, segura y responsable.", Programacion: "Crea algoritmos que integran los conceptos de programación como secuencia, evento, estructuras de control (condicionales simples y ciclos), en la solución a problemas del contexto mediante programación por bloques.", Robotica: "Crea algoritmos que permiten la simulación de comportamientos de aparatos tecnológicos, aplicando elementos de computación física, programación y electrónica.", DatosIA: "Reconoce el uso de la inteligencia artificial en contextos cotidianos y aplica técnicas básicas de recolección, análisis y representación de datos mediante tablas y gráficos." },
-                III: { Apropiacion: "Combina herramientas digitales, tomando en cuenta fundamentos de tecnología, impacto de las TIC, seguridad y privacidad digital, en la realización de productos digitales.", Programacion: "Integra conceptos de programación como eventos, operadores, estructuras de datos, estructuras de control, procedimientos, funciones, colecciones de datos y algoritmos (diagrama de flujo y pseudocódigo), en la solución de problemas reales.", Robotica: "Aplica fundamentos de robótica, computación física, electrónica, mecánica y sistemas robóticos autónomos en la programación y construcción de prototipos.", DatosIA: "Analiza datos mediante herramientas digitales que permitan su visualización para la toma de decisiones en situaciones cotidianas." }
+                preescolar: { Apropiacion: "Identifica los dispositivos digitales considerando características funcionales, experimentando su utilidad y reconociendo la autoría.", Programacion: "Ordena secuencias integrando conceptos de programación como dato, evento, estado, ciclos, lateralidad y orientación espacial.", Robotica: "Reconoce el funcionamiento de los robots, sus componentes y los programa para resolver retos.", DatosIA: "Reconoce conceptos básicos de recopilación, organización e interpretación de datos mediante gráficos pictóricos." },
+                I: { Apropiacion: "Selecciona los dispositivos digitales y herramientas de productividad mediante el uso de software y hardware, creando archivos y contenido multimedia.", Programacion: "Selecciona conceptos de programación como dato, secuencia, evento, estado, variables, operadores, condicionales simples, ciclos.", Robotica: "No aplica para este ciclo.", DatosIA: "Reconoce los fundamentos de la inteligencia artificial y su presencia cotidiana mediante ejemplos como asistentes virtuales." },
+                II: { Apropiacion: "Selecciona la configuración de programas locales y en línea para crear, buscar, compartir, organizar y administrar información de manera segura.", Programacion: "Crea algoritmos que integran secuencia, evento, condicionales simples y ciclos, en solución de problemas mediante programación por bloques.", Robotica: "Crea algoritmos que permiten simular comportamientos de aparatos tecnológicos aplicando computación física y electrónica.", DatosIA: "Reconoce el uso de IA en contextos cotidianos y aplica técnicas básicas de recolección, análisis y representación de datos." },
+                III: { Apropiacion: "Combina herramientas digitales considerando fundamentos de tecnología, impacto de las TIC, seguridad y privacidad digital.", Programacion: "Integra eventos, operadores, estructuras de datos, control, procedimientos, funciones, colecciones de datos y algoritmos en problemas reales.", Robotica: "Aplica fundamentos de robótica, computación física, electrónica, mecánica y sistemas robóticos autónomos en prototipos.", DatosIA: "Analiza datos mediante herramientas digitales para visualización y toma de decisiones en situaciones cotidianas." }
             },
             saberes: {
-                "0": { "1": ["Computadora","Software","Herramientas de creación de contenido multimedia","Entorno de programación iconográfico","Lateralidad y orientación espacial","Evento"], "2": ["Conexión entre dispositivos","Estado","Algoritmo","Dato","Estructuras repetitivas","Robot","Dato (ciencias de datos)","Estrategias para presentar datos"] },
-                "1": { "1": ["Computadora","Hardware","Software","Entorno de programación iconográfico","Reconocimiento de patrones","Estado","Algoritmo","Evento"], "2": ["Herramientas multimedia (audio,imagen)","Conexión bluetooth","Internet","Estructuras repetitivas","Dato","Fundamentos IA","Asistentes virtuales"] },
-                "2": { "1": ["Hardware","Software","Procesador texto","Herramientas multimedia","Programación por bloques","Algoritmo","Dato","Variable","Evento"], "2": ["Conexión wifi","Internet","Estructuras repetitivas","Condicionales simples","Operadores aritméticos","Operador relacional","Fundamentos IA","Asistentes virtuales"] },
-                "3": { "1": ["Hardware (entrada,proceso,salida)","Redes comunicación","Gestión archivos","Editor presentaciones","Algoritmo","Variable","Operadores aritméticos/relacionales"], "2": ["Herramientas video","Navegador","Buscador","Netiqueta","Correo electrónico","Huella digital","Software malicioso","Riesgos línea","Control parental","Desafíos IA"] },
+                "0": { "1": ["Computadora","Software","Herramientas de creación multimedia","Entorno programación iconográfico","Lateralidad","Evento"], "2": ["Conexión bluetooth","Estado","Algoritmo","Dato","Estructuras repetitivas","Robot","Dato (ciencias de datos)","Estrategias para presentar datos"] },
+                "1": { "1": ["Computadora","Hardware","Software","Programación iconográfica","Patrones","Estado","Algoritmo","Evento"], "2": ["Herramientas multimedia","Conexión bluetooth","Internet","Estructuras repetitivas","Dato","Fundamentos IA","Asistentes virtuales"] },
+                "2": { "1": ["Hardware","Software","Procesador texto","Herramientas multimedia","Programación bloques","Algoritmo","Dato","Variable","Evento"], "2": ["Conexión wifi","Internet","Estructuras repetitivas","Condicionales simples","Operadores aritméticos","Operador relacional","Fundamentos IA","Asistentes virtuales"] },
+                "3": { "1": ["Hardware (entrada,proceso,salida)","Redes","Gestión archivos","Editor presentaciones","Algoritmo","Variable","Operadores"], "2": ["Herramientas video","Navegador","Buscador","Netiqueta","Correo electrónico","Huella digital","Software malicioso","Riesgos línea","Control parental","Desafíos IA"] },
                 "4": { "1": ["Hardware","Software","Redes","Conexión dispositivos","Gestión archivos","Herramientas productividad","Programación bloques","Estado","Pseudocódigo","Dato","Variable","Estructuras repetitivas","Eventos"], "2": ["Editor gráfico","Navegador","Buscador","Internet","Netiqueta","Chat","Huella digital","Contraseñas seguras","Hackeo","Software malicioso","Antivirus","Condicionales","Operadores","Fundamentos IA","Asistentes virtuales"] },
-                "5": { "1": ["Hardware mixto","Software ofimática","Conexión dispositivos","Sistema operativo","Hoja cálculo","Multimedia","Programación bloques computación física","Lógica","Diagrama flujo","Computación física","Circuito eléctrico","Electrónica","Microcontrolador","Herramientas generativas","Desafíos IA"], "2": ["Hoja cálculo","Buscador","Derechos autor","Dato booleano","Variable","Colección datos","Condicionales múltiples","Operadores lógicos","Procedimientos/funciones","Sensor","Actuador","Domótica","Dato","Recolección datos","Almacenamiento","Visualización"] },
-                "6": { "1": ["Hardware interno","Direcciones IP","Redes comunicación","Gestión archivos compresión","Sistema operativo","Multimedia","Tablas verdad","Procedimientos/funciones","Computación física","Prototipos"], "2": ["Herramienta productividad","Internet","Comunicación síncrona/asíncrona","Nube","Referencias","IoT","Moneda virtual","Huella digital","Contraseñas seguras","Software malicioso","Riesgos línea","HTTPS","Dato registros","Recolección","Almacenamiento","Estrategias presentación","Visualización"] },
-                "7": { "1": ["Computadora","Hardware","Software","Redes","SO","Gestión archivos","Editor gráfico","Programación textual/bloques","Lógica","Algoritmo","Dato","Variable","Condicionales","Repetitivas","Operadores","Evento"], "2": ["Procesador texto/presentaciones","Internet","Navegador/buscador","Netiqueta","Comunicación colaboración","Nube","Referencias","Criptomonedas","Contraseñas","Software malicioso","Riesgos","Operadores lógicos","Procedimientos/funciones","Dato (ciencias)","Fundamentos IA","Asistentes virtuales"] },
-                "8": { "1": ["Hardware interno","Software","Redes","Conexión dispositivos","SO","Compresión","Edición audio/video","IoT","Programación robótica","Robot","Robótica","Mecánica","Mecanismos","Circuito eléctrico","Electrónica","Microcontrolador"], "2": ["Hoja cálculo","Buscador","Plataformas contenido","Licencia","Hackeo","Software malicioso","Antivirus","Colección datos","Sensor","Actuador","Recolección datos","Fundamentos IA","Herramientas generativas"] },
+                "5": { "1": ["Hardware mixto","Software ofimática","Conexión dispositivos","Sistema operativo","Hoja cálculo","Multimedia","Programación computación física","Lógica","Diagrama flujo","Computación física","Circuito eléctrico","Electrónica","Microcontrolador","Herramientas generativas","Desafíos IA"], "2": ["Hoja cálculo","Buscador","Derechos autor","Dato booleano","Variable","Colección datos","Condicionales múltiples","Operadores lógicos","Procedimientos/funciones","Sensor","Actuador","Domótica","Dato","Recolección","Almacenamiento","Visualización"] },
+                "6": { "1": ["Hardware interno","Direcciones IP","Redes comunicación","Compresión archivos","Sistema operativo","Multimedia","Tablas verdad","Procedimientos/funciones","Computación física","Prototipos"], "2": ["Herramienta productividad","Internet","Comunicación síncrona/asíncrona","Nube","Referencias","IoT","Moneda virtual","Huella digital","Contraseñas seguras","Software malicioso","Riesgos línea","HTTPS","Dato registros","Recolección","Almacenamiento","Estrategias presentación","Visualización"] },
+                "7": { "1": ["Computadora","Hardware","Software","Redes","SO","Gestión archivos","Editor gráfico","Programación textual/bloques","Lógica","Algoritmo","Dato","Variable","Condicionales","Repetitivas","Operadores","Evento"], "2": ["Procesador texto/presentaciones","Internet","Navegador/buscador","Netiqueta","Comunicación","Nube","Referencias","Criptomonedas","Contraseñas","Software malicioso","Riesgos","Operadores lógicos","Procedimientos/funciones","Dato (ciencias)","Fundamentos IA","Asistentes virtuales"] },
+                "8": { "1": ["Hardware interno","Software","Redes","Conexión","SO","Compresión","Edición audio/video","IoT","Programación robótica","Robot","Robótica","Mecánica","Mecanismos","Circuito eléctrico","Electrónica","Microcontrolador"], "2": ["Hoja cálculo","Buscador","Plataformas contenido","Licencia","Hackeo","Software malicioso","Antivirus","Colección datos","Sensor","Actuador","Recolección datos","Fundamentos IA","Herramientas generativas"] },
                 "9": { "1": ["Programación robótica","Algoritmo","Movimiento mecanismos","Microcontrolador","Sensor","Actuador","Domótica","Prototipos","Dato","Almacenamiento datos"], "2": ["Redes protocolos","Optimización SO","Gestor BD","Modelado 3D","Encuestas","Derechos autor","Huella digital","Riesgos línea","Herramientas generativas","Desafíos IA"] }
             },
             indicadores: {
-                "0": { "1": ["Identificar qué es una computadora y algunas características","Reconocer elementos visuales del software","Reconocer herramientas multimedia","Reconocer entorno iconográfico","Reconocer lateralidad y orientación espacial","Reconocer evento causa-efecto"], "2": ["Reconocer conexión bluetooth","Reconocer concepto de estado","Reconocer algoritmo como secuencia ordenada","Reconocer importancia del dato","Reconocer ciclos finitos e infinitos","Reconocer robot y sus usos","Identificar dato y su importancia","Reconocer gráficos pictóricos"] },
-                "1": { "1": ["Reconocer computadora como herramienta","Identificar hardware básico","Identificar elementos de interfaz","Reconocer entorno iconográfico","Reconocer patrones de movimiento","Reconocer estado de objeto","Identificar algoritmo en vida diaria","Reconocer evento"], "2": ["Utilizar herramientas de audio/imagen","Reconocer bluetooth","Reconocer dispositivos internet","Reconocer ciclos finitos/infinitos","Identificar dato en contextos","Reconocer fundamentos IA","Reconocer asistente virtual"] },
-                "2": { "1": ["Identificar funcionamiento hardware","Explorar software según tarea","Usar procesador texto","Usar grabadora/editor gráfico","Aplicar programación por bloques","Diseñar algoritmo lenguaje natural","Clasificar dato numérico/texto","Identificar variable","Reconocer evento"], "2": ["Reconocer wifi","Aplicar normas navegación internet","Identificar estructuras repetitivas","Aplicar condicionales simples","Reconocer suma/resta","Reconocer operador igual que","Describir fundamentos IA","Reconocer uso asistentes"] },
-                "3": { "1": ["Explicar funciones hardware","Describir red local","Reconocer gestión de archivos","Usar editor presentaciones","Reconocer estructura algoritmo","Usar variable","Utilizar multiplicación/división y comparadores"], "2": ["Aplicar creación/edición videos","Identificar navegador/buscador","Identificar normas netiqueta","Identificar correo electrónico","Reconocer huella digital","Reconocer virus informático","Reconocer riesgos en línea","Reconocer control parental","Identificar desafíos IA"] },
-                "4": { "1": ["Clasificar hardware","Reconocer tipos software","Reconocer red local","Reconocer conexión física/inalámbrica","Organizar archivos","Usar procesador texto/presentaciones","Utilizar programación bloques","Identificar estado","Usar pseudocódigo","Organizar datos","Gestionar variables","Usar estructuras repetitivas","Usar eventos"], "2": ["Aplicar editor gráfico","Usar navegadores/buscadores","Identificar dispositivos internet","Aplicar netiqueta","Identificar chat","Identificar huella digital","Identificar contraseña segura","Identificar hackeo/phishing","Identificar virus","Identificar antivirus","Usar condicionales","Usar operadores","Identificar fundamentos IA","Explicar aporte asistentes"] },
-                "5": { "1": ["Identificar hardware mixto","Identificar software ofimática","Identificar formas conexión","Identificar elementos barra tareas","Usar hoja cálculo","Elaborar audio/video","Usar programación computación física","Reconocer proposiciones lógicas","Aplicar diagramas flujo","Reconocer componentes computación física","Identificar circuito eléctrico","Identificar electrónica","Reconocer microcontrolador","Reconocer herramientas generativas","Reconocer desafíos IA"], "2": ["Usar hoja cálculo","Búsquedas eficientes","Reconocer derechos autor","Usar dato booleano","Gestionar variables","Organizar listas","Aplicar condicionales múltiples","Reconocer operadores lógicos","Reconocer procedimientos/funciones","Identificar sensores","Identificar actuadores","Identificar domótica","Identificar dato numérico/texto","Reconocer técnicas recolección","Identificar almacenamiento","Identificar visualización"] },
-                "6": { "1": ["Analizar hardware interno","Explicar direcciones IP","Describir tipos redes","Analizar gestión archivos","Identificar barra tareas","Crear multimedia","Aplicar tablas verdad","Emplear procedimientos/funciones","Aplicar computación física","Diseñar prototipos"], "2": ["Usar herramienta productividad","Identificar internet","Aplicar comunicación síncrona/asíncrona","Crear archivos nube","Aplicar referencias","Reconocer IoT","Reconocer monedas virtuales","Aplicar medidas huella digital","Reconocer contraseñas seguras","Identificar propagación malware","Identificar riesgos en línea","Identificar HTTPS","Aplicar registros","Seleccionar técnicas recolección","Aplicar almacenamiento","Crear gráficos","Aplicar visualización"] },
+                "0": { "1": ["Identificar computadora","Reconocer elementos software","Reconocer herramientas multimedia","Reconocer entorno iconográfico","Reconocer lateralidad","Reconocer evento causa-efecto"], "2": ["Reconocer bluetooth","Reconocer estado","Reconocer algoritmo secuencial","Reconocer importancia del dato","Reconocer ciclos finitos/infinitos","Reconocer robot","Identificar dato","Reconocer gráficos pictóricos"] },
+                "1": { "1": ["Reconocer computadora como herramienta","Identificar hardware básico","Identificar interfaz","Reconocer entorno iconográfico","Reconocer patrones movimiento","Reconocer estado objeto","Identificar algoritmo cotidiano","Reconocer evento"], "2": ["Usar herramientas audio/imagen","Reconocer bluetooth","Reconocer dispositivos internet","Reconocer ciclos","Identificar dato en contextos","Reconocer fundamentos IA","Reconocer asistente virtual"] },
+                "2": { "1": ["Identificar funcionamiento hardware","Explorar software","Usar procesador texto","Usar grabadora/editor gráfico","Aplicar programación bloques","Diseñar algoritmo lenguaje natural","Clasificar dato numérico/texto","Identificar variable","Reconocer evento"], "2": ["Reconocer wifi","Aplicar normas navegación","Identificar estructuras repetitivas","Aplicar condicionales simples","Reconocer suma/resta","Reconocer operador igual","Describir IA","Reconocer uso asistentes"] },
+                "3": { "1": ["Explicar funciones hardware","Describir red local","Reconocer gestión archivos","Usar editor presentaciones","Reconocer estructura algoritmo","Usar variable","Usar multiplicación/división y comparadores"], "2": ["Crear/editar videos","Identificar navegador/buscador","Identificar netiqueta","Identificar correo electrónico","Reconocer huella digital","Reconocer virus","Reconocer riesgos línea","Reconocer control parental","Identificar desafíos IA"] },
+                "4": { "1": ["Clasificar hardware","Reconocer tipos software","Reconocer red local","Reconocer conexión física/inalámbrica","Organizar archivos","Usar procesador texto/presentaciones","Programar bloques","Identificar estado","Usar pseudocódigo","Organizar datos","Gestionar variables","Usar estructuras repetitivas","Usar eventos"], "2": ["Aplicar editor gráfico","Usar navegadores","Identificar dispositivos internet","Aplicar netiqueta","Identificar chat","Identificar huella digital","Identificar contraseña segura","Identificar hackeo/phishing","Identificar virus","Identificar antivirus","Usar condicionales","Usar operadores","Identificar fundamentos IA","Explicar aporte asistentes"] },
+                "5": { "1": ["Identificar hardware mixto","Identificar software ofimática","Identificar formas conexión","Identificar barra tareas","Usar hoja cálculo","Elaborar audio/video","Usar programación computación física","Reconocer proposiciones lógicas","Aplicar diagramas flujo","Reconocer componentes computación física","Identificar circuito eléctrico","Identificar electrónica","Reconocer microcontrolador","Reconocer herramientas generativas","Reconocer desafíos IA"], "2": ["Usar hoja cálculo","Búsquedas eficientes","Reconocer derechos autor","Usar dato booleano","Gestionar variables","Organizar listas","Aplicar condicionales múltiples","Reconocer operadores lógicos","Reconocer procedimientos/funciones","Identificar sensores","Identificar actuadores","Identificar domótica","Identificar dato numérico/texto","Reconocer técnicas recolección","Identificar almacenamiento","Identificar visualización"] },
+                "6": { "1": ["Analizar hardware interno","Explicar direcciones IP","Describir tipos redes","Analizar gestión archivos","Identificar barra tareas","Crear multimedia","Aplicar tablas verdad","Emplear procedimientos/funciones","Aplicar computación física","Diseñar prototipos"], "2": ["Usar herramienta productividad","Identificar internet","Aplicar comunicación síncrona/asíncrona","Crear archivos nube","Aplicar referencias","Reconocer IoT","Reconocer monedas virtuales","Aplicar medidas huella digital","Reconocer contraseñas seguras","Identificar propagación malware","Identificar riesgos línea","Identificar HTTPS","Aplicar registros","Seleccionar técnicas recolección","Aplicar almacenamiento","Crear gráficos","Aplicar visualización"] },
                 "7": { "1": ["Aplicar reglas cuidado computadora","Clasificar tipos computadoras","Distinguir tipos software","Identificar redes","Identificar SO","Aplicar propiedades archivos","Diseñar gráficos","Reconocer programación","Identificar lógica","Reconocer algoritmo","Identificar tipos dato","Gestionar variables","Aplicar condicionales","Aplicar repetitivas","Aplicar operadores","Aplicar evento"], "2": ["Aplicar procesador texto/presentaciones","Reconocer internet","Usar navegador/buscador","Aplicar netiqueta","Usar comunicación","Usar nube","Aplicar referencias","Reconocer criptomonedas","Crear contraseñas","Reconocer software malicioso","Identificar riesgos","Aplicar operadores lógicos","Aplicar procedimientos/funciones","Identificar tipos dato","Reconocer IA","Identificar asistentes"] },
                 "8": { "1": ["Analizar hardware","Analizar software","Identificar almacenamiento redes","Distinguir conexiones","Reconocer SO","Aplicar compresión","Usar edición audio/video","Analizar IoT","Programar mecanismos","Reconocer robot","Diferenciar robótica","Emplear mecánica","Reconocer mecanismos","Identificar circuito","Identificar electrónica","Comprender microcontrolador"], "2": ["Usar hoja cálculo","Usar buscador","Usar plataformas","Reconocer licencia","Reconocer hackeo","Aplicar medidas protección","Gestionar colecciones","Usar sensor","Usar actuador","Aplicar recolección","Reconocer IA","Usar herramientas generativas"] },
-                "9": { "1": ["Diseñar automatizaciones","Diseñar algoritmo","Identificar movimiento","Aplicar microcontrolador","Integrar sensor","Integrar actuador","Analizar domótica","Construir prototipos","Reconocer organización dato","Reconocer ciclo vida dato"], "2": ["Reconocer arquitectura redes","Aplicar optimización SO","Usar gestor BD","Usar modelado 3D","Crear encuestas","Reconocer derechos autor","Analizar huella digital","Analizar riesgos línea","Aplicar herramientas generativas","Reconocer desafíos IA"] }
+                "9": { "1": ["Diseñar automatizaciones","Diseñar algoritmo","Identificar movimiento mecanismos","Aplicar microcontrolador","Integrar sensor","Integrar actuador","Analizar domótica","Construir prototipos","Reconocer organización dato","Reconocer ciclo vida dato"], "2": ["Reconocer arquitectura redes","Aplicar optimización SO","Usar gestor BD","Usar modelado 3D","Crear encuestas","Reconocer derechos autor","Analizar huella digital","Analizar riesgos línea","Aplicar herramientas generativas","Reconocer desafíos IA"] }
             },
-            procedimentales: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Remezcla","Depura","Programa","Comunica","Colabora","Piensa de forma creativa","Maneja las tecnologías de forma ética y segura"],
+            procedimentales: ["Reconoce patrones","Abstrae","Generaliza","Transfiere","Modulariza","Formula algoritmos","Remezcla","Depura","Programa","Comunica","Colabora","Piensa de forma creativa","Maneja tecnologías ética y segura"],
             actitudinales: ["Gusto por la precisión","Aprender del error","Flexibilidad para manejar problemas","Tolerancia a la frustración"],
-            ejes: { "Pensamiento computacional": "Desarrolla habilidades de pensamiento algorítmico, abstracción, descomposición y reconocimiento de patrones para resolver problemas.", "Ciudadanía y ética digital": "Promueve el uso responsable, seguro y ético de la tecnología, respetando la privacidad y los derechos de autor.", "Emprendimiento e innovación": "Fomenta la creatividad, la planificación, la colaboración y la capacidad de innovar para generar soluciones tecnológicas." },
-            metodologiaPorCiclo: { "preescolar": "ABJ (Aprendizaje Basado en Juegos)", "I": "ABJ (Aprendizaje Basado en Juegos)", "II": "ABR (Aprendizaje Basado en Retos)", "III": "Design Thinking" },
-            dualibre: { "preescolar": "Actividades unplugged con tarjetas, juegos de roles, canciones", "I": "Tarjetas de secuencias, juegos de mesa adaptados, dramatizaciones", "II": "Diagramas en papel, maquetas, simulaciones con materiales reciclados", "III": "Prototipos de cartón, pseudocódigo en papel, debates éticos" },
+            ejes: { "Pensamiento computacional": "Desarrolla pensamiento algorítmico, abstracción, descomposición y reconocimiento de patrones.", "Ciudadanía y ética digital": "Uso responsable, seguro y ético de la tecnología.", "Emprendimiento e innovación": "Creatividad, planificación, colaboración e innovación." },
+            metodologia: { "preescolar": "ABJ (Aprendizaje Basado en Juegos)", "I": "ABJ (Aprendizaje Basado en Juegos)", "II": "ABR (Aprendizaje Basado en Retos)", "III": "Design Thinking" },
+            dualibre: { "preescolar": "Tarjetas, juegos de roles, canciones", "I": "Tarjetas de secuencias, juegos de mesa", "II": "Diagramas en papel, maquetas", "III": "Prototipos de cartón, pseudocódigo" },
             juegos: [
-                { nombre: "Derechos en movimiento", descripcion: "Reflexiona sobre la importancia de hacer valer tus derechos para vivir plenamente.", valores: "Respeto, empatía" },
-                { nombre: "Mi derecho es tu derecho", descripcion: "¿Cómo vives tus derechos? Descúbrelo a través de este divertido juego.", valores: "Solidaridad, cooperación" },
+                { nombre: "Derechos en movimiento", descripcion: "Reflexiona sobre la importancia de hacer valer tus derechos.", valores: "Respeto, empatía" },
+                { nombre: "Mi derecho es tu derecho", descripcion: "¿Cómo vives tus derechos? Juego de acceso a derechos.", valores: "Solidaridad, cooperación" },
                 { nombre: "Oportunidades escondidillas", descripcion: "¿Qué oportunidades tienes y cuáles te gustaría tener?", valores: "Igualdad, inclusión" },
-                { nombre: "Noticias con valor", descripcion: "Reflexiona qué pasaría si los valores estuvieran presentes en todo.", valores: "Responsabilidad, respeto" },
+                { nombre: "Noticias con valor", descripcion: "Reflexiona sobre valores en las noticias.", valores: "Responsabilidad, respeto" },
                 { nombre: "Gigantes, hadas y elfos", descripcion: "Trabajo en equipo y estrategia.", valores: "Trabajo en equipo, juego limpio" },
-                { nombre: "BASTA a la discriminación", descripcion: "Reflexiona qué puedes hacer para combatir la discriminación.", valores: "Respeto, igualdad" },
-                { nombre: "Mi huella de inclusión", descripcion: "Reflexiona sobre la importancia de conocer a otras personas.", valores: "Empatía, inclusión" },
-                { nombre: "Recreadores del mundo", descripcion: "Reflexiona sobre la importancia de respetar las decisiones de los demás.", valores: "Libertad, respeto" },
-                { nombre: "¡Alto al ciberacoso!", descripcion: "Reconoce que es necesario establecer límites en Internet.", valores: "Seguridad, respeto" },
-                { nombre: "Desafío a la desigualdad", descripcion: "Reflexiona sobre la brecha salarial y la igualdad de género.", valores: "Igualdad, justicia" },
-                { nombre: "Adivina quién soy", descripcion: "Reflexiona sobre la importancia de respetar oficios y profesiones.", valores: "Respeto, valoración" },
-                { nombre: "¡Oh memoria!", descripcion: "Reflexiona sobre la importancia de empatizar con personas con discapacidad.", valores: "Empatía, inclusión" },
-                { nombre: "Descubre al trol", descripcion: "Reflexiona sobre tus comportamientos en Internet.", valores: "Responsabilidad, ética digital" },
-                { nombre: "Escudos familiares", descripcion: "Descubre cómo cuidarte en Internet con redes de protección.", valores: "Protección, confianza" },
-                { nombre: "Los retos de empatía", descripcion: "Dialoga con las personas, conoce sus necesidades y construyan acuerdos.", valores: "Empatía, colaboración" }
+                { nombre: "BASTA a la discriminación", descripcion: "Reflexiona sobre acciones contra la discriminación.", valores: "Respeto, igualdad" },
+                { nombre: "Mi huella de inclusión", descripcion: "Reflexiona sobre cómo incluir a otros.", valores: "Empatía, inclusión" },
+                { nombre: "Recreadores del mundo", descripcion: "Respetar las decisiones de los demás.", valores: "Libertad, respeto" },
+                { nombre: "¡Alto al ciberacoso!", descripcion: "Poner límites en Internet.", valores: "Seguridad, respeto" },
+                { nombre: "Desafío a la desigualdad", descripcion: "Reflexiona sobre brecha salarial y género.", valores: "Igualdad, justicia" },
+                { nombre: "Adivina quién soy", descripcion: "Respetar oficios y profesiones.", valores: "Respeto, valoración" },
+                { nombre: "¡Oh memoria!", descripcion: "Empatizar con personas con discapacidad.", valores: "Empatía, inclusión" },
+                { nombre: "Descubre al trol", descripcion: "Comportamientos en Internet.", valores: "Responsabilidad, ética digital" },
+                { nombre: "Escudos familiares", descripcion: "Redes de protección en Internet.", valores: "Protección, confianza" },
+                { nombre: "Los retos de empatía", descripcion: "Conoce necesidades y construye acuerdos.", valores: "Empatía, colaboración" }
             ]
         };
 
-        // Variables globales
-        let currentPlaneamientoHTML = "";
+        // Variables
+        let planeamientoActual = "";
         let recursosSubidos = [];
-        let db;
+        let estudiantes = JSON.parse(localStorage.getItem('estudiantes')) || [{nombre:"Ana Pérez", cot:45, tar:9, pru:14, proy:12, asis:9}];
 
-        // IndexedDB para persistencia de archivos
-        const requestDB = indexedDB.open('IDONETRecursos', 1);
-        requestDB.onupgradeneeded = (e) => { db = e.target.result; db.createObjectStore('archivos', { keyPath: 'nombre' }); };
-        requestDB.onsuccess = (e) => { db = e.target.result; cargarRecursosDesdeDB(); };
-
-        async function guardarRecursoEnDB(file, textoExtraido = "") {
-            const blob = await file.arrayBuffer();
-            const tx = db.transaction(['archivos'], 'readwrite');
-            const store = tx.objectStore('archivos');
-            store.put({ nombre: file.name, blob: blob, tipo: file.type, texto: textoExtraido });
-            recursosSubidos.push({ name: file.name, blob: blob, texto: textoExtraido });
-            actualizarListaRecursos();
-        }
-
-        function cargarRecursosDesdeDB() {
-            const tx = db.transaction(['archivos'], 'readonly');
-            const store = tx.objectStore('archivos');
-            const request = store.getAll();
-            request.onsuccess = () => {
-                recursosSubidos = request.result.map(r => ({ name: r.nombre, blob: r.blob, texto: r.texto || "" }));
-                actualizarListaRecursos();
-            };
-        }
-
-        function actualizarListaRecursos() {
-            const div = document.getElementById('listaRecursos');
-            div.innerHTML = recursosSubidos.map((r, i) => `<div class="flex justify-between"><span>📄 ${r.name}</span><button class="text-red-500 eliminar-recurso" data-idx="${i}">🗑️</button></div>`).join('');
-            document.querySelectorAll('.eliminar-recurso').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(e.target.dataset.idx); const nombre = recursosSubidos[idx].name; const tx = db.transaction(['archivos'], 'readwrite'); tx.objectStore('archivos').delete(nombre); recursosSubidos.splice(idx,1); actualizarListaRecursos(); }));
-        }
-
-        document.getElementById('recursoFileInput').addEventListener('change', async (e) => { for (let file of e.target.files) await guardarRecursoEnDB(file); });
-        document.getElementById('extraerTextoBtn').onclick = async () => {
-            for (let r of recursosSubidos) {
-                if (r.name.endsWith('.pdf')) {
-                    const pdf = await pdfjsLib.getDocument({ data: r.blob }).promise;
-                    let texto = "";
-                    for (let p=1; p<=pdf.numPages; p++) { const page = await pdf.getPage(p); const content = await page.getTextContent(); texto += content.items.map(item => item.str).join(" "); }
-                    r.texto = texto.substring(0, 2000);
-                    const tx = db.transaction(['archivos'], 'readwrite'); tx.objectStore('archivos').put({ nombre: r.name, blob: r.blob, tipo: r.tipo, texto: r.texto });
-                } else if (r.name.endsWith('.pptx')) { r.texto = "PPT extraído: revisa manualmente el contenido de las diapositivas."; }
-                else { r.texto = "Imagen sin texto extraíble."; }
-            }
-            alert("Texto extraído de los archivos (donde fue posible).");
-            actualizarListaRecursos();
-        };
-
-        function cargarSaberes() {
-            const nivel = document.getElementById('nivelSelect').value;
-            const mod1 = document.getElementById('modulo1Check').checked;
-            const mod2 = document.getElementById('modulo2Check').checked;
+        // Funciones UI
+        function actualizarSaberes() {
+            const nivel = document.getElementById('nivel').value;
+            const mod1 = document.getElementById('mod1').checked;
+            const mod2 = document.getElementById('mod2').checked;
             let saberesSet = new Set();
             if (mod1 && PNFT.saberes[nivel]?.["1"]) PNFT.saberes[nivel]["1"].forEach(s => saberesSet.add(s));
             if (mod2 && PNFT.saberes[nivel]?.["2"]) PNFT.saberes[nivel]["2"].forEach(s => saberesSet.add(s));
-            const container = document.getElementById('saberesContainer');
+            const container = document.getElementById('saberesLista');
             container.innerHTML = '';
             if (saberesSet.size === 0) { container.innerHTML = '<div class="text-gray-400">Selecciona al menos un módulo</div>'; return; }
             saberesSet.forEach(s => { const label = document.createElement('label'); label.className = 'flex items-center gap-2 text-sm'; label.innerHTML = `<input type="checkbox" class="saber-check" value="${s}"> ${s}`; container.appendChild(label); });
         }
 
-        document.getElementById('cicloSelect').addEventListener('change', cargarSaberes);
-        document.getElementById('nivelSelect').addEventListener('change', cargarSaberes);
-        document.getElementById('modulo1Check').addEventListener('change', cargarSaberes);
-        document.getElementById('modulo2Check').addEventListener('change', cargarSaberes);
-        document.getElementById('leccionesSlider').addEventListener('input', (e) => document.getElementById('leccionesValor').innerText = e.target.value);
-
         function generarPlaneamiento() {
-            const ciclo = document.getElementById('cicloSelect').value;
-            const nivel = document.getElementById('nivelSelect').value;
-            const mod1 = document.getElementById('modulo1Check').checked;
-            const mod2 = document.getElementById('modulo2Check').checked;
+            const ciclo = document.getElementById('ciclo').value;
+            const nivel = document.getElementById('nivel').value;
+            const mod1 = document.getElementById('mod1').checked;
+            const mod2 = document.getElementById('mod2').checked;
             if (!mod1 && !mod2) { alert("Selecciona al menos un módulo"); return; }
-            const saberesCheck = document.querySelectorAll('.saber-check:checked');
-            const saberesSeleccionados = Array.from(saberesCheck).map(cb => cb.value);
-            if (saberesSeleccionados.length === 0) { alert("Selecciona al menos un saber"); return; }
-            const lecciones = document.getElementById('leccionesSlider').value;
-            const metodologia = PNFT.metodologiaPorCiclo[ciclo];
+            const saberes = [...document.querySelectorAll('.saber-check:checked')].map(cb => cb.value);
+            if (saberes.length === 0) { alert("Selecciona al menos un saber"); return; }
+            const metodologia = PNFT.metodologia[ciclo];
             const dualibre = PNFT.dualibre[ciclo];
-            const rdaObj = PNFT.rda[ciclo];
-            const rdaTexto = `📌 Apropiación: ${rdaObj.Apropiacion}<br>📌 Programación: ${rdaObj.Programacion}<br>📌 Robótica: ${rdaObj.Robotica}<br>📌 Datos/IA: ${rdaObj.DatosIA}`;
-            let tablaIndicadores = `<table class="min-w-full border text-sm"><thead class="bg-gray-100"><tr><th>Saber conceptual</th><th>Indicador de logro</th></tr></thead><tbody>`;
+            const rda = PNFT.rda[ciclo];
+            const rdaHTML = `<div class="bg-blue-50 p-3 rounded-xl"><strong>📌 Resultados de Aprendizaje (RdA)</strong><br>• Apropiación: ${rda.Apropiacion}<br>• Programación: ${rda.Programacion}<br>• Robótica: ${rda.Robotica}<br>• Datos/IA: ${rda.DatosIA}</div>`;
+            let tablaIndicadores = `<table class="min-w-full border text-sm mt-3"><thead class="bg-gray-100"><tr><th>Saber conceptual</th><th>Indicador de logro</th></tr></thead><tbody>`;
             const indicadoresNivel = PNFT.indicadores[nivel] ? (mod1 ? PNFT.indicadores[nivel]["1"] : PNFT.indicadores[nivel]["2"]) : [];
-            saberesSeleccionados.forEach((s, idx) => { tablaIndicadores += `<tr><td class="border p-1">${s}</td><td class="border p-1">${indicadoresNivel[idx] || "Indicador asociado"}</td></tr>`; });
+            saberes.forEach((s, idx) => { tablaIndicadores += `<tr><td class="border p-1">${s}</td><td class="border p-1">${indicadoresNivel[idx] || "Indicador asociado"}</td></tr>`; });
             tablaIndicadores += `</tbody></table>`;
-            const recursosTexto = recursosSubidos.filter(r => r.texto).map(r => `📄 ${r.name}: ${r.texto.substring(0,200)}...`).join('<br>');
-            const html = `<div class="bg-blue-50 p-3 rounded-xl">${rdaTexto}</div>
-                          <div class="mt-3"><strong>🧩 Saberes integrados:</strong> ${saberesSeleccionados.join(", ")}</div>
-                          <div class="mt-2"><strong>📖 Metodología activa:</strong> ${metodologia}</div>
-                          <div class="grid md:grid-cols-2 gap-4 mt-3"><div class="border p-3 rounded-xl"><strong>💻 Con tecnología</strong><br>Usar simuladores, programación por bloques, sensores, micro:bit, Arduino. Actividad sugerida: ${saberesSeleccionados.slice(0,2).join(" y ")} aplicado a un proyecto real.</div><div class="border p-3 rounded-xl"><strong>📴 Desconectada (Unplugged)</strong><br>${duaLibre}</div></div>
-                          <div class="bg-gray-50 p-3 rounded-xl mt-3"><strong>♿ DUA y accesibilidad:</strong> Representación múltiple (visual, auditiva, kinestésica), acción/expresión (dibujo, oral, digital), compromiso (colaboración, autonomía).</div>
-                          <div class="mt-3"><strong>Saberes procedimentales:</strong> ${PNFT.procedimentales.join(", ")}</div>
-                          <div class="mt-1"><strong>Saberes actitudinales:</strong> ${PNFT.actitudinales.join(", ")}</div>
-                          <div class="mt-2"><strong>Ejes transversales:</strong><br>${Object.entries(PNFT.ejes).map(([k,v]) => `<strong>${k}:</strong> ${v}`).join("<br>")}</div>
-                          ${recursosTexto ? `<div class="mt-3 bg-yellow-50 p-2 rounded"><strong>📂 Texto extraído de tus recursos:</strong><br>${recursosTexto}</div>` : ""}
-                          <div class="mt-4"><strong>📊 Indicadores de logro</strong>${tablaIndicadores}</div>`;
-            currentPlaneamientoHTML = html;
-            document.getElementById('outputDinamico').innerHTML = html;
-            const prompt = `[CONTEXTO] PNFT 2026. Nivel: ${nivel}°, ciclo ${ciclo}, ${lecciones} lecciones/semana.\n[SABERES] ${saberesSeleccionados.join(", ")}.\n[METODOLOGÍA] ${metodologia}.\n[RECURSOS] ${recursosSubidos.filter(r=>r.texto).map(r=>r.name+": "+r.texto.substring(0,200)).join(" | ")}\n[DUALIDAD] Tecnológica y desconectada.\n[DUA] Representación, acción/expresión, compromiso.\n[ENTREGA] Genera una estrategia de mediación en 4 momentos (focalización, exploración, reflexión, aplicación) con actividades concretas.`;
-            document.getElementById('promptGenerado').value = prompt;
+            const html = `${rdaHTML}
+                <div class="mt-3"><strong>🧩 Saberes integrados:</strong> ${saberes.join(", ")}</div>
+                <div class="mt-2"><strong>📖 Metodología activa:</strong> ${metodologia}</div>
+                <div class="grid md:grid-cols-2 gap-4 mt-3"><div class="border p-3 rounded-xl"><strong>💻 Con tecnología</strong><br>Usar simuladores, programación por bloques, sensores, micro:bit, Arduino. Actividad sugerida: proyecto que integre ${saberes.slice(0,2).join(" y ")}.</div><div class="border p-3 rounded-xl"><strong>📴 Desconectada (Unplugged)</strong><br>${duaLibre}. Juegos de roles, tarjetas, diagramas en papel.</div></div>
+                <div class="bg-gray-50 p-3 rounded-xl mt-3"><strong>♿ DUA y accesibilidad:</strong> Representación múltiple (visual, auditiva, kinestésica), acción/expresión (dibujo, oral, digital), compromiso (colaboración, autonomía).</div>
+                <div class="mt-2"><strong>Saberes procedimentales:</strong> ${PNFT.procedimentales.join(", ")}</div>
+                <div class="mt-1"><strong>Saberes actitudinales:</strong> ${PNFT.actitudinales.join(", ")}</div>
+                <div class="mt-2"><strong>Ejes transversales:</strong><br>${Object.entries(PNFT.ejes).map(([k,v]) => `<strong>${k}:</strong> ${v}`).join("<br>")}</div>
+                ${tablaIndicadores}`;
+            planeamientoActual = html;
+            document.getElementById('planeamiento').innerHTML = html;
+            document.getElementById('coordMostrar').innerText = `${ciclo} · ${nivel}° · M${mod1?"1":""}${mod2?"2":""}`;
+            // Prompt
+            const prompt = `[CONTEXTO] PNFT 2026. Nivel: ${nivel}°, ciclo ${ciclo}. Lecciones: ${document.getElementById('lecciones').value}/semana.\n[SABERES] ${saberes.join(", ")}.\n[METODOLOGÍA] ${metodologia}.\n[RECURSOS DOCENTE] ${recursosSubidos.map(r=>r.name).join(", ")}\n[DUALIDAD] Tecnológica y desconectada.\n[DUA] Representación, acción/expresión, compromiso.\n[ENTREGA] Genera una estrategia de mediación en 4 momentos (focalización, exploración, reflexión, aplicación) con actividades concretas y evaluación formativa.`;
+            document.getElementById('promptTexto').value = prompt;
         }
-
-        document.getElementById('generarBtn').onclick = generarPlaneamiento;
-        document.getElementById('guardarEdicion').onclick = () => { localStorage.setItem('planeamientoEditado', document.getElementById('outputDinamico').innerHTML); alert("Planeamiento guardado"); };
-        document.getElementById('restablecerEdicion').onclick = () => { if(currentPlaneamientoHTML) document.getElementById('outputDinamico').innerHTML = currentPlaneamientoHTML; };
-
-        // Exportaciones
-        document.getElementById('exportPDFBtn').onclick = () => window.print();
-        document.getElementById('exportWordBtn').onclick = () => { const blob = new Blob([document.getElementById('outputDinamico').innerText], {type:'application/msword'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'planeamiento.doc'; a.click(); };
-        document.getElementById('exportExcelBtn').onclick = () => { const ws = XLSX.utils.table_to_sheet(document.getElementById('tablaEvaluacion')); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Evaluacion"); XLSX.writeFile(wb, "evaluacion.xlsx"); };
-        document.getElementById('exportHTMLBtn').onclick = () => { const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Planeamiento IDONET</title><style>body{font-family:sans-serif;padding:2rem}</style></head><body>${currentPlaneamientoHTML}</body></html>`; const blob = new Blob([html], {type:'text/html'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'planeamiento.html'; a.click(); };
-        document.getElementById('exportJSONBtn').onclick = () => { const data = JSON.stringify({planeamiento: currentPlaneamientoHTML, estudiantes: estudiantes}, null,2); const blob = new Blob([data], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'datos_idonet.json'; a.click(); };
 
         // Evaluación
-        let estudiantes = JSON.parse(localStorage.getItem('estudiantes_idonet')) || [{nombre:"Ana Pérez", cot:45, tar:9, pru:14, proy:12, asis:9}];
         function renderEvaluacion() {
-            const tbody = document.getElementById('cuerpoEvaluacion');
+            const tbody = document.getElementById('cuerpoNotas');
             tbody.innerHTML = '';
-            estudiantes.forEach((est, idx) => {
-                const promedio = (est.cot * 0.5 + est.tar * 0.1 + est.pru * 0.15 + est.proy * 0.15 + est.asis * 0.1).toFixed(2);
-                let condicion = "", color = "";
-                if (promedio >= 70) { condicion = "Aprobado"; color = "semaphore-green"; }
-                else if (promedio >= 60) { condicion = "Aplazado"; color = "semaphore-yellow"; }
-                else { condicion = "Reprobado"; color = "semaphore-red"; }
-                tbody.innerHTML += `<tr><td class="border p-1"><input type="text" class="nombre-est" value="${est.nombre}" data-idx="${idx}" style="width:100px"></td><td class="border p-1"><input type="number" class="nota-cot" value="${est.cot}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-tar" value="${est.tar}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-pru" value="${est.pru}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-proy" value="${est.proy}" data-idx="${idx}" style="width:60px"></td><td class="border p-1"><input type="number" class="nota-asis" value="${est.asis}" data-idx="${idx}" style="width:60px"></td><td class="font-bold ${color}">${promedio}</td><td class="${color}">${condicion}</td></tr>`;
+            estudiantes.forEach((e, idx) => {
+                const prom = (e.cot * 0.5 + e.tar * 0.1 + e.pru * 0.15 + e.proy * 0.15 + e.asis * 0.1).toFixed(2);
+                let cond = "", color = "";
+                if (prom >= 70) { cond = "Aprobado"; color = "semaphore-green"; }
+                else if (prom >= 60) { cond = "Aplazado"; color = "semaphore-yellow"; }
+                else { cond = "Reprobado"; color = "semaphore-red"; }
+                tbody.innerHTML += `<tr><td class="border p-1"><input type="text" class="nombre" value="${e.nombre}" data-idx="${idx}" style="width:100px"></td>
+                    <td class="border p-1"><input type="number" class="cot" value="${e.cot}" data-idx="${idx}" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="tar" value="${e.tar}" data-idx="${idx}" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="pru" value="${e.pru}" data-idx="${idx}" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="proy" value="${e.proy}" data-idx="${idx}" style="width:60px"></td>
+                    <td class="border p-1"><input type="number" class="asis" value="${e.asis}" data-idx="${idx}" style="width:60px"></td>
+                    <td class="border p-1 font-bold ${color}">${prom}</td><td class="border p-1 ${color}">${cond}</td></tr>`;
             });
-            document.querySelectorAll('.nota-cot, .nota-tar, .nota-pru, .nota-proy, .nota-asis, .nombre-est').forEach(inp => inp.addEventListener('change', (e) => { const idx = parseInt(e.target.dataset.idx); if (e.target.classList.contains('nombre-est')) estudiantes[idx].nombre = e.target.value; if (e.target.classList.contains('nota-cot')) estudiantes[idx].cot = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-tar')) estudiantes[idx].tar = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-pru')) estudiantes[idx].pru = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-proy')) estudiantes[idx].proy = parseFloat(e.target.value) || 0; if (e.target.classList.contains('nota-asis')) estudiantes[idx].asis = parseFloat(e.target.value) || 0; localStorage.setItem('estudiantes_idonet', JSON.stringify(estudiantes)); renderEvaluacion(); }));
+            document.querySelectorAll('.nombre, .cot, .tar, .pru, .proy, .asis').forEach(inp => inp.addEventListener('change', (e) => {
+                const idx = e.target.dataset.idx;
+                if (e.target.classList.contains('nombre')) estudiantes[idx].nombre = e.target.value;
+                if (e.target.classList.contains('cot')) estudiantes[idx].cot = parseFloat(e.target.value) || 0;
+                if (e.target.classList.contains('tar')) estudiantes[idx].tar = parseFloat(e.target.value) || 0;
+                if (e.target.classList.contains('pru')) estudiantes[idx].pru = parseFloat(e.target.value) || 0;
+                if (e.target.classList.contains('proy')) estudiantes[idx].proy = parseFloat(e.target.value) || 0;
+                if (e.target.classList.contains('asis')) estudiantes[idx].asis = parseFloat(e.target.value) || 0;
+                localStorage.setItem('estudiantes', JSON.stringify(estudiantes));
+                renderEvaluacion();
+            }));
         }
-        document.getElementById('agregarEstudianteBtn').onclick = () => { estudiantes.push({nombre:"Nuevo", cot:0, tar:0, pru:0, proy:0, asis:0}); localStorage.setItem('estudiantes_idonet', JSON.stringify(estudiantes)); renderEvaluacion(); };
-        document.getElementById('exportarActasBtn').onclick = () => { const ws = XLSX.utils.table_to_sheet(document.getElementById('tablaEvaluacion')); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Acta"); XLSX.writeFile(wb, "acta_evaluacion.xlsx"); };
-        renderEvaluacion();
 
-        // Matriz arrastrable real
-        function renderMatriz() {
-            const dias = ['Lun','Mar','Mié','Jue','Vie'];
-            const matrizDiv = document.getElementById('matrizSemanal');
-            matrizDiv.innerHTML = dias.map(d => `<div class="font-bold p-2 bg-gray-100 rounded">${d}</div>`).join('');
-            for (let i=0; i<5; i++) {
-                const lec = document.createElement('div'); lec.className = 'p-2 bg-white border rounded shadow-sm leccion-item'; lec.setAttribute('draggable', 'true'); lec.innerText = `Lección ${i+1}`;
-                lec.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', lec.innerText));
-                matrizDiv.appendChild(lec);
+        // Recursos (simulacro offline)
+        document.getElementById('recursosFile').addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            recursosSubidos = files.map(f => ({ name: f.name, file: f }));
+            const div = document.getElementById('recursosLista');
+            div.innerHTML = recursosSubidos.map(r => `<div>📄 ${r.name}</div>`).join('');
+        });
+        document.getElementById('extraerTexto').onclick = async () => {
+            let textos = [];
+            for (let r of recursosSubidos) {
+                if (r.name.endsWith('.pdf')) {
+                    const arrayBuffer = await r.file.arrayBuffer();
+                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    let texto = "";
+                    for (let i=1; i<=pdf.numPages; i++) { const page = await pdf.getPage(i); const content = await page.getTextContent(); texto += content.items.map(item => item.str).join(" "); }
+                    textos.push(`📄 ${r.name}: ${texto.substring(0,500)}...`);
+                } else { textos.push(`📄 ${r.name}: (texto no extraíble automáticamente)`); }
             }
-            const celdas = matrizDiv.querySelectorAll('.leccion-item');
-            celdas.forEach(celda => { celda.addEventListener('dragover', (e) => e.preventDefault()); celda.addEventListener('drop', (e) => { e.preventDefault(); const texto = e.dataTransfer.getData('text/plain'); if (celda.innerText !== texto) { const temp = celda.innerText; celda.innerText = texto; const origen = [...celdas].find(c => c.innerText === texto && c !== celda); if (origen) origen.innerText = temp; } }); });
-        }
-        renderMatriz();
-        document.getElementById('guardarMatrizBtn').onclick = () => { const orden = [...document.querySelectorAll('#matrizSemanal .leccion-item')].map(c => c.innerText); localStorage.setItem('matrizOrden', JSON.stringify(orden)); alert("Matriz guardada"); };
-        const matrizGuardada = localStorage.getItem('matrizOrden');
-        if (matrizGuardada) { const orden = JSON.parse(matrizGuardada); const items = document.querySelectorAll('#matrizSemanal .leccion-item'); items.forEach((item, i) => { if(orden[i]) item.innerText = orden[i]; }); }
+            alert("Texto extraído de PDFs (si los hay). Se usará en el prompt.");
+            if (textos.length) document.getElementById('promptTexto').value += "\n\n[RECURSOS EXTRAÍDOS]\n" + textos.join("\n");
+        };
 
-        // Tabs y juegos
-        ['Matriz','Evaluacion','Prompt','Juegos'].forEach(tab => { document.getElementById(`tab${tab}Btn`).onclick = () => { document.querySelectorAll('.tab-contenido').forEach(div => div.classList.add('hidden')); document.getElementById(`tab${tab}`).classList.remove('hidden'); }; });
-        document.getElementById('listaJuegos').innerHTML = PNFT.juegos.map(j => `<div class="bg-gray-50 p-3 rounded-xl"><strong>🎮 ${j.nombre}</strong><br>${j.descripcion}<br><span class="text-xs text-gray-500">Valores: ${j.valores}</span></div>`).join('');
-
-        // Botones externos
-        document.getElementById('teachyBtn').onclick = () => { window.open('https://teachy.ai/es', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
-        document.getElementById('geniallyBtn').onclick = () => { window.open('https://app.genial.ly/editor', '_blank'); navigator.clipboard.writeText(document.getElementById('outputDinamico').innerText); alert("Texto copiado para Genially"); };
-        document.getElementById('chatgptBtn').onclick = () => { window.open('https://chat.openai.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
-        document.getElementById('geminiBtn').onclick = () => { window.open('https://gemini.google.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
-        document.getElementById('copiarPromptBtn').onclick = () => { navigator.clipboard.writeText(document.getElementById('promptGenerado').value); alert("Prompt copiado"); };
-
-        cargarSaberes();
+        // Eventos
+        document.getElementById('ciclo').addEventListener('change', actualizarSaberes);
+        document.getElementById('nivel').addEventListener('change', actualizarSaberes);
+        document.getElementById('mod1').addEventListener('change', actualizarSaberes);
+        document.getElementById('mod2').addEventListener('change', actualizarSaberes);
+        document.getElementById('lecciones').addEventListener('input', (e) => document.getElementById('leccVal').innerText = e.target.value);
+        document.getElementById('generar').addEventListener('click', generarPlaneamiento);
+        document.getElementById('guardarEdicion').onclick = () => { localStorage.setItem('planeamientoGuardado', document.getElementById('planeamiento').innerHTML); alert("Planeamiento guardado"); };
+        document.getElementById('restaurarEdicion').onclick = () => { if(planeamientoActual) document.getElementById('planeamiento').innerHTML = planeamientoActual; };
+        document.getElementById('agregarEstudiante').onclick = () => { estudiantes.push({nombre:"Nuevo", cot:0, tar:0, pru:0, proy:0, asis:0}); localStorage.setItem('estudiantes', JSON.stringify(estudiantes)); renderEvaluacion(); };
+        document.getElementById('exportarActa').onclick = () => { const ws = XLSX.utils.table_to_sheet(document.getElementById('tablaNotas')); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Acta"); XLSX.writeFile(wb, "acta.xlsx"); };
+        document.getElementById('copiarPrompt').onclick = () => { navigator.clipboard.writeText(document.getElementById('promptTexto').value); alert("Prompt copiado"); };
+        document.getElementById('btnTeachy').onclick = () => { window.open('https://teachy.ai/es', '_blank'); navigator.clipboard.writeText(document.getElementById('promptTexto').value); alert("Prompt copiado para Teachy.ai"); };
+        document.getElementById('btnGenially').onclick = () => { window.open('https://app.genial.ly/editor', '_blank'); navigator.clipboard.writeText(document.getElementById('planeamiento').innerText); alert("Texto copiado para Genially"); };
+        document.getElementById('btnChatGPT').onclick = () => { window.open('https://chat.openai.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptTexto').value); alert("Prompt copiado para ChatGPT"); };
+        document.getElementById('btnGemini').onclick = () => { window.open('https://gemini.google.com', '_blank'); navigator.clipboard.writeText(document.getElementById('promptTexto').value); alert("Prompt copiado para Gemini"); };
+        // Exportaciones
+        document.getElementById('exportPDF').onclick = () => window.print();
+        document.getElementById('exportWord').onclick = () => { const blob = new Blob([document.getElementById('planeamiento').innerText], {type:'application/msword'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'planeamiento.doc'; a.click(); };
+        document.getElementById('exportExcel').onclick = () => { const ws = XLSX.utils.table_to_sheet(document.getElementById('tablaNotas')); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Planeamiento"); XLSX.writeFile(wb, "datos.xlsx"); };
+        document.getElementById('exportHTML').onclick = () => { const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Planeamiento IDONET</title><style>body{font-family:sans-serif;padding:2rem}</style></head><body>${document.getElementById('planeamiento').innerHTML}</body></html>`; const blob = new Blob([html], {type:'text/html'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'planeamiento.html'; a.click(); };
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-contenido').forEach(div => div.classList.add('hidden'));
+                document.getElementById(btn.dataset.tab).classList.remove('hidden');
+            });
+        });
+        document.getElementById('juegosLista').innerHTML = PNFT.juegos.map(j => `<div class="bg-gray-50 p-3 rounded-xl"><strong>🎮 ${j.nombre}</strong><br>${j.descripcion}<br><span class="text-xs text-gray-500">Valores: ${j.valores}</span></div>`).join('');
+        actualizarSaberes();
         generarPlaneamiento();
+        renderEvaluacion();
     </script>
 </body>
 </html>
