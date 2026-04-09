@@ -887,22 +887,28 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
     }
 
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado al portapapeles."); }
-    function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
+    function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); } 
 
+// --------------------------------------------------------------
+    // A PARTIR DE AQUÍ, SOLO SE MODIFICA EL PASO 6
     // --------------------------------------------------------------
-    // PASO 6: LABORATORIO DE RECURSOS + IA + GENERACIÓN PPT
-    // --------------------------------------------------------------
+    
+    // Almacenamiento IndexedDB para recursos y plantillas
     let db = null;
     const DB_NAME = "PIAResourcesDB";
-    const STORE_NAME = "pptx_files";
+    const STORE_RESOURCES = "pptx_files";
+    const STORE_TEMPLATES = "templates"; // guardar plantillas por ciclo
 
     function openDB() {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open(DB_NAME, 1);
+            const request = indexedDB.open(DB_NAME, 2);
             request.onupgradeneeded = (e) => {
                 const db = e.target.result;
-                if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
+                if (!db.objectStoreNames.contains(STORE_RESOURCES)) {
+                    db.createObjectStore(STORE_RESOURCES, { keyPath: "id", autoIncrement: true });
+                }
+                if (!db.objectStoreNames.contains(STORE_TEMPLATES)) {
+                    db.createObjectStore(STORE_TEMPLATES, { keyPath: "cycle" });
                 }
             };
             request.onsuccess = (e) => resolve(e.target.result);
@@ -910,49 +916,55 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
         });
     }
 
+    // Guardar/obtener plantillas
+    async function saveTemplate(cycle, file) {
+        const dbConn = await openDB();
+        const tx = dbConn.transaction(STORE_TEMPLATES, "readwrite");
+        const store = tx.objectStore(STORE_TEMPLATES);
+        await store.put({ cycle: cycle, blob: file, name: file.name, updatedAt: new Date().toISOString() });
+        return new Promise((resolve) => { tx.oncomplete = resolve; });
+    }
+    async function getTemplate(cycle) {
+        const dbConn = await openDB();
+        const tx = dbConn.transaction(STORE_TEMPLATES, "readonly");
+        const store = tx.objectStore(STORE_TEMPLATES);
+        return new Promise((resolve) => {
+            const req = store.get(cycle);
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => resolve(null);
+        });
+    }
+    // Recursos
     async function saveFile(file) {
         const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_NAME, "readwrite");
-        const store = tx.objectStore(STORE_NAME);
-        const fileData = {
-            name: file.name,
-            lastModified: file.lastModified,
-            size: file.size,
-            blob: file,
-            uploadedAt: new Date().toISOString()
-        };
+        const tx = dbConn.transaction(STORE_RESOURCES, "readwrite");
+        const store = tx.objectStore(STORE_RESOURCES);
+        const fileData = { name: file.name, lastModified: file.lastModified, size: file.size, blob: file, uploadedAt: new Date().toISOString() };
         await store.add(fileData);
-        return new Promise((resolve) => { tx.oncomplete = () => resolve(); });
+        return new Promise((resolve) => { tx.oncomplete = resolve; });
     }
-
     async function getAllFiles() {
         const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_NAME, "readonly");
-        const store = tx.objectStore(STORE_NAME);
-        const files = await new Promise((resolve) => {
-            const request = store.getAll();
-            request.onsuccess = () => resolve(request.result);
-        });
+        const tx = dbConn.transaction(STORE_RESOURCES, "readonly");
+        const store = tx.objectStore(STORE_RESOURCES);
+        const files = await new Promise((resolve) => { const req = store.getAll(); req.onsuccess = () => resolve(req.result); });
         return files;
     }
-
     async function deleteFile(id) {
         const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_NAME, "readwrite");
-        const store = tx.objectStore(STORE_NAME);
+        const tx = dbConn.transaction(STORE_RESOURCES, "readwrite");
+        const store = tx.objectStore(STORE_RESOURCES);
         store.delete(id);
-        return new Promise((resolve) => { tx.oncomplete = () => resolve(); });
+        return new Promise((resolve) => { tx.oncomplete = resolve; });
     }
-
     async function extractTextFromPPTX(blob) {
         try {
             const arrayBuffer = await blob.arrayBuffer();
             const extractor = window.OfficeTextExtractor;
             if (!extractor) throw new Error("Librería no cargada");
             const text = await extractor.extractText({ arrayBuffer, mimeType: "application/vnd.openxmlformats-officedocument.presentationml.presentation" });
-            return text || "No se pudo extraer texto del archivo.";
+            return text || "No se pudo extraer texto.";
         } catch (error) {
-            console.error(error);
             return "Error al extraer texto: " + error.message;
         }
     }
@@ -973,48 +985,63 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
                 <button onclick="deleteResource(${r.id})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
             </div>
         `).join('');
-        selectContainer.innerHTML = resourcesList.map(r => `
-            <label class="flex items-center gap-2"><input type="checkbox" value="${r.id}" class="resource-checkbox"> <span class="text-sm">${r.name}</span></label>
-        `).join('');
+        selectContainer.innerHTML = resourcesList.map(r => `<label class="flex items-center gap-2"><input type="checkbox" value="${r.id}" class="resource-checkbox"> <span class="text-sm">${r.name}</span></label>`).join('');
         initIcons();
     }
+    window.deleteResource = async function(id) { await deleteFile(id); await refreshResourcesUI(); };
 
-    window.deleteResource = async function(id) {
-        await deleteFile(id);
-        await refreshResourcesUI();
-    };
+    // IA local con Transformers.js
+    let pipeline = null;
+    async function loadModel() {
+        if (pipeline) return pipeline;
+        const { pipeline: pipe } = await import("@xenova/transformers");
+        // Modelo pequeño pero eficaz para tareas de generación de texto
+        pipeline = await pipe("text-generation", "Xenova/Phi-3-mini-4k-instruct");
+        return pipeline;
+    }
 
-    async function analyzeWithGemini(selectedResources) {
-        const apiKey = document.getElementById("gemini-key").value.trim();
-        if (!apiKey) { alert("Ingresa tu API Key de Gemini (gratuita en Google AI Studio)."); return null; }
+    async function analyzeWithLocalAI(selectedResources) {
         let combinedText = "";
         for (const res of selectedResources) {
             const text = await extractTextFromPPTX(res.blob);
-            combinedText += `\n--- RECURSO: ${res.name} ---\n${text.substring(0, 3000)}\n`;
+            combinedText += `\n--- RECURSO: ${res.name} ---\n${text.substring(0, 2500)}\n`;
         }
-        const prompt = `Eres un especialista en diseño de actividades educativas integrando recursos. A continuación tienes el contenido de varios recursos (PPTX). Analiza cómo se pueden integrar para crear una actividad educativa novedosa. Devuelve únicamente un JSON con la siguiente estructura: {"title": "título sugerido", "cycle": "preescolar/ii/iii", "slides": [{"type": "title", "content": "..."}, {"type": "content", "content": "..."}]}. Asegúrate de incluir al menos 3 diapositivas (título, desarrollo, cierre).\n\nContenido:\n${combinedText}`;
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-        });
-        const data = await response.json();
-        const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+        const prompt = `Eres un especialista en diseño de actividades educativas. Analiza el contenido de estos recursos y genera una actividad integradora. Devuelve SOLO un JSON con: {"title": "título", "slides": [{"type": "title", "content": "..."}, {"type": "content", "content": "..."}]}. Debe tener al menos 3 diapositivas.\n\nContenido:\n${combinedText}`;
+        const generator = await loadModel();
+        const result = await generator(prompt, { max_new_tokens: 800, temperature: 0.7 });
+        let textResponse = result[0]?.generated_text || "{}";
+        // Extraer JSON
         try {
             const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
-            const result = jsonMatch ? JSON.parse(jsonMatch[0]) : JSON.parse(textResponse);
-            return result;
-        } catch (e) { return { title: "Actividad integrada", cycle: "ii", slides: [{ type: "title", content: "Actividad generada" }, { type: "content", content: textResponse.substring(0, 500) }] }; }
+            const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : { title: "Actividad sugerida", slides: [{ type: "title", content: "Actividad generada" }, { type: "content", content: textResponse.substring(0, 500) }] };
+            return parsed;
+        } catch(e) {
+            return { title: "Actividad integrada", slides: [{ type: "title", content: "Actividad generada por IA local" }, { type: "content", content: textResponse.substring(0, 500) }] };
+        }
     }
 
-    function generatePPT(activityJson, cycleType) {
+    // Generación de PPT usando plantilla subida o por defecto
+    async function generatePPTWithTemplate(activityJson, cycleType) {
         const PptxGenJS = window.PptxGenJS;
         const pptx = new PptxGenJS();
+        pptx.defineLayout({ name: "WIDE", width: 10, height: 5.625 });
+        pptx.layout = "WIDE";
+
+        // Intentar cargar plantilla guardada
+        const templateData = await getTemplate(cycleType);
+        if (templateData && templateData.blob) {
+            // Usar la plantilla subida: necesitaríamos una librería para modificar .pptx existente.
+            // Dado que PptxGenJS no permite editar fácilmente una plantilla existente, usamos un enfoque híbrido:
+            // Si el usuario subió plantilla, mostramos un mensaje de que debe usar el generador por defecto o usar docxtemplater.
+            // Para simplificar y asegurar funcionamiento, usamos el generador por defecto pero con el nombre de la plantilla.
+            // En una implementación profesional se podría usar docxtemplater, pero añadiría complejidad.
+            alert("Usando generador por defecto. Para usar tu plantilla exacta, necesitaríamos docxtemplater. Por ahora se genera con estilo del ciclo seleccionado.");
+        }
+        // Generación por defecto con estilos según ciclo
         let theme = { name: "Preescolar/I", background: "F0F9FF", titleColor: "1E3A8A", bodyColor: "334155" };
         if (cycleType === "ii") theme = { name: "II Ciclo", background: "F8FAFC", titleColor: "0F3B5C", bodyColor: "1E293B" };
         if (cycleType === "iii") theme = { name: "III Ciclo", background: "F1F5F9", titleColor: "0F172A", bodyColor: "0F172A" };
-        pptx.defineLayout({ name: "WIDE", width: 10, height: 5.625 });
-        pptx.layout = "WIDE";
+        
         const slidesData = activityJson.slides || [{ type: "title", content: activityJson.title || "Actividad educativa" }, { type: "content", content: "Contenido generado por IA a partir de los recursos subidos." }];
         slidesData.forEach(slideDef => {
             const slide = pptx.addSlide();
@@ -1026,9 +1053,10 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
                 slide.addText("Actividad integrada", { x: 0.5, y: 1.6, w: 9, h: 3.5, fontSize: 14, color: theme.bodyColor });
             }
         });
-        pptx.writeFile({ fileName: `actividad_integrada_${cycleType}.pptx` });
+        pptx.writeFile({ fileName: `actividad_${cycleType}_${Date.now()}.pptx` });
     }
 
+    // Eventos del Paso 6
     document.getElementById("upload-btn")?.addEventListener("click", async () => {
         const fileInput = document.getElementById("file-upload");
         const file = fileInput.files[0];
@@ -1043,30 +1071,70 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
         const selectedIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
         if (selectedIds.length === 0) { alert("Selecciona al menos un recurso para analizar."); return; }
         const selectedResources = resourcesList.filter(r => selectedIds.includes(r.id));
-        document.getElementById("ai-output").innerHTML = "<div class='flex justify-center'><i data-lucide='loader-circle' class='w-5 h-5 animate-spin'></i> Analizando con IA...</div>";
+        document.getElementById("ai-output").innerHTML = "<div class='flex items-center gap-2'><div class='loader'></div> Cargando IA local (solo la primera vez) y analizando...</div>";
         initIcons();
-        const result = await analyzeWithGemini(selectedResources);
-        if (result) {
+        try {
+            const result = await analyzeWithLocalAI(selectedResources);
             document.getElementById("ai-output").innerHTML = `<strong>${result.title || "Actividad sugerida"}</strong><br><pre class="text-xs mt-2 whitespace-pre-wrap">${JSON.stringify(result, null, 2)}</pre>`;
             document.getElementById("generate-ppt-btn").disabled = false;
             window.lastActivityJson = result;
-        } else {
-            document.getElementById("ai-output").innerHTML = "Error en el análisis. Revisa tu API Key o vuelve a intentar.";
+        } catch (err) {
+            document.getElementById("ai-output").innerHTML = "Error al analizar con IA local. Revisa la consola (F12) para más detalles.";
+            console.error(err);
         }
         initIcons();
     });
 
-    document.getElementById("generate-ppt-btn")?.addEventListener("click", () => {
+    document.getElementById("generate-ppt-btn")?.addEventListener("click", async () => {
         if (!window.lastActivityJson) { alert("Primero analiza los recursos con IA."); return; }
         const cycle = document.getElementById("cycle-select").value;
-        generatePPT(window.lastActivityJson, cycle);
+        await generatePPTWithTemplate(window.lastActivityJson, cycle);
+    });
+
+    // Subida de plantillas
+    document.getElementById("template-preescolar")?.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (file && file.name.endsWith(".pptx")) {
+            await saveTemplate("preescolar", file);
+            document.getElementById("template-preescolar-status").innerText = "✅ Plantilla guardada";
+        } else alert("Archivo no válido");
+    });
+    document.getElementById("template-ii")?.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (file && file.name.endsWith(".pptx")) {
+            await saveTemplate("ii", file);
+            document.getElementById("template-ii-status").innerText = "✅ Plantilla guardada";
+        } else alert("Archivo no válido");
+    });
+    document.getElementById("template-iii")?.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (file && file.name.endsWith(".pptx")) {
+            await saveTemplate("iii", file);
+            document.getElementById("template-iii-status").innerText = "✅ Plantilla guardada";
+        } else alert("Archivo no válido");
     });
 
     async function initStep6() {
         await refreshResourcesUI();
+        // Cargar estado de plantillas guardadas
+        const pre = await getTemplate("preescolar");
+        const ii = await getTemplate("ii");
+        const iii = await getTemplate("iii");
+        if (pre) document.getElementById("template-preescolar-status").innerText = "✅ Plantilla cargada";
+        if (ii) document.getElementById("template-ii-status").innerText = "✅ Plantilla cargada";
+        if (iii) document.getElementById("template-iii-status").innerText = "✅ Plantilla cargada";
     }
 
+    // Sobrescribir showStep para cargar paso 6
+    const originalShowStep = window.showStep;
+    window.showStep = function(step) {
+        originalShowStep(step);
+        if (step === 6) initStep6();
+    };
+
     window.onload = () => { initIcons(); resetSelection(); initStep6(); };
+    // Función resetSelection y demás ya existen en tu código original.
+    // Asegúrate de que todas las funciones de los pasos 1-5 estén presentes.
 </script>
 </body>
 </html>
