@@ -1019,7 +1019,8 @@
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
     function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
 
-   <!-- STEP 6: FORMATEADOR PARA POWERPOINT -->
+ 
+<!-- ==================== PASO 6: FORMATEADOR PARA POWERPOINT ==================== -->
 <section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
     <div class="flex items-center gap-4 mb-6">
         <div class="p-3 bg-primary/20 rounded-2xl text-2xl">🎯</div>
@@ -1046,7 +1047,7 @@
     <div class="flex flex-wrap gap-4 mb-6">
         <button id="preview-btn" class="btn-gradient px-5 py-2 rounded-full flex items-center gap-2">👁️ Previsualizar</button>
         <button id="copy-ppt-btn" class="btn-primary-glow px-5 py-2 rounded-full flex items-center gap-2">📋 Copiar para PowerPoint</button>
-        <button id="download-ppt-txt" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-full flex items-center gap-2">💾 Descargar .txt</button>
+        <button id="download-ppt-txt" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-full flex items-center gap-2">💾 Descargar .txt</button>
     </div>
 
     <div id="preview-area" class="hidden mb-6">
@@ -1054,11 +1055,17 @@
         <div id="preview-content" class="bg-slate-900/50 border border-slate-600 rounded-xl p-4 text-sm text-slate-200 whitespace-pre-wrap font-mono max-h-96 overflow-auto"></div>
     </div>
 
-    <div class="text-xs text-slate-400 text-center border-t border-slate-700 pt-4">
+    <div class="mt-8 flex justify-between items-center">
+        <button onclick="showStep(5)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
+        <button onclick="showStep(1)" class="text-slate-400 hover:text-white font-medium transition">+ Nueva planificación</button>
+    </div>
+
+    <div class="text-xs text-slate-400 text-center border-t border-slate-700 pt-4 mt-4">
         💡 Al copiar y pegar en PowerPoint (Ctrl+V), cada "---" creará una nueva diapositiva. Las viñetas (•) se mantendrán.
     </div>
 </section>
 
+<script>
     (function() {
         function initPaso6() {
             const inputTextarea = document.getElementById('ia-input');
@@ -1067,14 +1074,12 @@
             const downloadBtn = document.getElementById('download-ppt-txt');
             const previewArea = document.getElementById('preview-area');
             const previewContent = document.getElementById('preview-content');
-            
             if (!inputTextarea) return;
-            
+
             function formatForPowerPoint(text, cycle) {
                 if (!text.trim()) return "⚠️ No hay texto para formatear.";
                 let lines = text.split(/\r?\n/);
-                let result = [];
-                let currentSlide = [];
+                let result = [], currentSlide = [];
                 const titleKeywords = [
                     "objetivo", "actividad", "evaluación", "rúbrica", "dua", "reflexión",
                     "focalización", "exploración", "aplicación", "introducción", "desarrollo",
@@ -1120,7 +1125,7 @@
                 }
                 return formatted;
             }
-            
+
             previewBtn?.addEventListener('click', () => {
                 const original = inputTextarea.value;
                 const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
@@ -1128,7 +1133,7 @@
                 previewContent.innerText = formatted;
                 previewArea.classList.remove('hidden');
             });
-            
+
             copyBtn?.addEventListener('click', async () => {
                 const original = inputTextarea.value;
                 const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
@@ -1140,7 +1145,7 @@
                     alert("Error al copiar. Selecciona manualmente el texto de la vista previa.");
                 }
             });
-            
+
             downloadBtn?.addEventListener('click', () => {
                 const original = inputTextarea.value;
                 const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
@@ -1153,7 +1158,7 @@
                 URL.revokeObjectURL(link.href);
             });
         }
-        
+
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initPaso6);
         } else {
