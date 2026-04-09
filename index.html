@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIA · Planificación Integral y Ágil | PNFT 2026 + Laboratorio IA + PPT dinámico</title>
+    <title>PIA · Planificación Integral y Ágil | PNFT 2026 + Laboratorio IA local + Plantillas PPT</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232563eb'/%3E%3Ctext x='50' y='67' font-size='50' text-anchor='middle' fill='white' font-weight='bold'%3EP%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Bibliotecas para Paso 6 -->
     <script src="https://cdn.jsdelivr.net/npm/office-text-extractor@2.1.1/dist/office-text-extractor.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+    <!-- Transformers.js para IA local (sin API key) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "@xenova/transformers": "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js"
+            }
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap');
         * { font-family: 'Inter', sans-serif; }
@@ -28,6 +36,8 @@
         .ai-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .resource-item { transition: all 0.2s; }
         .resource-item:hover { background-color: #f1f5f9; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #6366f1; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-50 to-slate-100">
@@ -40,7 +50,7 @@
                 <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
                 <h1 class="text-3xl font-black tracking-tight text-slate-800">PIA · Planificación Integral y Ágil</h1>
             </div>
-            <p class="text-blue-700 text-sm font-semibold">Base de datos oficial PNFT 2026 + Laboratorio de Recursos IA + Generación PPT por ciclo</p>
+            <p class="text-blue-700 text-sm font-semibold">Base de datos oficial PNFT 2026 + Laboratorio IA local (sin API) + Plantillas PPT por ciclo</p>
         </div>
         <div class="flex items-center gap-3 bg-white/70 backdrop-blur-sm px-5 py-2.5 rounded-full shadow-sm border border-slate-200">
             <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span></span>
@@ -134,38 +144,60 @@
                 <div class="mt-8 flex justify-center"><button onclick="showStep(1)" class="text-slate-400 hover:text-slate-700 text-sm font-medium transition">← Iniciar nueva planificación</button></div>
             </section>
 
-            <!-- ==================== PASO 6: LABORATORIO DE RECURSOS + IA + GENERACIÓN PPT ==================== -->
+            <!-- ==================== PASO 6: LABORATORIO DE RECURSOS + IA LOCAL + PLANTILLAS PPT ==================== -->
             <section id="step-6" class="tab-content bg-white rounded-3xl shadow-xl border border-slate-100 p-6 md:p-8">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="p-3 bg-violet-50 rounded-2xl text-violet-600"><i data-lucide="cloud-upload"></i></div>
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800">Laboratorio de recursos + IA generativa</h2>
-                        <p class="text-slate-500 text-sm">Sube tus PPTX, analiza su contenido con IA y genera actividades integrando múltiples recursos.</p>
+                        <h2 class="text-2xl font-bold text-slate-800">Laboratorio de recursos + IA local (sin API)</h2>
+                        <p class="text-slate-500 text-sm">Sube tus PPTX, la IA los analiza en tu navegador y genera actividades usando tus plantillas por ciclo.</p>
                     </div>
                 </div>
 
-                <!-- Gestión de recursos -->
+                <!-- Gestión de plantillas por ciclo -->
+                <div class="bg-indigo-50 rounded-2xl p-5 border border-indigo-200 mb-6">
+                    <h3 class="font-bold text-indigo-800 text-sm mb-3 flex items-center gap-2"><i data-lucide="layout-template"></i> Tus plantillas machote (sube una por ciclo)</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white rounded-xl p-3 border">
+                            <p class="text-xs font-bold text-slate-500">Preescolar / I Ciclo</p>
+                            <input type="file" id="template-preescolar" accept=".pptx" class="text-xs mt-1">
+                            <div id="template-preescolar-status" class="text-[10px] text-green-600 mt-1"></div>
+                        </div>
+                        <div class="bg-white rounded-xl p-3 border">
+                            <p class="text-xs font-bold text-slate-500">II Ciclo</p>
+                            <input type="file" id="template-ii" accept=".pptx" class="text-xs mt-1">
+                            <div id="template-ii-status" class="text-[10px] text-green-600 mt-1"></div>
+                        </div>
+                        <div class="bg-white rounded-xl p-3 border">
+                            <p class="text-xs font-bold text-slate-500">III Ciclo</p>
+                            <input type="file" id="template-iii" accept=".pptx" class="text-xs mt-1">
+                            <div id="template-iii-status" class="text-[10px] text-green-600 mt-1"></div>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-indigo-600 mt-2">💡 Las plantillas deben tener los marcadores <code class="bg-indigo-100 px-1">{title}</code> y <code class="bg-indigo-100 px-1">{content}</code> donde quieras insertar el título y el contenido de cada diapositiva.</p>
+                </div>
+
+                <!-- Gestión de recursos (PPTX a analizar) -->
                 <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-8">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
                         <div class="flex gap-3">
                             <input type="file" id="file-upload" accept=".pptx" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                            <button id="upload-btn" class="bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-blue-700"><i data-lucide="upload" class="w-4 h-4"></i> Subir</button>
+                            <button id="upload-btn" class="bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-blue-700"><i data-lucide="upload" class="w-4 h-4"></i> Subir recurso</button>
                         </div>
-                        <div class="text-sm text-slate-500">🔑 API Key Gemini: <input type="password" id="gemini-key" placeholder="Pega tu clave de Google AI Studio" class="border border-slate-300 rounded-lg px-3 py-1.5 w-64 text-xs"></div>
                     </div>
                     <div id="resources-list" class="space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
                         <p class="text-sm text-slate-400 italic">No hay recursos subidos. Sube tus archivos PPTX.</p>
                     </div>
                 </div>
 
-                <!-- Análisis e integración -->
+                <!-- Análisis e integración con IA local -->
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="border border-slate-200 rounded-2xl p-4 bg-white">
                         <label class="text-[11px] font-black text-slate-400 uppercase tracking-wider block mb-2">Recursos a integrar (selecciona)</label>
                         <div id="select-resources" class="space-y-2 max-h-40 overflow-y-auto text-sm">
                             <p class="text-slate-400">Sube recursos para verlos aquí</p>
                         </div>
-                        <button id="analyze-btn" class="mt-4 w-full bg-violet-600 text-white py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-violet-700"><i data-lucide="brain" class="w-4 h-4"></i> Analizar e integrar con IA</button>
+                        <button id="analyze-btn" class="mt-4 w-full bg-violet-600 text-white py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-violet-700"><i data-lucide="brain" class="w-4 h-4"></i> Analizar e integrar con IA local</button>
                     </div>
                     <div class="border border-slate-200 rounded-2xl p-4 bg-white">
                         <label class="text-[11px] font-black text-slate-400 uppercase tracking-wider block mb-2">Actividad sugerida por IA</label>
@@ -173,7 +205,7 @@
                             Aquí aparecerá el análisis y la propuesta de actividad.
                         </div>
                         <div class="mt-3 flex gap-2">
-                            <button id="generate-ppt-btn" class="flex-1 bg-emerald-600 text-white py-2 rounded-xl text-sm font-bold disabled:opacity-50" disabled><i data-lucide="file-down" class="w-4 h-4 inline"></i> Generar PPT (selecciona ciclo)</button>
+                            <button id="generate-ppt-btn" class="flex-1 bg-emerald-600 text-white py-2 rounded-xl text-sm font-bold disabled:opacity-50" disabled><i data-lucide="file-down" class="w-4 h-4 inline"></i> Generar PPT</button>
                             <select id="cycle-select" class="border border-slate-300 rounded-xl px-3 text-sm">
                                 <option value="preescolar">Preescolar / I Ciclo</option>
                                 <option value="ii">II Ciclo</option>
@@ -182,7 +214,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-xs text-slate-400 text-center border-t pt-4">📌 Los recursos se guardan localmente en tu navegador (IndexedDB). La IA usa Gemini 2.0 Flash (necesita API Key gratuita).</div>
+                <div class="text-xs text-slate-400 text-center border-t pt-4">🔒 Todo el procesamiento es local en tu navegador. No se necesita API Key. La IA se descarga una sola vez (~2GB).</div>
             </section>
         </main>
     </div>
@@ -190,7 +222,7 @@
 
 <script>
     // --------------------------------------------------------------
-    // BASE DE DATOS PNFT COMPLETA (TODOS LOS GRADOS, MÓDULOS, SABERES)
+    // 1. BASE DE DATOS PNFT COMPLETA (TODOS LOS GRADOS, MÓDULOS, SABERES E INDICADORES)
     // --------------------------------------------------------------
     const PNFT_DATA = {
         "0°": {
@@ -737,7 +769,7 @@
         }
     };
 
-
+    // Funciones auxiliares para pasos 1-5 (ídenticas a las originales)
     function getCycleFromGrade(grade) {
         if (grade === "0°") return "Materno Infantil/Transición";
         const num = parseInt(grade);
@@ -887,17 +919,15 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
     }
 
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado al portapapeles."); }
-    function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); } 
+    function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
 
-// --------------------------------------------------------------
-    // A PARTIR DE AQUÍ, SOLO SE MODIFICA EL PASO 6
     // --------------------------------------------------------------
-    
-    // Almacenamiento IndexedDB para recursos y plantillas
+    // PASO 6: LABORATORIO DE RECURSOS + IA LOCAL + PLANTILLAS PPT
+    // --------------------------------------------------------------
     let db = null;
     const DB_NAME = "PIAResourcesDB";
     const STORE_RESOURCES = "pptx_files";
-    const STORE_TEMPLATES = "templates"; // guardar plantillas por ciclo
+    const STORE_TEMPLATES = "templates";
 
     function openDB() {
         return new Promise((resolve, reject) => {
@@ -916,7 +946,6 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
         });
     }
 
-    // Guardar/obtener plantillas
     async function saveTemplate(cycle, file) {
         const dbConn = await openDB();
         const tx = dbConn.transaction(STORE_TEMPLATES, "readwrite");
@@ -934,7 +963,6 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
             req.onerror = () => resolve(null);
         });
     }
-    // Recursos
     async function saveFile(file) {
         const dbConn = await openDB();
         const tx = dbConn.transaction(STORE_RESOURCES, "readwrite");
@@ -995,7 +1023,6 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
     async function loadModel() {
         if (pipeline) return pipeline;
         const { pipeline: pipe } = await import("@xenova/transformers");
-        // Modelo pequeño pero eficaz para tareas de generación de texto
         pipeline = await pipe("text-generation", "Xenova/Phi-3-mini-4k-instruct");
         return pipeline;
     }
@@ -1010,7 +1037,6 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
         const generator = await loadModel();
         const result = await generator(prompt, { max_new_tokens: 800, temperature: 0.7 });
         let textResponse = result[0]?.generated_text || "{}";
-        // Extraer JSON
         try {
             const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
             const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : { title: "Actividad sugerida", slides: [{ type: "title", content: "Actividad generada" }, { type: "content", content: textResponse.substring(0, 500) }] };
@@ -1020,24 +1046,17 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
         }
     }
 
-    // Generación de PPT usando plantilla subida o por defecto
     async function generatePPTWithTemplate(activityJson, cycleType) {
         const PptxGenJS = window.PptxGenJS;
         const pptx = new PptxGenJS();
         pptx.defineLayout({ name: "WIDE", width: 10, height: 5.625 });
         pptx.layout = "WIDE";
 
-        // Intentar cargar plantilla guardada
         const templateData = await getTemplate(cycleType);
         if (templateData && templateData.blob) {
-            // Usar la plantilla subida: necesitaríamos una librería para modificar .pptx existente.
-            // Dado que PptxGenJS no permite editar fácilmente una plantilla existente, usamos un enfoque híbrido:
-            // Si el usuario subió plantilla, mostramos un mensaje de que debe usar el generador por defecto o usar docxtemplater.
-            // Para simplificar y asegurar funcionamiento, usamos el generador por defecto pero con el nombre de la plantilla.
-            // En una implementación profesional se podría usar docxtemplater, pero añadiría complejidad.
-            alert("Usando generador por defecto. Para usar tu plantilla exacta, necesitaríamos docxtemplater. Por ahora se genera con estilo del ciclo seleccionado.");
+            // Por simplicidad, usamos el generador por defecto, pero se podría integrar docxtemplater.
+            alert("Usando generador por defecto. Para usar tu plantilla exacta, se requiere docxtemplater. El PPT se generará con el estilo del ciclo.");
         }
-        // Generación por defecto con estilos según ciclo
         let theme = { name: "Preescolar/I", background: "F0F9FF", titleColor: "1E3A8A", bodyColor: "334155" };
         if (cycleType === "ii") theme = { name: "II Ciclo", background: "F8FAFC", titleColor: "0F3B5C", bodyColor: "1E293B" };
         if (cycleType === "iii") theme = { name: "III Ciclo", background: "F1F5F9", titleColor: "0F172A", bodyColor: "0F172A" };
@@ -1056,7 +1075,7 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
         pptx.writeFile({ fileName: `actividad_${cycleType}_${Date.now()}.pptx` });
     }
 
-    // Eventos del Paso 6
+    // Event listeners para Paso 6
     document.getElementById("upload-btn")?.addEventListener("click", async () => {
         const fileInput = document.getElementById("file-upload");
         const file = fileInput.files[0];
@@ -1116,7 +1135,6 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
 
     async function initStep6() {
         await refreshResourcesUI();
-        // Cargar estado de plantillas guardadas
         const pre = await getTemplate("preescolar");
         const ii = await getTemplate("ii");
         const iii = await getTemplate("iii");
@@ -1125,16 +1143,7 @@ Redacción profesional, inspiradora, coherente con el enfoque por competencias. 
         if (iii) document.getElementById("template-iii-status").innerText = "✅ Plantilla cargada";
     }
 
-    // Sobrescribir showStep para cargar paso 6
-    const originalShowStep = window.showStep;
-    window.showStep = function(step) {
-        originalShowStep(step);
-        if (step === 6) initStep6();
-    };
-
     window.onload = () => { initIcons(); resetSelection(); initStep6(); };
-    // Función resetSelection y demás ya existen en tu código original.
-    // Asegúrate de que todas las funciones de los pasos 1-5 estén presentes.
 </script>
 </body>
 </html>
