@@ -801,7 +801,6 @@
         const btns = document.querySelectorAll('#nav-steps button');
         btns.forEach((btn, i) => { if (i+1 === step) btn.classList.add('step-active'); else btn.classList.remove('step-active'); });
         if (step === 3) generatePromptContent();
-        window.scrollTo(0, 0);
     }
 
     function resetSelection() { selectedAreas.clear(); document.getElementById('saberes-section')?.classList.add('hidden'); }
