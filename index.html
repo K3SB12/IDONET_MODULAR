@@ -195,6 +195,14 @@
                 <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn-primary-glow text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2">Cargar currículo →</button></div>
             </section>
 
+            <!-- STEP 2 -->
+            <section id="step-2" class="tab-content card-3d rounded-3xl p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-primary/20 rounded-2xl text-2xl">📚</div><div><h2 class="text-2xl font-bold text-white">Selección de saberes</h2><p class="text-slate-300 text-sm">Marque áreas y saberes específicos para construir su planificación.</p></div></div>
+                <div class="mb-6"><p class="text-[11px] font-black text-primary-light uppercase tracking-wider mb-3">Áreas disponibles (PNFT)</p><div id="area-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>
+                <div id="saberes-section" class="hidden space-y-5"><div class="flex justify-between items-center border-b border-slate-700 pb-2"><span class="text-[10px] font-black text-primary-light tracking-[0.2em]">SABERES E INDICADORES POR ÁREA</span><span id="badge-count" class="badge-glow">0 SELECCIONADOS</span></div><div id="saberes-container" class="space-y-6 max-h-[540px] overflow-y-auto pr-2 custom-scrollbar"></div></div>
+                <div class="mt-10 flex justify-between items-center border-t border-slate-700 pt-6"><button onclick="showStep(1)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button><button onclick="goToStep3()" class="btn-gradient">Generar prompt →</button></div>
+            </section>
+
         <!-- STEP 3 (corregido con botones Volver y Continuar) -->
         <section id="step-3" class="tab-content card-3d rounded-3xl p-6 md:p-8">
             <div class="flex items-center gap-4 mb-6">
