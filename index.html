@@ -1019,7 +1019,7 @@
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
     function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
 
-   <!-- STEP 6: FORMATEADOR PARA POWERPOINT (insertar dentro de <main>) -->
+   <!-- STEP 6: FORMATEADOR PARA POWERPOINT -->
 <section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
     <div class="flex items-center gap-4 mb-6">
         <div class="p-3 bg-primary/20 rounded-2xl text-2xl">🎯</div>
@@ -1029,13 +1029,11 @@
         </div>
     </div>
 
-    <!-- Área de entrada -->
     <div class="mb-6">
         <label class="block text-sm font-bold text-primary-light mb-2">Texto generado por la IA:</label>
         <textarea id="ia-input" rows="8" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white" placeholder="Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
     </div>
 
-    <!-- Selector de ciclo -->
     <div class="mb-6">
         <label class="block text-sm font-bold text-primary-light mb-2">Ciclo educativo (afecta el formato):</label>
         <div class="flex flex-wrap gap-4">
@@ -1045,14 +1043,12 @@
         </div>
     </div>
 
-    <!-- Botones -->
     <div class="flex flex-wrap gap-4 mb-6">
         <button id="preview-btn" class="btn-gradient px-5 py-2 rounded-full flex items-center gap-2">👁️ Previsualizar</button>
         <button id="copy-ppt-btn" class="btn-primary-glow px-5 py-2 rounded-full flex items-center gap-2">📋 Copiar para PowerPoint</button>
         <button id="download-ppt-txt" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-full flex items-center gap-2">💾 Descargar .txt</button>
     </div>
 
-    <!-- Vista previa -->
     <div id="preview-area" class="hidden mb-6">
         <label class="block text-sm font-bold text-primary-light mb-2">Vista previa (copia este texto a PowerPoint):</label>
         <div id="preview-content" class="bg-slate-900/50 border border-slate-600 rounded-xl p-4 text-sm text-slate-200 whitespace-pre-wrap font-mono max-h-96 overflow-auto"></div>
@@ -1063,8 +1059,7 @@
     </div>
 </section>
 
-<!-- Script del paso 6 (colocar al final del <body>, después del script principal) -->
-
+<script>
     (function() {
         function initPaso6() {
             const inputTextarea = document.getElementById('ia-input');
@@ -1074,7 +1069,7 @@
             const previewArea = document.getElementById('preview-area');
             const previewContent = document.getElementById('preview-content');
             
-            if (!inputTextarea) return; // Si no existe, salir (por si se ejecuta antes de cargar el DOM)
+            if (!inputTextarea) return;
             
             function formatForPowerPoint(text, cycle) {
                 if (!text.trim()) return "⚠️ No hay texto para formatear.";
@@ -1127,43 +1122,37 @@
                 return formatted;
             }
             
-            if (previewBtn) {
-                previewBtn.addEventListener('click', () => {
-                    const original = inputTextarea.value;
-                    const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
-                    const formatted = formatForPowerPoint(original, cycle);
-                    previewContent.innerText = formatted;
-                    previewArea.classList.remove('hidden');
-                });
-            }
+            previewBtn?.addEventListener('click', () => {
+                const original = inputTextarea.value;
+                const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
+                const formatted = formatForPowerPoint(original, cycle);
+                previewContent.innerText = formatted;
+                previewArea.classList.remove('hidden');
+            });
             
-            if (copyBtn) {
-                copyBtn.addEventListener('click', async () => {
-                    const original = inputTextarea.value;
-                    const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
-                    const formatted = formatForPowerPoint(original, cycle);
-                    try {
-                        await navigator.clipboard.writeText(formatted);
-                        alert("✅ Texto formateado copiado. Ahora pega en PowerPoint (Ctrl+V).");
-                    } catch (err) {
-                        alert("Error al copiar. Selecciona manualmente el texto de la vista previa.");
-                    }
-                });
-            }
+            copyBtn?.addEventListener('click', async () => {
+                const original = inputTextarea.value;
+                const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
+                const formatted = formatForPowerPoint(original, cycle);
+                try {
+                    await navigator.clipboard.writeText(formatted);
+                    alert("✅ Texto formateado copiado. Ahora pega en PowerPoint (Ctrl+V).");
+                } catch (err) {
+                    alert("Error al copiar. Selecciona manualmente el texto de la vista previa.");
+                }
+            });
             
-            if (downloadBtn) {
-                downloadBtn.addEventListener('click', () => {
-                    const original = inputTextarea.value;
-                    const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
-                    const formatted = formatForPowerPoint(original, cycle);
-                    const blob = new Blob([formatted], { type: "text/plain" });
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(blob);
-                    link.download = `actividad_powerpoint_${cycle}.txt`;
-                    link.click();
-                    URL.revokeObjectURL(link.href);
-                });
-            }
+            downloadBtn?.addEventListener('click', () => {
+                const original = inputTextarea.value;
+                const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
+                const formatted = formatForPowerPoint(original, cycle);
+                const blob = new Blob([formatted], { type: "text/plain" });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = `actividad_powerpoint_${cycle}.txt`;
+                link.click();
+                URL.revokeObjectURL(link.href);
+            });
         }
         
         if (document.readyState === 'loading') {
@@ -1172,8 +1161,6 @@
             initPaso6();
         }
     })();
-    // Inicialización
-    window.onload = () => { resetSelection(); };
 </script>
 </body>
 </html>
