@@ -2,44 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIA · Planificación Integral y Ágil | PNFT 2026 + Integrador de Actividades</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>PIA · Planificación Integral y Ágil | PNFT 2026 | Diseño Premiado</title>
+    <!-- Tailwind CSS (base ligera) + Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
-        /* ---------- RESET Y VARIABLES ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --primary-light: #818cf8;
-            --secondary: #ec4899;
-            --secondary-dark: #db2777;
-            --accent: #06b6d4;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --glass: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
+        * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            background: radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98));
             min-height: 100vh;
-            color: var(--light);
-            scroll-behavior: smooth;
+            position: relative;
+            overflow-x: hidden;
         }
-
         /* Fondo animado con partículas sutiles */
         body::before {
             content: '';
@@ -48,222 +23,166 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDMiIGQ9Ik0yMCAzLjVDMTEuNzMgMy41IDUgMTAuMjMgNSAxOC41YzAgNy4zIDUuOTUgMTMuMjUgMTMuMjUgMTMuMjUgNy4zIDAgMTMuMjUtNS45NSAxMy4yNS0xMy4yNSAwLTguMjctNi43My0xNS0xNS0xNXoiLz48L3N2Zz4=');
+            background-repeat: repeat;
+            opacity: 0.2;
             pointer-events: none;
-            z-index: -1;
+            z-index: 0;
         }
-
-        /* Contenedor principal con efecto glass */
-        .glass-container {
-            backdrop-filter: blur(2px);
-        }
-
-        /* Header con glow */
-        .header-glow {
-            position: relative;
-            overflow: hidden;
-        }
-        .header-glow::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-light), var(--accent), var(--secondary), transparent);
-            animation: shimmer 3s infinite;
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Tarjetas con efecto 3D al hover */
-        .card-3d {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: rgba(15, 23, 42, 0.7);
+        /* efecto glassmorphism */
+        .glass-card {
+            background: rgba(15, 25, 45, 0.55);
             backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-lg);
-        }
-        .card-3d:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.5);
-            border-color: var(--primary-light);
-        }
-
-        /* Botones con gradiente animado */
-        .btn-gradient {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border: none;
-            color: white;
-            font-weight: bold;
-            padding: 0.75rem 1.5rem;
             border-radius: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background-size: 200% auto;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .btn-gradient:hover {
-            background-position: right center;
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5);
+        .glass-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.4);
+            border-color: rgba(59,130,246,0.5);
         }
-
-        /* Sidebar paso activo */
-        .step-active {
-            background: linear-gradient(90deg, rgba(79, 70, 229, 0.3), rgba(79, 70, 229, 0.05));
-            border-left: 3px solid var(--primary-light);
+        .step-btn {
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            background: rgba(30, 41, 59, 0.4);
             backdrop-filter: blur(4px);
-            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255,255,255,0.05);
         }
-
-        /* Área de texto estilo moderno */
-        .textarea-glow {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--glass-border);
-            color: var(--light);
-            transition: all 0.3s;
+        .step-btn-active {
+            background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(37,99,235,0.8));
+            border-left: 4px solid #fff;
+            box-shadow: 0 8px 20px -6px rgba(59,130,246,0.4);
+            color: white;
         }
-        .textarea-glow:focus {
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+        .neon-glow {
+            text-shadow: 0 0 5px rgba(59,130,246,0.5);
+        }
+        .btn-primary-glow {
+            background: linear-gradient(105deg, #2563eb, #3b82f6);
+            box-shadow: 0 8px 18px -6px #1e40af;
+            transition: all 0.2s;
+            border: none;
+        }
+        .btn-primary-glow:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 22px -8px #1e3a8a;
+            filter: brightness(1.05);
+        }
+        .input-modern {
+            background: rgba(15, 25, 45, 0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            transition: all 0.2s;
+        }
+        .input-modern:focus {
+            border-color: #3b82f6;
             outline: none;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+            background: rgba(30, 41, 59, 0.8);
         }
-
-        /* Scrollbar personalizada */
+        .area-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s;
+        }
+        .area-card-active {
+            background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(37,99,235,0.1));
+            border-color: #3b82f6;
+            box-shadow: 0 0 12px rgba(59,130,246,0.3);
+        }
+        .saber-item {
+            background: rgba(15, 25, 45, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s;
+        }
+        .saber-item:hover {
+            background: rgba(59,130,246,0.15);
+            border-color: #3b82f6;
+        }
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            background: #1e293b;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--primary-light);
+            background: #3b82f6;
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary);
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Animaciones de entrada */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .animate-fade-in {
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
-
-        /* Badges y etiquetas */
-        .badge-glow {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            padding: 0.2rem 0.8rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 0 8px var(--primary-light);
-        }
-
-        /* Enlaces de herramientas */
-        .tool-card {
-            background: rgba(30, 27, 75, 0.6);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        .tool-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(79, 70, 229, 0.4);
-            border-color: var(--primary-light);
-            box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .btn-gradient {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
-            }
-            .card-3d {
-                padding: 1rem;
-            }
+        .tab-content {
+            animation: fadeSlideUp 0.4s ease-out;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="text-white relative">
 
-<div class="max-w-7xl mx-auto px-4 py-8 md:py-10 glass-container">
-    <!-- Header mejorado -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-4 header-glow">
-        <div class="animate-fade-in">
-            <div class="flex items-center gap-3 mb-2">
-                <div class="w-1 h-10 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
-                <h1 class="text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-r from-white via-primary-light to-secondary bg-clip-text text-transparent">PIA · Planificación Integral y Ágil</h1>
+<div class="relative z-10 max-w-7xl mx-auto px-4 py-8 md:py-12">
+    <!-- Header premium -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12 pb-4 border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <span class="text-xl font-black">P</span>
             </div>
-            <p class="text-slate-300 text-sm font-medium">Base de datos oficial PNFT 2026 + Integrador de Actividades · Sin dependencias externas</p>
+            <div>
+                <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white via-blue-200 to-blue-400 bg-clip-text text-transparent">PIA · Planificación Integral y Ágil</h1>
+                <p class="text-blue-300 text-sm font-medium mt-1">Base de datos oficial PNFT 2026 · Diseño adaptativo · Sin dependencias externas</p>
+            </div>
         </div>
-        <div class="flex items-center gap-3 bg-white/5 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/10 shadow-lg">
-            <span class="relative flex h-2.5 w-2.5">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-            <span class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">PNFT · Currículo Nacional 2026</span>
+        <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+            <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-white/80">PNFT · Currículo 2026</span>
         </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Sidebar con pasos -->
+        <!-- Sidebar elegante -->
         <aside class="lg:col-span-3">
             <div class="sticky top-6 space-y-3" id="nav-steps">
-                <button onclick="showStep(1)" id="btn-step-1" class="step-active w-full text-left p-4 rounded-xl transition-all flex items-center gap-3 group shadow-md backdrop-blur-sm">
-                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center font-black text-sm shadow-md">1</span>
-                    <div><p class="text-[10px] font-black uppercase tracking-wider opacity-80">Paso 1</p><p class="text-sm font-bold">Coordenadas</p></div>
+                <button onclick="showStep(1)" id="btn-step-1" class="step-btn step-btn-active w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 group">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-sm shadow-md">1</span>
+                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 1</p><p class="text-sm font-extrabold">Coordenadas</p></div>
                 </button>
-                <button onclick="showStep(2)" id="btn-step-2" class="w-full text-left p-4 rounded-xl transition-all flex items-center gap-3 opacity-60 hover:opacity-100 backdrop-blur-sm">
-                    <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center font-black text-sm">2</span>
-                    <div><p class="text-[10px] font-black uppercase tracking-wider">Paso 2</p><p class="text-sm font-bold">Currículo</p></div>
+                <button onclick="showStep(2)" id="btn-step-2" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
+                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">2</span>
+                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 2</p><p class="text-sm font-extrabold">Currículo</p></div>
                 </button>
-                <button onclick="showStep(3)" id="btn-step-3" class="w-full text-left p-4 rounded-xl transition-all flex items-center gap-3 opacity-60 hover:opacity-100 backdrop-blur-sm">
-                    <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center font-black text-sm">3</span>
-                    <div><p class="text-[10px] font-black uppercase tracking-wider">Paso 3</p><p class="text-sm font-bold">Prompt IA</p></div>
+                <button onclick="showStep(3)" id="btn-step-3" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
+                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">3</span>
+                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 3</p><p class="text-sm font-extrabold">Prompt IA</p></div>
                 </button>
-                <button onclick="showStep(4)" id="btn-step-4" class="w-full text-left p-4 rounded-xl transition-all flex items-center gap-3 opacity-60 hover:opacity-100 backdrop-blur-sm">
-                    <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center font-black text-sm">4</span>
-                    <div><p class="text-[10px] font-black uppercase tracking-wider">Paso 4</p><p class="text-sm font-bold">Asistentes IA</p></div>
+                <button onclick="showStep(4)" id="btn-step-4" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
+                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">4</span>
+                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 4</p><p class="text-sm font-extrabold">Asistentes IA</p></div>
                 </button>
-                <button onclick="showStep(5)" id="btn-step-5" class="w-full text-left p-4 rounded-xl transition-all flex items-center gap-3 opacity-60 hover:opacity-100 backdrop-blur-sm">
-                    <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center font-black text-sm">5</span>
-                    <div><p class="text-[10px] font-black uppercase tracking-wider">Paso 5</p><p class="text-sm font-bold">Exportar gratis</p></div>
+                <button onclick="showStep(5)" id="btn-step-5" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
+                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">5</span>
+                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 5</p><p class="text-sm font-extrabold">Exportar gratis</p></div>
                 </button>
-                <button onclick="showStep(6)" id="btn-step-6" class="w-full text-left p-4 rounded-xl transition-all flex items-center gap-3 opacity-60 hover:opacity-100 backdrop-blur-sm">
-                    <span class="w-8 h-8 rounded-lg bg-slate-700 text-slate-300 flex items-center justify-center font-black text-sm">6</span>
-                    <div><p class="text-[10px] font-black uppercase tracking-wider">Paso 6</p><p class="text-sm font-bold">Integrar y generar PPT</p></div>
+                <button onclick="showStep(6)" id="btn-step-6" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
+                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">6</span>
+                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 6</p><p class="text-sm font-extrabold">Laboratorio PPT</p></div>
                 </button>
             </div>
         </aside>
 
-        <!-- Contenido principal -->
+        <!-- Contenido principal (glassmorphism) -->
         <main class="lg:col-span-9">
             <!-- STEP 1 -->
-            <section id="step-1" class="tab-content active card-3d rounded-3xl p-6 md:p-8 animate-fade-in">
-                <div class="flex items-center gap-4 mb-8"><div class="p-3 bg-primary/20 rounded-2xl text-primary-light text-2xl">🧭</div><div><h2 class="text-2xl font-bold text-white">Definir coordenadas</h2><p class="text-slate-300 text-sm">Nivel y módulo para cargar los saberes oficiales del PNFT.</p></div></div>
+            <section id="step-1" class="tab-content active glass-card p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-8"><div class="p-3 bg-blue-500/20 rounded-2xl text-blue-300 text-2xl">🧭</div><div><h2 class="text-2xl font-bold">Definir coordenadas</h2><p class="text-white/60 text-sm">Selecciona nivel y módulo para cargar los saberes PNFT.</p></div></div>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="space-y-2"><label class="text-[11px] font-black text-primary-light uppercase tracking-wider">Nivel educativo</label><select id="select-nivel" class="w-full bg-slate-800/50 border border-slate-600 p-4 rounded-2xl focus:border-primary-light focus:ring-1 focus:ring-primary-light transition outline-none text-white"><option value="">-- Seleccionar grado --</option><optgroup label="Primera Infancia"><option value="0°">0° - Transición / Preescolar</option></optgroup><optgroup label="I Ciclo"><option value="1°">1° - Primero</option><option value="2°">2° - Segundo</option><option value="3°">3° - Tercero</option></optgroup><optgroup label="II Ciclo"><option value="4°">4° - Cuarto</option><option value="5°">5° - Quinto</option><option value="6°">6° - Sexto</option></optgroup><optgroup label="III Ciclo"><option value="7°">7° - Sétimo</option><option value="8°">8° - Octavo</option><option value="9°">9° - Noveno</option></optgroup></select></div>
-                    <div class="space-y-2"><label class="text-[11px] font-black text-primary-light uppercase tracking-wider">Módulo / período</label><select id="select-modulo" class="w-full bg-slate-800/50 border border-slate-600 p-4 rounded-2xl focus:border-primary-light focus:ring-1 focus:ring-primary-light transition outline-none text-white"><option value="Módulo 1">Módulo 1 (Primer semestre)</option><option value="Módulo 2">Módulo 2 (Segundo semestre)</option></select></div>
+                    <div><label class="text-[11px] font-bold text-blue-300 uppercase tracking-wider">Nivel educativo</label><select id="select-nivel" class="input-modern w-full mt-1"><option value="">-- Seleccionar grado --</option><optgroup label="Primera Infancia"><option value="0°">0° - Preescolar</option></optgroup><optgroup label="I Ciclo"><option value="1°">1°</option><option value="2°">2°</option><option value="3°">3°</option></optgroup><optgroup label="II Ciclo"><option value="4°">4°</option><option value="5°">5°</option><option value="6°">6°</option></optgroup><optgroup label="III Ciclo"><option value="7°">7°</option><option value="8°">8°</option><option value="9°">9°</option></optgroup></select></div>
+                    <div><label class="text-[11px] font-bold text-blue-300 uppercase tracking-wider">Módulo</label><select id="select-modulo" class="input-modern w-full mt-1"><option value="Módulo 1">Módulo 1 (Primer semestre)</option><option value="Módulo 2">Módulo 2 (Segundo semestre)</option></select></div>
                 </div>
-                <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn-gradient">Cargar currículo →</button></div>
+                <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn-primary-glow text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2">Cargar currículo →</button></div>
             </section>
 
             <!-- STEP 2 -->
