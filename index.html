@@ -1019,84 +1019,76 @@
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
     function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
 
-    // --------------------------------------------------------------
-    // PASO 6: Funciones sin dependencias externas
-    // --------------------------------------------------------------
-    <!-- STEP 6: FORMATEADOR PARA POWERPOINT -->
-    <section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-        <div class="flex items-center gap-4 mb-6">
-            <div class="p-3 bg-primary/20 rounded-2xl text-2xl">🎯</div>
-            <div>
-                <h2 class="text-2xl font-bold text-white">Prepara tu contenido para PowerPoint</h2>
-                <p class="text-slate-300 text-sm">Pega el texto de la IA y conviértelo en diapositivas listas para copiar.</p>
-            </div>
+   <!-- STEP 6: FORMATEADOR PARA POWERPOINT (insertar dentro de <main>) -->
+<section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
+    <div class="flex items-center gap-4 mb-6">
+        <div class="p-3 bg-primary/20 rounded-2xl text-2xl">🎯</div>
+        <div>
+            <h2 class="text-2xl font-bold text-white">Prepara tu contenido para PowerPoint</h2>
+            <p class="text-slate-300 text-sm">Pega el texto de la IA y conviértelo en diapositivas listas para copiar.</p>
         </div>
-    
-        <!-- Área de entrada -->
-        <div class="mb-6">
-            <label class="block text-sm font-bold text-primary-light mb-2">Texto generado por la IA:</label>
-            <textarea id="ia-input" rows="8" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white" placeholder="Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
+    </div>
+
+    <!-- Área de entrada -->
+    <div class="mb-6">
+        <label class="block text-sm font-bold text-primary-light mb-2">Texto generado por la IA:</label>
+        <textarea id="ia-input" rows="8" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white" placeholder="Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
+    </div>
+
+    <!-- Selector de ciclo -->
+    <div class="mb-6">
+        <label class="block text-sm font-bold text-primary-light mb-2">Ciclo educativo (afecta el formato):</label>
+        <div class="flex flex-wrap gap-4">
+            <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="preescolar" checked> 🎨 Preescolar / I Ciclo</label>
+            <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="ii"> 📘 II Ciclo</label>
+            <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="iii"> 📙 III Ciclo</label>
         </div>
-    
-        <!-- Selector de ciclo (para ajustar el tono) -->
-        <div class="mb-6">
-            <label class="block text-sm font-bold text-primary-light mb-2">Ciclo educativo (afecta el formato):</label>
-            <div class="flex flex-wrap gap-4">
-                <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="preescolar" checked> 🎨 Preescolar / I Ciclo</label>
-                <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="ii"> 📘 II Ciclo</label>
-                <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="iii"> 📙 III Ciclo</label>
-            </div>
-        </div>
-    
-        <!-- Botones -->
-        <div class="flex flex-wrap gap-4 mb-6">
-            <button id="preview-btn" class="btn-gradient px-5 py-2 rounded-full flex items-center gap-2">👁️ Previsualizar</button>
-            <button id="copy-ppt-btn" class="btn-primary-glow px-5 py-2 rounded-full flex items-center gap-2">📋 Copiar para PowerPoint</button>
-            <button id="download-ppt-txt" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-full flex items-center gap-2">💾 Descargar .txt</button>
-        </div>
-    
-        <!-- Vista previa del resultado -->
-        <div id="preview-area" class="hidden mb-6">
-            <label class="block text-sm font-bold text-primary-light mb-2">Vista previa (copia este texto a PowerPoint):</label>
-            <div id="preview-content" class="bg-slate-900/50 border border-slate-600 rounded-xl p-4 text-sm text-slate-200 whitespace-pre-wrap font-mono max-h-96 overflow-auto"></div>
-        </div>
-    
-        <div class="text-xs text-slate-400 text-center border-t border-slate-700 pt-4">
-            💡 Al copiar y pegar en PowerPoint (Ctrl+V), cada "---" creará una nueva diapositiva. Las viñetas (•) se mantendrán.
-        </div>
-    </section>
-    
-    <script>
-        (function() {
+    </div>
+
+    <!-- Botones -->
+    <div class="flex flex-wrap gap-4 mb-6">
+        <button id="preview-btn" class="btn-gradient px-5 py-2 rounded-full flex items-center gap-2">👁️ Previsualizar</button>
+        <button id="copy-ppt-btn" class="btn-primary-glow px-5 py-2 rounded-full flex items-center gap-2">📋 Copiar para PowerPoint</button>
+        <button id="download-ppt-txt" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-full flex items-center gap-2">💾 Descargar .txt</button>
+    </div>
+
+    <!-- Vista previa -->
+    <div id="preview-area" class="hidden mb-6">
+        <label class="block text-sm font-bold text-primary-light mb-2">Vista previa (copia este texto a PowerPoint):</label>
+        <div id="preview-content" class="bg-slate-900/50 border border-slate-600 rounded-xl p-4 text-sm text-slate-200 whitespace-pre-wrap font-mono max-h-96 overflow-auto"></div>
+    </div>
+
+    <div class="text-xs text-slate-400 text-center border-t border-slate-700 pt-4">
+        💡 Al copiar y pegar en PowerPoint (Ctrl+V), cada "---" creará una nueva diapositiva. Las viñetas (•) se mantendrán.
+    </div>
+</section>
+
+<!-- Script del paso 6 (colocar al final del <body>, después del script principal) -->
+
+    (function() {
+        function initPaso6() {
             const inputTextarea = document.getElementById('ia-input');
             const previewBtn = document.getElementById('preview-btn');
             const copyBtn = document.getElementById('copy-ppt-btn');
             const downloadBtn = document.getElementById('download-ppt-txt');
             const previewArea = document.getElementById('preview-area');
             const previewContent = document.getElementById('preview-content');
-    
-            // Función para limpiar y formatear el texto
+            
+            if (!inputTextarea) return; // Si no existe, salir (por si se ejecuta antes de cargar el DOM)
+            
             function formatForPowerPoint(text, cycle) {
                 if (!text.trim()) return "⚠️ No hay texto para formatear.";
-    
-                // Dividir en líneas
                 let lines = text.split(/\r?\n/);
                 let result = [];
                 let currentSlide = [];
-                let inTitle = false;
-    
-                // Palabras clave para detectar títulos (según ciclo)
                 const titleKeywords = [
                     "objetivo", "actividad", "evaluación", "rúbrica", "dua", "reflexión",
                     "focalización", "exploración", "aplicación", "introducción", "desarrollo",
                     "cierre", "conclusión", "recomendación", "materiales", "recursos"
                 ];
-    
                 for (let line of lines) {
                     line = line.trim();
                     if (line === "") continue;
-    
-                    // Detectar si es un título (línea corta, mayúsculas, o contiene palabras clave)
                     let isTitle = false;
                     if (line.length < 60 && (line === line.toUpperCase() || line.match(/^#{1,3}\s/))) {
                         isTitle = true;
@@ -1109,34 +1101,21 @@
                             }
                         }
                     }
-    
                     if (isTitle) {
-                        // Guardar diapositiva anterior
                         if (currentSlide.length > 0) {
                             result.push(currentSlide.join('\n'));
                             currentSlide = [];
                         }
-                        // Añadir título como encabezado de diapositiva
                         currentSlide.push(`🔹 ${line}`);
-                        inTitle = true;
                     } else {
-                        // Convertir línea en viñeta si no es título
                         if (!line.match(/^[\*\-\•]\s/)) {
                             line = `• ${line}`;
                         }
                         currentSlide.push(line);
-                        inTitle = false;
                     }
                 }
-                // Agregar última diapositiva
-                if (currentSlide.length > 0) {
-                    result.push(currentSlide.join('\n'));
-                }
-    
-                // Unir diapositivas con separador "---" (PowerPoint interpreta como nueva diapositiva)
+                if (currentSlide.length > 0) result.push(currentSlide.join('\n'));
                 let formatted = result.join('\n\n---\n\n');
-    
-                // Ajustes adicionales según ciclo
                 if (cycle === 'preescolar') {
                     formatted = "🎨 ACTIVIDAD PARA PREESCOLAR / I CICLO\n\n" + formatted;
                     formatted = formatted.replace(/•/g, '🌟');
@@ -1145,46 +1124,54 @@
                 } else {
                     formatted = "📙 ACTIVIDAD PARA III CICLO\n\n" + formatted;
                 }
-    
                 return formatted;
             }
-    
-            // Previsualizar
-            previewBtn.addEventListener('click', () => {
-                const original = inputTextarea.value;
-                const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
-                const formatted = formatForPowerPoint(original, cycle);
-                previewContent.innerText = formatted;
-                previewArea.classList.remove('hidden');
-            });
-    
-            // Copiar al portapapeles
-            copyBtn.addEventListener('click', async () => {
-                const original = inputTextarea.value;
-                const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
-                const formatted = formatForPowerPoint(original, cycle);
-                try {
-                    await navigator.clipboard.writeText(formatted);
-                    alert("✅ Texto formateado copiado. Ahora pega en PowerPoint (Ctrl+V).");
-                } catch (err) {
-                    alert("Error al copiar. Selecciona manualmente el texto de la vista previa.");
-                }
-            });
-    
-            // Descargar como .txt
-            downloadBtn.addEventListener('click', () => {
-                const original = inputTextarea.value;
-                const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
-                const formatted = formatForPowerPoint(original, cycle);
-                const blob = new Blob([formatted], { type: "text/plain" });
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = `actividad_powerpoint_${cycle}.txt`;
-                link.click();
-                URL.revokeObjectURL(link.href);
-            });
-        })();
-
+            
+            if (previewBtn) {
+                previewBtn.addEventListener('click', () => {
+                    const original = inputTextarea.value;
+                    const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
+                    const formatted = formatForPowerPoint(original, cycle);
+                    previewContent.innerText = formatted;
+                    previewArea.classList.remove('hidden');
+                });
+            }
+            
+            if (copyBtn) {
+                copyBtn.addEventListener('click', async () => {
+                    const original = inputTextarea.value;
+                    const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
+                    const formatted = formatForPowerPoint(original, cycle);
+                    try {
+                        await navigator.clipboard.writeText(formatted);
+                        alert("✅ Texto formateado copiado. Ahora pega en PowerPoint (Ctrl+V).");
+                    } catch (err) {
+                        alert("Error al copiar. Selecciona manualmente el texto de la vista previa.");
+                    }
+                });
+            }
+            
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', () => {
+                    const original = inputTextarea.value;
+                    const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
+                    const formatted = formatForPowerPoint(original, cycle);
+                    const blob = new Blob([formatted], { type: "text/plain" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = `actividad_powerpoint_${cycle}.txt`;
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                });
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPaso6);
+        } else {
+            initPaso6();
+        }
+    })();
     // Inicialización
     window.onload = () => { resetSelection(); };
 </script>
