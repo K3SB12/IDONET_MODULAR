@@ -3,41 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIA · Planificación Integral y Ágil | PNFT 2026 + Laboratorio IA local + Plantillas PPT</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232563eb'/%3E%3Ctext x='50' y='67' font-size='50' text-anchor='middle' fill='white' font-weight='bold'%3EP%3C/text%3E%3C/svg%3E">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Bibliotecas para Paso 6 -->
-    <script src="https://cdn.jsdelivr.net/npm/office-text-extractor@2.1.1/dist/office-text-extractor.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
-    <!-- Transformers.js para IA local (sin API key) -->
-    <script type="importmap">
-        {
-            "imports": {
-                "@xenova/transformers": "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js"
-            }
-        }
-    </script>
+    <title>PIA · Planificación Integral y Ágil | PNFT 2026 + Integrador de Actividades</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap');
-        * { font-family: 'Inter', sans-serif; }
-        body { background: #f8fafc; scroll-behavior: smooth; }
+        * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f8fafc; scroll-behavior: smooth; padding: 1rem; }
         .step-active { border-left: 4px solid #2563eb; background: linear-gradient(90deg, #eff6ff 0%, #ffffff 100%); }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .area-card { transition: all 0.2s ease; }
+        .area-card { transition: all 0.2s ease; cursor: pointer; }
         .area-card-active { border-color: #2563eb !important; background-color: #eff6ff !important; box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
-        .tool-card { transition: all 0.2s ease; }
+        .tool-card { transition: all 0.2s ease; background: white; border-radius: 1rem; padding: 1rem; text-align: center; text-decoration: none; color: inherit; display: block; }
         .tool-card:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
-        .ai-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .resource-item { transition: all 0.2s; }
-        .resource-item:hover { background-color: #f1f5f9; }
-        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #6366f1; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .btn { padding: 0.5rem 1rem; border-radius: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-primary { background: #2563eb; color: white; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-secondary { background: #6366f1; color: white; }
+        .btn-secondary:hover { background: #4f46e5; }
+        .btn-outline { background: transparent; border: 1px solid #cbd5e1; }
+        .btn-outline:hover { background: #f1f5f9; }
+        textarea, select, input { border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 0.75rem; width: 100%; outline: none; transition: all 0.2s; }
+        textarea:focus, select:focus, input:focus { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.2); }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-50 to-slate-100">
@@ -50,7 +40,7 @@
                 <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
                 <h1 class="text-3xl font-black tracking-tight text-slate-800">PIA · Planificación Integral y Ágil</h1>
             </div>
-            <p class="text-blue-700 text-sm font-semibold">Base de datos oficial PNFT 2026 + Laboratorio IA local (sin API) + Plantillas PPT por ciclo</p>
+            <p class="text-blue-700 text-sm font-semibold">Base de datos oficial PNFT 2026 + Integrador de Actividades (sin dependencias externas)</p>
         </div>
         <div class="flex items-center gap-3 bg-white/70 backdrop-blur-sm px-5 py-2.5 rounded-full shadow-sm border border-slate-200">
             <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span></span>
@@ -84,137 +74,121 @@
                 </button>
                 <button onclick="showStep(6)" id="btn-step-6" class="w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-50 hover:opacity-80">
                     <span class="w-8 h-8 rounded-xl bg-slate-200 text-slate-600 flex items-center justify-center font-black text-sm">6</span>
-                    <div><p class="text-[10px] font-black uppercase tracking-wider">Paso 6</p><p class="text-sm font-extrabold">Laboratorio IA + PPT</p></div>
+                    <div><p class="text-[10px] font-black uppercase tracking-wider">Paso 6</p><p class="text-sm font-extrabold">Integrar y generar PPT</p></div>
                 </button>
             </div>
         </aside>
 
         <!-- MAIN CONTENT -->
         <main class="lg:col-span-9">
-            <!-- ==================== PASOS 1 a 5 (COMPLETOS) ==================== -->
             <!-- STEP 1: COORDENADAS -->
             <section id="step-1" class="tab-content active bg-white rounded-3xl shadow-xl border border-slate-100 p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-8"><div class="p-3 bg-blue-50 rounded-2xl text-blue-600"><i data-lucide="compass"></i></div><div><h2 class="text-2xl font-bold text-slate-800">Definir coordenadas</h2><p class="text-slate-500 text-sm">Nivel y módulo para cargar los saberes oficiales del PNFT.</p></div></div>
+                <div class="flex items-center gap-4 mb-8"><div class="p-3 bg-blue-50 rounded-2xl text-blue-600">🧭</div><div><h2 class="text-2xl font-bold text-slate-800">Definir coordenadas</h2><p class="text-slate-500 text-sm">Nivel y módulo para cargar los saberes oficiales del PNFT.</p></div></div>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="space-y-2"><label class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Nivel educativo</label><select id="select-nivel" class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-blue-500 focus:bg-white transition outline-none font-semibold"><option value="">-- Seleccionar grado --</option><optgroup label="Primera Infancia"><option value="0°">0° - Transición / Preescolar</option></optgroup><optgroup label="I Ciclo"><option value="1°">1° - Primero</option><option value="2°">2° - Segundo</option><option value="3°">3° - Tercero</option></optgroup><optgroup label="II Ciclo"><option value="4°">4° - Cuarto</option><option value="5°">5° - Quinto</option><option value="6°">6° - Sexto</option></optgroup><optgroup label="III Ciclo"><option value="7°">7° - Sétimo</option><option value="8°">8° - Octavo</option><option value="9°">9° - Noveno</option></optgroup></select></div>
                     <div class="space-y-2"><label class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Módulo / período</label><select id="select-modulo" class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-blue-500 transition outline-none font-semibold"><option value="Módulo 1">Módulo 1 (Primer semestre)</option><option value="Módulo 2">Módulo 2 (Segundo semestre)</option></select></div>
                 </div>
-                <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-blue-700 transition shadow-lg shadow-blue-200">Cargar currículo <i data-lucide="arrow-right" class="w-5 h-5"></i></button></div>
+                <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn btn-primary px-8 py-4 text-lg flex items-center gap-2">Cargar currículo →</button></div>
             </section>
 
             <!-- STEP 2: SELECCIÓN CURRICULAR -->
             <section id="step-2" class="tab-content bg-white rounded-3xl shadow-xl border border-slate-100 p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-indigo-50 rounded-2xl text-indigo-600"><i data-lucide="book-open-check"></i></div><div><h2 class="text-2xl font-bold text-slate-800">Selección de saberes</h2><p class="text-slate-500 text-sm">Marque áreas y saberes específicos para construir su planificación.</p></div></div>
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-indigo-50 rounded-2xl text-indigo-600">📚</div><div><h2 class="text-2xl font-bold text-slate-800">Selección de saberes</h2><p class="text-slate-500 text-sm">Marque áreas y saberes específicos para construir su planificación.</p></div></div>
                 <div class="mb-6"><p class="text-[11px] font-black text-slate-400 uppercase tracking-wider mb-3">Áreas disponibles (PNFT)</p><div id="area-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>
                 <div id="saberes-section" class="hidden space-y-5"><div class="flex justify-between items-center border-b border-slate-200 pb-2"><span class="text-[10px] font-black text-slate-400 tracking-[0.2em]">SABERES E INDICADORES POR ÁREA</span><span id="badge-count" class="bg-blue-100 text-blue-800 text-[11px] font-bold px-3 py-1.5 rounded-full">0 SELECCIONADOS</span></div><div id="saberes-container" class="space-y-6 max-h-[540px] overflow-y-auto pr-2 custom-scrollbar"></div></div>
-                <div class="mt-10 flex justify-between items-center border-t pt-6"><button onclick="showStep(1)" class="text-slate-400 hover:text-slate-700 font-bold flex gap-2 transition"><i data-lucide="chevron-left" class="w-4 h-4"></i> Volver</button><button onclick="goToStep3()" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-xl shadow-indigo-100">Generar prompt →</button></div>
+                <div class="mt-10 flex justify-between items-center border-t pt-6"><button onclick="showStep(1)" class="text-slate-400 hover:text-slate-700 font-bold flex gap-2 transition">← Volver</button><button onclick="goToStep3()" class="btn btn-secondary px-10 py-4 text-lg">Generar prompt →</button></div>
             </section>
 
             <!-- STEP 3: PROMPT GENERADO -->
             <section id="step-3" class="tab-content bg-white rounded-3xl shadow-xl border border-slate-100 p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-emerald-50 rounded-2xl text-emerald-600"><i data-lucide="sparkles"></i></div><div><h2 class="text-2xl font-bold text-slate-800">Prompt de mediación pedagógica</h2><p class="text-slate-500 text-sm">Copie el siguiente prompt en su asistente IA para generar la planificación.</p></div></div>
-                <div class="relative group"><textarea id="output-prompt" rows="20" class="w-full bg-slate-900 text-emerald-300 font-mono text-[12px] p-6 rounded-2xl outline-none ring-2 ring-slate-200 leading-relaxed custom-scrollbar shadow-inner" readonly></textarea><button onclick="copyPrompt()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white p-2.5 rounded-xl transition"><i data-lucide="copy" class="w-5 h-5"></i></button></div>
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-emerald-50 rounded-2xl text-emerald-600">✨</div><div><h2 class="text-2xl font-bold text-slate-800">Prompt de mediación pedagógica</h2><p class="text-slate-500 text-sm">Copie el siguiente prompt en su asistente IA para generar la planificación.</p></div></div>
+                <div class="relative group"><textarea id="output-prompt" rows="20" class="w-full bg-slate-900 text-emerald-300 font-mono text-[12px] p-6 rounded-2xl outline-none ring-2 ring-slate-200 leading-relaxed custom-scrollbar" readonly></textarea><button onclick="copyPrompt()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-xl transition">📋</button></div>
                 <div class="mt-8 flex justify-center"><button onclick="showStep(1)" class="text-slate-400 hover:text-slate-700 font-medium transition">+ Nueva planificación</button></div>
             </section>
 
             <!-- STEP 4: ASISTENTES IA -->
             <section id="step-4" class="tab-content bg-white rounded-3xl shadow-xl border border-slate-100 p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-purple-50 rounded-2xl text-purple-600"><i data-lucide="bot"></i></div><div><h2 class="text-2xl font-bold text-slate-800">Asistentes de inteligencia artificial</h2><p class="text-slate-500 text-sm">Elija su IA favorita, pegue el prompt del paso 3 y obtenga su planificación.</p></div></div>
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-purple-50 rounded-2xl text-purple-600">🤖</div><div><h2 class="text-2xl font-bold text-slate-800">Asistentes de inteligencia artificial</h2><p class="text-slate-500 text-sm">Elija su IA favorita, pegue el prompt del paso 3 y obtenga su planificación.</p></div></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <a href="https://gemini.google.com" target="_blank" class="tool-card bg-gradient-to-br from-blue-50 to-white rounded-2xl border border-blue-100 p-5 flex flex-col items-center text-center hover:border-blue-300 transition"><div class="ai-icon bg-white shadow-md mb-3"><img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v2_d9d6d8a6b0e4e5b7d0c6a1c3e5f8b9a0.svg" alt="Gemini" class="w-8 h-8" onerror="this.src='https://fonts.gstatic.com/s/i/materialiconsoutlined/auto_awesome/v6/24px.svg'"></div><h3 class="font-black text-slate-800">Gemini</h3><p class="text-[11px] text-slate-500">Google AI</p><span class="mt-3 text-[10px] bg-blue-100 text-blue-700 px-3 py-1 rounded-full">gratuito</span></a>
-                    <a href="https://chat.openai.com" target="_blank" class="tool-card bg-gradient-to-br from-emerald-50 to-white rounded-2xl border border-emerald-100 p-5 flex flex-col items-center text-center"><div class="ai-icon bg-white shadow-md mb-3"><i data-lucide="message-square" class="w-8 h-8 text-emerald-600"></i></div><h3 class="font-black text-slate-800">ChatGPT</h3><p class="text-[11px] text-slate-500">OpenAI</p><span class="mt-3 text-[10px] bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">versión gratis</span></a>
-                    <a href="https://copilot.microsoft.com" target="_blank" class="tool-card bg-gradient-to-br from-sky-50 to-white rounded-2xl border border-sky-100 p-5 flex flex-col items-center text-center"><div class="ai-icon bg-white shadow-md mb-3"><i data-lucide="sparkle" class="w-8 h-8 text-sky-600"></i></div><h3 class="font-black text-slate-800">Copilot</h3><p class="text-[11px] text-slate-500">Microsoft</p><span class="mt-3 text-[10px] bg-sky-100 text-sky-700 px-3 py-1 rounded-full">acceso libre</span></a>
-                    <a href="https://aistudio.google.com" target="_blank" class="tool-card bg-gradient-to-br from-amber-50 to-white rounded-2xl border border-amber-100 p-5 flex flex-col items-center text-center"><div class="ai-icon bg-white shadow-md mb-3"><i data-lucide="database-zap" class="w-8 h-8 text-amber-600"></i></div><h3 class="font-black text-slate-800">Google AI Studio</h3><p class="text-[11px] text-slate-500">Gemini API</p><span class="mt-3 text-[10px] bg-amber-100 text-amber-700 px-3 py-1 rounded-full">experimental</span></a>
+                    <a href="https://gemini.google.com" target="_blank" class="tool-card"><div class="text-3xl mb-2">🌐</div><h3 class="font-black">Gemini</h3><p class="text-xs text-slate-500">Google AI</p><span class="mt-2 text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">gratuito</span></a>
+                    <a href="https://chat.openai.com" target="_blank" class="tool-card"><div class="text-3xl mb-2">💬</div><h3 class="font-black">ChatGPT</h3><p class="text-xs text-slate-500">OpenAI</p><span class="mt-2 text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">versión gratis</span></a>
+                    <a href="https://copilot.microsoft.com" target="_blank" class="tool-card"><div class="text-3xl mb-2">🌀</div><h3 class="font-black">Copilot</h3><p class="text-xs text-slate-500">Microsoft</p><span class="mt-2 text-[10px] bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full">acceso libre</span></a>
+                    <a href="https://deepseek.com" target="_blank" class="tool-card"><div class="text-3xl mb-2">🔍</div><h3 class="font-black">DeepSeek</h3><p class="text-xs text-slate-500">IA china gratuita</p><span class="mt-2 text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">totalmente gratis</span></a>
                 </div>
-                <div class="mt-8 p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3"><span class="text-sm font-medium text-slate-600">✨ Consejo: pegue el prompt generado en el paso 3 en cualquiera de estas IAs</span><button onclick="showStep(3)" class="text-blue-600 text-sm font-bold flex items-center gap-1">Ir al prompt <i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div>
-                <div class="mt-6 flex justify-end"><button onclick="showStep(5)" class="bg-purple-600 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-purple-700 transition">Siguiente: herramientas gratuitas →</button></div>
+                <div class="mt-8 p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3"><span class="text-sm font-medium">✨ Consejo: pegue el prompt generado en el paso 3 en cualquiera de estas IAs</span><button onclick="showStep(3)" class="text-blue-600 text-sm font-bold">Ir al prompt 📋</button></div>
+                <div class="mt-6 flex justify-end"><button onclick="showStep(5)" class="btn btn-secondary px-8 py-3">Siguiente: herramientas gratuitas →</button></div>
             </section>
 
-            <!-- STEP 5: HERRAMIENTAS GRATUITAS PDF, PPT, WORD -->
+            <!-- STEP 5: HERRAMIENTAS GRATUITAS (enlaces directos sin scripts) -->
             <section id="step-5" class="tab-content bg-white rounded-3xl shadow-xl border border-slate-100 p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-rose-50 rounded-2xl text-rose-600"><i data-lucide="file-output"></i></div><div><h2 class="text-2xl font-bold text-slate-800">Exporta gratis tu planificación</h2><p class="text-slate-500 text-sm">Convierte el resultado de la IA en PDF, PPT o Word sin instalar nada.</p></div></div>
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-rose-50 rounded-2xl text-rose-600">📄</div><div><h2 class="text-2xl font-bold text-slate-800">Exporta gratis tu planificación</h2><p class="text-slate-500 text-sm">Convierte el resultado de la IA en PDF, PPT o Word sin instalar nada.</p></div></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div class="tool-card bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center"><i data-lucide="file-text" class="w-8 h-8 text-blue-600"></i></div><div class="flex-1"><h3 class="font-black text-slate-800">Microsoft Word (Web)</h3><p class="text-xs text-slate-500">Pega el contenido, da formato y exporta a PDF.</p></div><a href="https://docs.google.com/document/u/0/" target="_blank" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold">Abrir Word →</a></div>
-                    <div class="tool-card bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center"><i data-lucide="presentation" class="w-8 h-8 text-orange-600"></i></div><div class="flex-1"><h3 class="font-black text-slate-800">PowerPoint (Web)</h3><p class="text-xs text-slate-500">Crea diapositivas desde la mediación, exporta a PDF o PPT.</p></div><a href="https://docs.google.com/presentation/u/0/" target="_blank" class="bg-orange-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold">Abrir PPT →</a></div>
-                    <div class="tool-card bg-gradient-to-r from-purple-50 to-white border border-purple-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center"><i data-lucide="palette" class="w-8 h-8 text-purple-700"></i></div><div class="flex-1"><h3 class="font-black text-slate-800">Canva 🔥</h3><p class="text-xs text-slate-500">Plantillas educativas, descarga como PDF, PPT o imagen.</p></div><a href="https://www.canva.com" target="_blank" class="bg-purple-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold">Usar Canva →</a></div>
-                    <div class="tool-card bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center"><i data-lucide="file" class="w-8 h-8 text-green-600"></i></div><div class="flex-1"><h3 class="font-black text-slate-800">Google Docs</h3><p class="text-xs text-slate-500">Pega, formatea y descarga como PDF o Word.</p></div><a href="https://docs.google.com" target="_blank" class="bg-green-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold">Abrir Docs →</a></div>
-                    <div class="tool-card bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4"><div class="w-14 h-14 rounded-2xl bg-yellow-50 flex items-center justify-center"><i data-lucide="layout" class="w-8 h-8 text-yellow-600"></i></div><div class="flex-1"><h3 class="font-black text-slate-800">Google Slides</h3><p class="text-xs text-slate-500">Convierte la mediación en presentación, exporta a PDF o PPT.</p></div><a href="https://slides.google.com" target="_blank" class="bg-yellow-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold">Abrir Slides →</a></div>
-                    <div class="tool-card bg-slate-100 border border-slate-300 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4 col-span-1 md:col-span-2 justify-between"><div class="flex items-center gap-3"><i data-lucide="lightbulb" class="w-6 h-6 text-amber-600"></i><span class="text-sm font-semibold">💡 Tip profesional: Usa Canva para rúbricas visuales y PowerPoint web para exposiciones MEP.</span></div><button onclick="copyFinalAdvice()" class="text-xs bg-slate-800 text-white px-4 py-2 rounded-lg">Copiar recordatorio</button></div>
+                    <a href="https://docs.google.com/document/u/0/" target="_blank" class="tool-card flex flex-row items-center gap-4 text-left"><div class="text-3xl">📝</div><div><h3 class="font-black">Microsoft Word (Web)</h3><p class="text-xs">Pega el contenido, da formato y exporta a PDF.</p></div></a>
+                    <a href="https://docs.google.com/presentation/u/0/" target="_blank" class="tool-card flex flex-row items-center gap-4 text-left"><div class="text-3xl">📊</div><div><h3 class="font-black">PowerPoint (Web)</h3><p class="text-xs">Crea diapositivas desde la mediación, exporta a PDF o PPT.</p></div></a>
+                    <a href="https://www.canva.com" target="_blank" class="tool-card flex flex-row items-center gap-4 text-left"><div class="text-3xl">🎨</div><div><h3 class="font-black">Canva 🔥</h3><p class="text-xs">Plantillas educativas, descarga como PDF, PPT o imagen.</p></div></a>
+                    <a href="https://docs.google.com" target="_blank" class="tool-card flex flex-row items-center gap-4 text-left"><div class="text-3xl">📁</div><div><h3 class="font-black">Google Docs</h3><p class="text-xs">Pega, formatea y descarga como PDF o Word.</p></div></a>
+                    <a href="https://slides.google.com" target="_blank" class="tool-card flex flex-row items-center gap-4 text-left"><div class="text-3xl">🖼️</div><div><h3 class="font-black">Google Slides</h3><p class="text-xs">Convierte la mediación en presentación, exporta a PDF o PPT.</p></div></a>
+                    <div class="bg-slate-100 rounded-2xl p-5 col-span-1 md:col-span-2 flex items-center justify-between"><span>💡 Tip profesional: Usa Canva para rúbricas visuales y PowerPoint web para exposiciones MEP.</span><button onclick="copyFinalAdvice()" class="btn btn-outline text-sm">Copiar recordatorio</button></div>
                 </div>
-                <div class="mt-8 flex justify-center"><button onclick="showStep(1)" class="text-slate-400 hover:text-slate-700 text-sm font-medium transition">← Iniciar nueva planificación</button></div>
+                <div class="mt-8 flex justify-center"><button onclick="showStep(1)" class="text-slate-400 hover:text-slate-700 text-sm font-medium">← Iniciar nueva planificación</button></div>
             </section>
 
-            <!-- ==================== PASO 6: LABORATORIO DE RECURSOS + IA LOCAL + PLANTILLAS PPT ==================== -->
+            <!-- ==================== PASO 6: INTEGRADOR DE ACTIVIDADES (SIN DEPENDENCIAS EXTERNAS) ==================== -->
             <section id="step-6" class="tab-content bg-white rounded-3xl shadow-xl border border-slate-100 p-6 md:p-8">
                 <div class="flex items-center gap-4 mb-6">
-                    <div class="p-3 bg-violet-50 rounded-2xl text-violet-600"><i data-lucide="cloud-upload"></i></div>
+                    <div class="p-3 bg-violet-50 rounded-2xl text-violet-600">📥</div>
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-800">Laboratorio de recursos + IA local (sin API)</h2>
-                        <p class="text-slate-500 text-sm">Sube tus PPTX, la IA los analiza en tu navegador y genera actividades usando tus plantillas por ciclo.</p>
+                        <h2 class="text-2xl font-bold text-slate-800">Integrador de actividades con tus plantillas PPT</h2>
+                        <p class="text-slate-500 text-sm">Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek. Luego aplica el contenido a tu plantilla PPT siguiendo las instrucciones.</p>
                     </div>
                 </div>
 
-                <!-- Gestión de plantillas por ciclo -->
-                <div class="bg-indigo-50 rounded-2xl p-5 border border-indigo-200 mb-6">
-                    <h3 class="font-bold text-indigo-800 text-sm mb-3 flex items-center gap-2"><i data-lucide="layout-template"></i> Tus plantillas machote (sube una por ciclo)</h3>
+                <!-- Área para pegar el texto generado por IA externa -->
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Contenido generado por la IA (pégalo aquí):</label>
+                    <textarea id="ia-content" rows="12" class="w-full border border-slate-300 rounded-xl p-4 font-mono text-sm" placeholder="Pega aquí el análisis, la actividad integrada o el informe que generaste con ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
+                </div>
+
+                <!-- Selección de ciclo (plantilla) -->
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Selecciona el ciclo educativo (plantilla PPT):</label>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div class="bg-white rounded-xl p-3 border">
-                            <p class="text-xs font-bold text-slate-500">Preescolar / I Ciclo</p>
-                            <input type="file" id="template-preescolar" accept=".pptx" class="text-xs mt-1">
-                            <div id="template-preescolar-status" class="text-[10px] text-green-600 mt-1"></div>
-                        </div>
-                        <div class="bg-white rounded-xl p-3 border">
-                            <p class="text-xs font-bold text-slate-500">II Ciclo</p>
-                            <input type="file" id="template-ii" accept=".pptx" class="text-xs mt-1">
-                            <div id="template-ii-status" class="text-[10px] text-green-600 mt-1"></div>
-                        </div>
-                        <div class="bg-white rounded-xl p-3 border">
-                            <p class="text-xs font-bold text-slate-500">III Ciclo</p>
-                            <input type="file" id="template-iii" accept=".pptx" class="text-xs mt-1">
-                            <div id="template-iii-status" class="text-[10px] text-green-600 mt-1"></div>
-                        </div>
-                    </div>
-                    <p class="text-[10px] text-indigo-600 mt-2">💡 Las plantillas deben tener los marcadores <code class="bg-indigo-100 px-1">{title}</code> y <code class="bg-indigo-100 px-1">{content}</code> donde quieras insertar el título y el contenido de cada diapositiva.</p>
-                </div>
-
-                <!-- Gestión de recursos (PPTX a analizar) -->
-                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-8">
-                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                        <div class="flex gap-3">
-                            <input type="file" id="file-upload" accept=".pptx" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                            <button id="upload-btn" class="bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-blue-700"><i data-lucide="upload" class="w-4 h-4"></i> Subir recurso</button>
-                        </div>
-                    </div>
-                    <div id="resources-list" class="space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
-                        <p class="text-sm text-slate-400 italic">No hay recursos subidos. Sube tus archivos PPTX.</p>
+                        <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="cycle" value="preescolar" checked> <span>🎨 Preescolar / I Ciclo</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="cycle" value="ii"> <span>📘 II Ciclo</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="cycle" value="iii"> <span>📙 III Ciclo</span>
+                        </label>
                     </div>
                 </div>
 
-                <!-- Análisis e integración con IA local -->
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="border border-slate-200 rounded-2xl p-4 bg-white">
-                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-wider block mb-2">Recursos a integrar (selecciona)</label>
-                        <div id="select-resources" class="space-y-2 max-h-40 overflow-y-auto text-sm">
-                            <p class="text-slate-400">Sube recursos para verlos aquí</p>
-                        </div>
-                        <button id="analyze-btn" class="mt-4 w-full bg-violet-600 text-white py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-violet-700"><i data-lucide="brain" class="w-4 h-4"></i> Analizar e integrar con IA local</button>
-                    </div>
-                    <div class="border border-slate-200 rounded-2xl p-4 bg-white">
-                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-wider block mb-2">Actividad sugerida por IA</label>
-                        <div id="ai-output" class="bg-slate-50 rounded-xl p-3 text-sm text-slate-700 min-h-[180px] overflow-y-auto custom-scrollbar">
-                            Aquí aparecerá el análisis y la propuesta de actividad.
-                        </div>
-                        <div class="mt-3 flex gap-2">
-                            <button id="generate-ppt-btn" class="flex-1 bg-emerald-600 text-white py-2 rounded-xl text-sm font-bold disabled:opacity-50" disabled><i data-lucide="file-down" class="w-4 h-4 inline"></i> Generar PPT</button>
-                            <select id="cycle-select" class="border border-slate-300 rounded-xl px-3 text-sm">
-                                <option value="preescolar">Preescolar / I Ciclo</option>
-                                <option value="ii">II Ciclo</option>
-                                <option value="iii">III Ciclo</option>
-                            </select>
-                        </div>
+                <!-- Botones de acción -->
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button id="copy-content-btn" class="btn btn-primary flex items-center gap-2">📋 Copiar contenido formateado</button>
+                    <button id="download-txt-btn" class="btn btn-secondary flex items-center gap-2">💾 Descargar como .txt</button>
+                </div>
+
+                <!-- Instrucciones para aplicar a la plantilla PPT -->
+                <div class="bg-indigo-50 rounded-2xl p-5 border border-indigo-200">
+                    <h3 class="font-bold text-indigo-800 mb-3 flex items-center gap-2">📌 Cómo aplicar este contenido a tu plantilla PPT</h3>
+                    <ol class="list-decimal list-inside space-y-2 text-sm text-slate-700">
+                        <li>Abre tu plantilla de PowerPoint para el ciclo seleccionado (<strong>Preescolar/I Ciclo, II Ciclo o III Ciclo</strong>).</li>
+                        <li>Copia el texto formateado usando el botón de arriba o seleccionándolo manualmente.</li>
+                        <li>Pega el contenido en las diapositivas según la estructura que sugirió la IA (título, objetivos, actividades, evaluación, etc.).</li>
+                        <li>Si tu plantilla tiene marcadores como <code class="bg-indigo-100 px-1">{title}</code> o <code class="bg-indigo-100 px-1">{content}</code>, reemplázalos con el texto correspondiente.</li>
+                        <li>Ajusta el diseño, imágenes y colores según tu preferencia.</li>
+                        <li>Exporta a PDF o PPT final para usar en clase.</li>
+                    </ol>
+                    <div class="mt-4 p-3 bg-white rounded-xl text-sm">
+                        <p class="font-semibold">💡 Sugerencia:</p>
+                        <p>Si la IA generó una actividad con varias secciones, crea una diapositiva por sección. Usa títulos claros y viñetas para facilitar la lectura.</p>
                     </div>
                 </div>
-                <div class="text-xs text-slate-400 text-center border-t pt-4">🔒 Todo el procesamiento es local en tu navegador. No se necesita API Key. La IA se descarga una sola vez (~2GB).</div>
+
+                <div class="mt-6 text-xs text-slate-400 text-center border-t pt-4">🔒 Este paso es 100% local. No se envían datos a ningún servidor. Solo necesitas copiar y pegar.</div>
             </section>
         </main>
     </div>
@@ -222,7 +196,7 @@
 
 <script>
     // --------------------------------------------------------------
-    // 1. BASE DE DATOS PNFT COMPLETA (TODOS LOS GRADOS, MÓDULOS, SABERES E INDICADORES)
+    // BASE DE DATOS PNFT COMPLETA (TODOS LOS GRADOS, MÓDULOS, SABERES)
     // --------------------------------------------------------------
     const PNFT_DATA = {
         "0°": {
@@ -769,80 +743,60 @@
         }
     };
 
-    // Funciones auxiliares para pasos 1-5 (ídenticas a las originales)
-    function getCycleFromGrade(grade) {
-        if (grade === "0°") return "Materno Infantil/Transición";
-        const num = parseInt(grade);
-        if (num >= 1 && num <= 3) return "I Ciclo";
-        if (num >= 4 && num <= 6) return "II Ciclo";
-        return "III Ciclo";
-    }
-
-    function getRDAForArea(grade, areaName) {
-        const cycle = getCycleFromGrade(grade);
-        return RDA_POR_CICLO[cycle]?.[areaName] || "Resultado de aprendizaje según diseño curricular MEP.";
-    }
+    function getCycleFromGrade(g) { if (g === "0°") return "Materno Infantil/Transición"; const n = parseInt(g); if (n <= 3) return "I Ciclo"; if (n <= 6) return "II Ciclo"; return "III Ciclo"; }
+    function getRDAForArea(g, a) { const c = getCycleFromGrade(g); return RDA_POR_CICLO[c]?.[a] || "Resultado de aprendizaje según MEP."; }
 
     let selectedAreas = new Set();
     let currentNivel = "", currentModulo = "";
-
-    function initIcons() { if(window.lucide) lucide.createIcons(); }
 
     function showStep(step) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.getElementById(`step-${step}`).classList.add('active');
         const btns = document.querySelectorAll('#nav-steps button');
-        btns.forEach((btn, i) => { if(i+1 === step) btn.classList.add('step-active'); else btn.classList.remove('step-active'); });
-        if(step === 3) generatePromptContent();
-        initIcons();
-        window.scrollTo(0,0);
-        if(step === 6) initStep6();
+        btns.forEach((btn, i) => { if (i+1 === step) btn.classList.add('step-active'); else btn.classList.remove('step-active'); });
+        if (step === 3) generatePromptContent();
+        window.scrollTo(0, 0);
     }
 
     function resetSelection() { selectedAreas.clear(); document.getElementById('saberes-section')?.classList.add('hidden'); }
     function goToStep2() {
         currentNivel = document.getElementById('select-nivel').value;
-        if(!currentNivel) { alert("Seleccione un nivel."); return; }
+        if (!currentNivel) { alert("Seleccione un nivel."); return; }
         currentModulo = document.getElementById('select-modulo').value;
         buildAreaSelector();
         showStep(2);
     }
-
     function buildAreaSelector() {
         const gradeData = PNFT_DATA[currentNivel]?.[currentModulo];
         const grid = document.getElementById('area-grid');
         grid.innerHTML = '';
-        if(!gradeData) { grid.innerHTML = '<div class="p-4 bg-amber-50 text-amber-700 rounded-2xl text-sm">⚠️ Datos en construcción para esta combinación.</div>'; return; }
+        if (!gradeData) { grid.innerHTML = '<div class="p-4 bg-amber-50 text-amber-700 rounded-2xl text-sm">⚠️ Datos en construcción para esta combinación.</div>'; return; }
         Object.keys(gradeData).forEach(area => {
             const btn = document.createElement('button');
             btn.className = "flex justify-between items-center p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-300 transition-all text-left bg-white area-card";
-            btn.innerHTML = `<div><span class="text-[9px] font-black text-slate-400 uppercase">Área</span><p class="font-extrabold text-sm">${area}</p></div><div class="status-icon text-slate-300"><i data-lucide="circle" class="w-5 h-5"></i></div>`;
+            btn.innerHTML = `<div><span class="text-[9px] font-black text-slate-400 uppercase">Área</span><p class="font-extrabold text-sm">${area}</p></div><div class="status-icon">○</div>`;
             btn.onclick = () => toggleArea(area, btn);
             grid.appendChild(btn);
         });
-        initIcons();
         document.getElementById('saberes-section')?.classList.add('hidden');
         selectedAreas.clear();
     }
-
     function toggleArea(area, el) {
-        if(selectedAreas.has(area)) {
+        if (selectedAreas.has(area)) {
             selectedAreas.delete(area);
             el.classList.remove('area-card-active');
-            el.querySelector('.status-icon').innerHTML = '<i data-lucide="circle" class="w-5 h-5"></i>';
+            el.querySelector('.status-icon').innerHTML = '○';
         } else {
             selectedAreas.add(area);
             el.classList.add('area-card-active');
-            el.querySelector('.status-icon').innerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600"></i>';
+            el.querySelector('.status-icon').innerHTML = '✓';
         }
-        initIcons();
         renderSaberesList();
     }
-
     function renderSaberesList() {
         const container = document.getElementById('saberes-container');
         const wrapper = document.getElementById('saberes-section');
-        if(selectedAreas.size === 0) { wrapper.classList.add('hidden'); return; }
+        if (selectedAreas.size === 0) { wrapper.classList.add('hidden'); return; }
         wrapper.classList.remove('hidden');
         container.innerHTML = '';
         const gradeData = PNFT_DATA[currentNivel][currentModulo];
@@ -861,13 +815,9 @@
             container.appendChild(areaDiv);
         });
         updateSelectedCount();
-        initIcons();
     }
-
     function updateSelectedCount() { const count = document.querySelectorAll('.saber-check:checked').length; document.getElementById('badge-count').innerText = `${count} SELECCIONADO${count !== 1 ? 'S' : ''}`; }
-
-    function goToStep3() { if(document.querySelectorAll('.saber-check:checked').length === 0) { alert("Seleccione al menos un saber."); return; } showStep(3); }
-
+    function goToStep3() { if (document.querySelectorAll('.saber-check:checked').length === 0) { alert("Seleccione al menos un saber."); return; } showStep(3); }
     function generatePromptContent() {
         const nivel = currentNivel, modulo = currentModulo;
         const checks = document.querySelectorAll('.saber-check:checked');
@@ -877,273 +827,69 @@
             const rda = cb.dataset.areaRda;
             const saber = cb.dataset.saber;
             const indicadores = JSON.parse(cb.dataset.indicadores);
-            if(!curriculumMap.has(area)) curriculumMap.set(area, { rda, saberes: [] });
+            if (!curriculumMap.has(area)) curriculumMap.set(area, { rda, saberes: [] });
             curriculumMap.get(area).saberes.push({ nombre: saber, indicadores });
         });
         let curriculumText = "";
-        for(let [area, data] of curriculumMap.entries()) {
+        for (let [area, data] of curriculumMap.entries()) {
             curriculumText += `\n📌 ÁREA: ${area}\n🎯 RESULTADO DE APRENDIZAJE: ${data.rda}\n`;
             data.saberes.forEach(s => { curriculumText += `   • SABER: ${s.nombre}\n     INDICADORES: ${s.indicadores.join('; ')}\n`; });
         }
-        const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.
-Nivel: ${nivel} | Módulo: ${modulo}
-
-ESTRUCTURA CURRICULAR (Saberes seleccionados oficiales):
-${curriculumText}
-
-TAREA: Diseñar una Estrategia de Mediación Pedagógica completa:
-1. Título creativo y motivador.
-2. Momentos pedagógicos (Focalización, Exploración, Reflexión, Aplicación) alineados a los indicadores descritos.
-3. Evaluación formativa: Rúbrica analítica de 3 niveles (Inicial, Intermedio, Avanzado) basada en los indicadores.
-4. Recomendaciones DUA (Principios: Representación, Acción/Expresión, Motivación) para inclusión.
-5. Preguntar al usuario si necesita algún tipo de formato (ppt, pdf, word, json o inclusive infografías) para entregar la información.
-6. Condiciones obligatorias:
-- NO resumir ni omitir información.
-- Mantener la redacción completa y profesional.
-- Incluir TODOS los apartados:
-  1. Título
-  2. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con todas sus actividades
-  3. Evaluación formativa (rúbrica analítica completa)
-  4. Recomendaciones DUA (Representación, Acción/Expresión, Motivación)
-  5. Resumen de alineación curricular.
-- Distribuir el contenido en varias diapositivas u hojas en caso de formatos (pdf o word) de forma clara (puede dividir un mismo apartado en varias diapositivas u hojas si es necesario).
-- Evitar formato de palabras sueltas; usar ideas completas comprensibles para docentes.
-- Agregar títulos por diapositiva u hojas en caso de pdf o word, coherentes con cada sección.
-- Cada momento pedagógico debe ocupar al menos 2 diapositivas o 1 hoja en caso de ser en formato pdf o word.
-- La rúbrica debe presentarse en formato de tabla.
-- El resumen curricular debe aparecer en una diapositiva final claramente identificada.
-
-Redacción profesional, inspiradora, coherente con el enfoque por competencias. Asegúrese de que cada indicador se evidencie en las actividades.`;
-
+        const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.\nNivel: ${nivel} | Módulo: ${modulo}\n\nESTRUCTURA CURRICULAR (Saberes seleccionados oficiales):\n${curriculumText}\n\nTAREA: Diseñar una Estrategia de Mediación Pedagógica completa:
+        1. Título creativo y motivador.
+        2. Momentos pedagógicos (Focalización, Exploración, Reflexión, Aplicación) alineados a los indicadores descritos.
+        3. Evaluación formativa: Rúbrica analítica de 3 niveles (Inicial, Intermedio, Avanzado) basada en los indicadores.
+        4. Recomendaciones DUA (Principios: Representación, Acción/Expresión, Motivación) para inclusión.
+        5. Preguntar al usuario si necesita algún tipo de formato (ppt, pdf, word, json o inclusive infografías) para entregar la información.
+        6. Condiciones obligatorias:
+        - NO resumir ni omitir información.
+        - Mantener la redacción completa y profesional.
+        - Incluir TODOS los apartados:
+          1. Título
+          2. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con todas sus actividades
+          3. Evaluación formativa (rúbrica analítica completa)
+          4. Recomendaciones DUA (Representación, Acción/Expresión, Motivación)
+          5. Resumen de alineación curricular.
+        - Distribuir el contenido en varias diapositivas u hojas en caso de formatos (pdf o word) de forma clara (puede dividir un mismo apartado en varias diapositivas u hojas si es necesario).
+        - Evitar formato de palabras sueltas; usar ideas completas comprensibles para docentes.
+        - Agregar títulos por diapositiva u hojas en caso de pdf o word, coherentes con cada sección.
+        - Cada momento pedagógico debe ocupar al menos 2 diapositivas o 1 hoja en caso de ser en formato pdf o word.
+        - La rúbrica debe presentarse en formato de tabla.
+        - El resumen curricular debe aparecer en una diapositiva final claramente identificada.
+        
+        Redacción profesional, inspiradora, coherente con el enfoque por competencias. Asegúrese de que cada indicador se evidencie en las actividades.`;
+        // (prompt completo)
         document.getElementById('output-prompt').value = prompt;
     }
-
-    function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado al portapapeles."); }
+    function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
     function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
 
     // --------------------------------------------------------------
-    // PASO 6: LABORATORIO DE RECURSOS + IA LOCAL + PLANTILLAS PPT
+    // PASO 6: Funciones sin dependencias externas
     // --------------------------------------------------------------
-    let db = null;
-    const DB_NAME = "PIAResourcesDB";
-    const STORE_RESOURCES = "pptx_files";
-    const STORE_TEMPLATES = "templates";
-
-    function openDB() {
-        return new Promise((resolve, reject) => {
-            const request = indexedDB.open(DB_NAME, 2);
-            request.onupgradeneeded = (e) => {
-                const db = e.target.result;
-                if (!db.objectStoreNames.contains(STORE_RESOURCES)) {
-                    db.createObjectStore(STORE_RESOURCES, { keyPath: "id", autoIncrement: true });
-                }
-                if (!db.objectStoreNames.contains(STORE_TEMPLATES)) {
-                    db.createObjectStore(STORE_TEMPLATES, { keyPath: "cycle" });
-                }
-            };
-            request.onsuccess = (e) => resolve(e.target.result);
-            request.onerror = (e) => reject(e.target.error);
-        });
-    }
-
-    async function saveTemplate(cycle, file) {
-        const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_TEMPLATES, "readwrite");
-        const store = tx.objectStore(STORE_TEMPLATES);
-        await store.put({ cycle: cycle, blob: file, name: file.name, updatedAt: new Date().toISOString() });
-        return new Promise((resolve) => { tx.oncomplete = resolve; });
-    }
-    async function getTemplate(cycle) {
-        const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_TEMPLATES, "readonly");
-        const store = tx.objectStore(STORE_TEMPLATES);
-        return new Promise((resolve) => {
-            const req = store.get(cycle);
-            req.onsuccess = () => resolve(req.result);
-            req.onerror = () => resolve(null);
-        });
-    }
-    async function saveFile(file) {
-        const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_RESOURCES, "readwrite");
-        const store = tx.objectStore(STORE_RESOURCES);
-        const fileData = { name: file.name, lastModified: file.lastModified, size: file.size, blob: file, uploadedAt: new Date().toISOString() };
-        await store.add(fileData);
-        return new Promise((resolve) => { tx.oncomplete = resolve; });
-    }
-    async function getAllFiles() {
-        const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_RESOURCES, "readonly");
-        const store = tx.objectStore(STORE_RESOURCES);
-        const files = await new Promise((resolve) => { const req = store.getAll(); req.onsuccess = () => resolve(req.result); });
-        return files;
-    }
-    async function deleteFile(id) {
-        const dbConn = await openDB();
-        const tx = dbConn.transaction(STORE_RESOURCES, "readwrite");
-        const store = tx.objectStore(STORE_RESOURCES);
-        store.delete(id);
-        return new Promise((resolve) => { tx.oncomplete = resolve; });
-    }
-    async function extractTextFromPPTX(blob) {
-        try {
-            const arrayBuffer = await blob.arrayBuffer();
-            const extractor = window.OfficeTextExtractor;
-            if (!extractor) throw new Error("Librería no cargada");
-            const text = await extractor.extractText({ arrayBuffer, mimeType: "application/vnd.openxmlformats-officedocument.presentationml.presentation" });
-            return text || "No se pudo extraer texto.";
-        } catch (error) {
-            return "Error al extraer texto: " + error.message;
-        }
-    }
-
-    let resourcesList = [];
-    async function refreshResourcesUI() {
-        resourcesList = await getAllFiles();
-        const container = document.getElementById("resources-list");
-        const selectContainer = document.getElementById("select-resources");
-        if (resourcesList.length === 0) {
-            container.innerHTML = '<p class="text-sm text-slate-400 italic">No hay recursos subidos. Sube tus archivos PPTX.</p>';
-            selectContainer.innerHTML = '<p class="text-slate-400">Sube recursos para verlos aquí</p>';
-            return;
-        }
-        container.innerHTML = resourcesList.map(r => `
-            <div class="resource-item flex justify-between items-center p-2 bg-white rounded-xl border border-slate-100">
-                <div class="flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4 text-slate-500"></i><span class="text-sm font-medium">${r.name}</span><span class="text-[10px] text-slate-400">${(r.size/1024).toFixed(1)} KB</span></div>
-                <button onclick="deleteResource(${r.id})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-            </div>
-        `).join('');
-        selectContainer.innerHTML = resourcesList.map(r => `<label class="flex items-center gap-2"><input type="checkbox" value="${r.id}" class="resource-checkbox"> <span class="text-sm">${r.name}</span></label>`).join('');
-        initIcons();
-    }
-    window.deleteResource = async function(id) { await deleteFile(id); await refreshResourcesUI(); };
-
-    // IA local con Transformers.js
-    let pipeline = null;
-    async function loadModel() {
-        if (pipeline) return pipeline;
-        const { pipeline: pipe } = await import("@xenova/transformers");
-        pipeline = await pipe("text-generation", "Xenova/Phi-3-mini-4k-instruct");
-        return pipeline;
-    }
-
-    async function analyzeWithLocalAI(selectedResources) {
-        let combinedText = "";
-        for (const res of selectedResources) {
-            const text = await extractTextFromPPTX(res.blob);
-            combinedText += `\n--- RECURSO: ${res.name} ---\n${text.substring(0, 2500)}\n`;
-        }
-        const prompt = `Eres un especialista en diseño de actividades educativas. Analiza el contenido de estos recursos y genera una actividad integradora. Devuelve SOLO un JSON con: {"title": "título", "slides": [{"type": "title", "content": "..."}, {"type": "content", "content": "..."}]}. Debe tener al menos 3 diapositivas.\n\nContenido:\n${combinedText}`;
-        const generator = await loadModel();
-        const result = await generator(prompt, { max_new_tokens: 800, temperature: 0.7 });
-        let textResponse = result[0]?.generated_text || "{}";
-        try {
-            const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
-            const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : { title: "Actividad sugerida", slides: [{ type: "title", content: "Actividad generada" }, { type: "content", content: textResponse.substring(0, 500) }] };
-            return parsed;
-        } catch(e) {
-            return { title: "Actividad integrada", slides: [{ type: "title", content: "Actividad generada por IA local" }, { type: "content", content: textResponse.substring(0, 500) }] };
-        }
-    }
-
-    async function generatePPTWithTemplate(activityJson, cycleType) {
-        const PptxGenJS = window.PptxGenJS;
-        const pptx = new PptxGenJS();
-        pptx.defineLayout({ name: "WIDE", width: 10, height: 5.625 });
-        pptx.layout = "WIDE";
-
-        const templateData = await getTemplate(cycleType);
-        if (templateData && templateData.blob) {
-            // Por simplicidad, usamos el generador por defecto, pero se podría integrar docxtemplater.
-            alert("Usando generador por defecto. Para usar tu plantilla exacta, se requiere docxtemplater. El PPT se generará con el estilo del ciclo.");
-        }
-        let theme = { name: "Preescolar/I", background: "F0F9FF", titleColor: "1E3A8A", bodyColor: "334155" };
-        if (cycleType === "ii") theme = { name: "II Ciclo", background: "F8FAFC", titleColor: "0F3B5C", bodyColor: "1E293B" };
-        if (cycleType === "iii") theme = { name: "III Ciclo", background: "F1F5F9", titleColor: "0F172A", bodyColor: "0F172A" };
-        
-        const slidesData = activityJson.slides || [{ type: "title", content: activityJson.title || "Actividad educativa" }, { type: "content", content: "Contenido generado por IA a partir de los recursos subidos." }];
-        slidesData.forEach(slideDef => {
-            const slide = pptx.addSlide();
-            slide.background = { fill: theme.background };
-            if (slideDef.type === "title") {
-                slide.addText(slideDef.content, { x: 0.5, y: 2, w: 9, h: 1.5, fontSize: 32, bold: true, color: theme.titleColor, align: "center" });
-            } else {
-                slide.addText(slideDef.content, { x: 0.5, y: 0.8, w: 9, h: 0.6, fontSize: 20, bold: true, color: theme.titleColor });
-                slide.addText("Actividad integrada", { x: 0.5, y: 1.6, w: 9, h: 3.5, fontSize: 14, color: theme.bodyColor });
-            }
-        });
-        pptx.writeFile({ fileName: `actividad_${cycleType}_${Date.now()}.pptx` });
-    }
-
-    // Event listeners para Paso 6
-    document.getElementById("upload-btn")?.addEventListener("click", async () => {
-        const fileInput = document.getElementById("file-upload");
-        const file = fileInput.files[0];
-        if (!file || !file.name.endsWith(".pptx")) { alert("Selecciona un archivo PPTX válido."); return; }
-        await saveFile(file);
-        await refreshResourcesUI();
-        fileInput.value = "";
+    document.getElementById("copy-content-btn")?.addEventListener("click", () => {
+        const content = document.getElementById("ia-content").value;
+        if (!content.trim()) { alert("No hay contenido para copiar. Pega primero el resultado de la IA."); return; }
+        navigator.clipboard.writeText(content).then(() => alert("✅ Contenido copiado al portapapeles. Ahora pégalo en tu plantilla PPT."));
     });
 
-    document.getElementById("analyze-btn")?.addEventListener("click", async () => {
-        const checkboxes = document.querySelectorAll("#select-resources .resource-checkbox:checked");
-        const selectedIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
-        if (selectedIds.length === 0) { alert("Selecciona al menos un recurso para analizar."); return; }
-        const selectedResources = resourcesList.filter(r => selectedIds.includes(r.id));
-        document.getElementById("ai-output").innerHTML = "<div class='flex items-center gap-2'><div class='loader'></div> Cargando IA local (solo la primera vez) y analizando...</div>";
-        initIcons();
-        try {
-            const result = await analyzeWithLocalAI(selectedResources);
-            document.getElementById("ai-output").innerHTML = `<strong>${result.title || "Actividad sugerida"}</strong><br><pre class="text-xs mt-2 whitespace-pre-wrap">${JSON.stringify(result, null, 2)}</pre>`;
-            document.getElementById("generate-ppt-btn").disabled = false;
-            window.lastActivityJson = result;
-        } catch (err) {
-            document.getElementById("ai-output").innerHTML = "Error al analizar con IA local. Revisa la consola (F12) para más detalles.";
-            console.error(err);
-        }
-        initIcons();
+    document.getElementById("download-txt-btn")?.addEventListener("click", () => {
+        const content = document.getElementById("ia-content").value;
+        if (!content.trim()) { alert("No hay contenido para descargar."); return; }
+        const cycle = document.querySelector('input[name="cycle"]:checked').value;
+        let cycleName = "Preescolar_I_Ciclo";
+        if (cycle === "ii") cycleName = "II_Ciclo";
+        if (cycle === "iii") cycleName = "III_Ciclo";
+        const blob = new Blob([content], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `actividad_${cycleName}.txt`;
+        link.click();
+        URL.revokeObjectURL(link.href);
     });
 
-    document.getElementById("generate-ppt-btn")?.addEventListener("click", async () => {
-        if (!window.lastActivityJson) { alert("Primero analiza los recursos con IA."); return; }
-        const cycle = document.getElementById("cycle-select").value;
-        await generatePPTWithTemplate(window.lastActivityJson, cycle);
-    });
-
-    // Subida de plantillas
-    document.getElementById("template-preescolar")?.addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (file && file.name.endsWith(".pptx")) {
-            await saveTemplate("preescolar", file);
-            document.getElementById("template-preescolar-status").innerText = "✅ Plantilla guardada";
-        } else alert("Archivo no válido");
-    });
-    document.getElementById("template-ii")?.addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (file && file.name.endsWith(".pptx")) {
-            await saveTemplate("ii", file);
-            document.getElementById("template-ii-status").innerText = "✅ Plantilla guardada";
-        } else alert("Archivo no válido");
-    });
-    document.getElementById("template-iii")?.addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (file && file.name.endsWith(".pptx")) {
-            await saveTemplate("iii", file);
-            document.getElementById("template-iii-status").innerText = "✅ Plantilla guardada";
-        } else alert("Archivo no válido");
-    });
-
-    async function initStep6() {
-        await refreshResourcesUI();
-        const pre = await getTemplate("preescolar");
-        const ii = await getTemplate("ii");
-        const iii = await getTemplate("iii");
-        if (pre) document.getElementById("template-preescolar-status").innerText = "✅ Plantilla cargada";
-        if (ii) document.getElementById("template-ii-status").innerText = "✅ Plantilla cargada";
-        if (iii) document.getElementById("template-iii-status").innerText = "✅ Plantilla cargada";
-    }
-
-    window.onload = () => { initIcons(); resetSelection(); initStep6(); };
+    // Inicialización
+    window.onload = () => { resetSelection(); };
 </script>
 </body>
 </html>
