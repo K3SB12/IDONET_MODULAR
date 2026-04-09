@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>PIA · Planificación Integral y Ágil | PNFT 2026 | Diseño Premiado</title>
-    <!-- Tailwind CSS (base ligera) + Fonts -->
+    <title>PIA · Planificación Integral y Ágil | PNFT 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -15,7 +14,6 @@
             position: relative;
             overflow-x: hidden;
         }
-        /* Fondo animado con partículas sutiles */
         body::before {
             content: '';
             position: fixed;
@@ -29,45 +27,29 @@
             pointer-events: none;
             z-index: 0;
         }
-        /* efecto glassmorphism */
         .glass-card {
             background: rgba(15, 25, 45, 0.55);
             backdrop-filter: blur(12px);
             border-radius: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.4);
-            border-color: rgba(59,130,246,0.5);
+            transition: transform 0.2s ease;
         }
         .step-btn {
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.2s;
             background: rgba(30, 41, 59, 0.4);
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
         }
         .step-btn-active {
             background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(37,99,235,0.8));
             border-left: 4px solid #fff;
-            box-shadow: 0 8px 20px -6px rgba(59,130,246,0.4);
-            color: white;
-        }
-        .neon-glow {
-            text-shadow: 0 0 5px rgba(59,130,246,0.5);
         }
         .btn-primary-glow {
             background: linear-gradient(105deg, #2563eb, #3b82f6);
             box-shadow: 0 8px 18px -6px #1e40af;
-            transition: all 0.2s;
             border: none;
-        }
-        .btn-primary-glow:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 22px -8px #1e3a8a;
-            filter: brightness(1.05);
+            cursor: pointer;
         }
         .input-modern {
             background: rgba(15, 25, 45, 0.7);
@@ -75,52 +57,16 @@
             border-radius: 1rem;
             padding: 0.75rem 1rem;
             color: white;
-            transition: all 0.2s;
-        }
-        .input-modern:focus {
-            border-color: #3b82f6;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
-            background: rgba(30, 41, 59, 0.8);
         }
         .area-card {
             background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s;
+            cursor: pointer;
         }
         .area-card-active {
             background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(37,99,235,0.1));
             border-color: #3b82f6;
-            box-shadow: 0 0 12px rgba(59,130,246,0.3);
         }
-        .saber-item {
-            background: rgba(15, 25, 45, 0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s;
-        }
-        .saber-item:hover {
-            background: rgba(59,130,246,0.15);
-            border-color: #3b82f6;
-        }
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #3b82f6;
-            border-radius: 10px;
-        }
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .tab-content {
-            animation: fadeSlideUp 0.4s ease-out;
-        }
-
         .tab-content {
             display: none;
         }
@@ -128,201 +74,149 @@
             display: block;
             animation: fadeSlideUp 0.4s ease-out;
         }
-
-        
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        .btn-gradient {
+            background: linear-gradient(105deg, #4f46e5, #6366f1);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
     </style>
 </head>
 <body class="text-white relative">
 
 <div class="relative z-10 max-w-7xl mx-auto px-4 py-8 md:py-12">
-    <!-- Header premium -->
+    <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12 pb-4 border-b border-white/10">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-                <span class="text-xl font-black">P</span>
-            </div>
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg"><span class="text-xl font-black">P</span></div>
             <div>
-                <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white via-blue-200 to-blue-400 bg-clip-text text-transparent">PIA · Planificación Integral y Ágil</h1>
-                <p class="text-blue-300 text-sm font-medium mt-1">Base de datos oficial PNFT 2026 · Diseño adaptativo · Sin dependencias externas</p>
+                <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-white via-blue-200 to-blue-400 bg-clip-text text-transparent">PIA · Planificación Integral y Ágil</h1>
+                <p class="text-blue-300 text-sm">PNFT 2026 · Sin dependencias externas</p>
             </div>
         </div>
-        <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-            <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
-            <span class="text-[11px] font-semibold uppercase tracking-wider text-white/80">PNFT · Currículo 2026</span>
-        </div>
+        <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span><span class="text-[11px] font-semibold">PNFT · Currículo 2026</span></div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Sidebar elegante -->
+        <!-- Sidebar -->
         <aside class="lg:col-span-3">
             <div class="sticky top-6 space-y-3" id="nav-steps">
-                <button onclick="showStep(1)" id="btn-step-1" class="step-btn step-btn-active w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 group">
-                    <span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-sm shadow-md">1</span>
-                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 1</p><p class="text-sm font-extrabold">Coordenadas</p></div>
-                </button>
-                <button onclick="showStep(2)" id="btn-step-2" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
-                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">2</span>
-                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 2</p><p class="text-sm font-extrabold">Currículo</p></div>
-                </button>
-                <button onclick="showStep(3)" id="btn-step-3" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
-                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">3</span>
-                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 3</p><p class="text-sm font-extrabold">Prompt IA</p></div>
-                </button>
-                <button onclick="showStep(4)" id="btn-step-4" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
-                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">4</span>
-                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 4</p><p class="text-sm font-extrabold">Asistentes IA</p></div>
-                </button>
-                <button onclick="showStep(5)" id="btn-step-5" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
-                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">5</span>
-                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 5</p><p class="text-sm font-extrabold">Exportar gratis</p></div>
-                </button>
-                <button onclick="showStep(6)" id="btn-step-6" class="step-btn w-full text-left p-4 rounded-2xl transition-all flex items-center gap-3 opacity-80 hover:opacity-100">
-                    <span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">6</span>
-                    <div><p class="text-[10px] font-bold uppercase tracking-wider text-blue-200">Paso 6</p><p class="text-sm font-extrabold">Laboratorio PPT</p></div>
-                </button>
+                <button onclick="showStep(1)" id="btn-step-1" class="step-btn step-btn-active w-full text-left p-4 rounded-2xl flex items-center gap-3"><span class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-sm">1</span><div><p class="text-[10px] font-bold text-blue-200">Paso 1</p><p class="text-sm font-extrabold">Coordenadas</p></div></button>
+                <button onclick="showStep(2)" id="btn-step-2" class="step-btn w-full text-left p-4 rounded-2xl flex items-center gap-3 opacity-80"><span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">2</span><div><p class="text-[10px] font-bold text-blue-200">Paso 2</p><p class="text-sm font-extrabold">Currículo</p></div></button>
+                <button onclick="showStep(3)" id="btn-step-3" class="step-btn w-full text-left p-4 rounded-2xl flex items-center gap-3 opacity-80"><span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">3</span><div><p class="text-[10px] font-bold text-blue-200">Paso 3</p><p class="text-sm font-extrabold">Prompt IA</p></div></button>
+                <button onclick="showStep(4)" id="btn-step-4" class="step-btn w-full text-left p-4 rounded-2xl flex items-center gap-3 opacity-80"><span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">4</span><div><p class="text-[10px] font-bold text-blue-200">Paso 4</p><p class="text-sm font-extrabold">Asistentes IA</p></div></button>
+                <button onclick="showStep(5)" id="btn-step-5" class="step-btn w-full text-left p-4 rounded-2xl flex items-center gap-3 opacity-80"><span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">5</span><div><p class="text-[10px] font-bold text-blue-200">Paso 5</p><p class="text-sm font-extrabold">Exportar gratis</p></div></button>
+                <button onclick="showStep(6)" id="btn-step-6" class="step-btn w-full text-left p-4 rounded-2xl flex items-center gap-3 opacity-80"><span class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center font-black text-sm">6</span><div><p class="text-[10px] font-bold text-blue-200">Paso 6</p><p class="text-sm font-extrabold">Formateador PPT</p></div></button>
             </div>
         </aside>
 
-        <!-- Contenido principal (glassmorphism) -->
+        <!-- Contenido principal -->
         <main class="lg:col-span-9">
             <!-- STEP 1 -->
             <section id="step-1" class="tab-content active glass-card p-6 md:p-8">
                 <div class="flex items-center gap-4 mb-8"><div class="p-3 bg-blue-500/20 rounded-2xl text-blue-300 text-2xl">🧭</div><div><h2 class="text-2xl font-bold">Definir coordenadas</h2><p class="text-white/60 text-sm">Selecciona nivel y módulo para cargar los saberes PNFT.</p></div></div>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div><label class="text-[11px] font-bold text-blue-300 uppercase tracking-wider">Nivel educativo</label><select id="select-nivel" class="input-modern w-full mt-1"><option value="">-- Seleccionar grado --</option><optgroup label="Primera Infancia"><option value="0°">0° - Preescolar</option></optgroup><optgroup label="I Ciclo"><option value="1°">1°</option><option value="2°">2°</option><option value="3°">3°</option></optgroup><optgroup label="II Ciclo"><option value="4°">4°</option><option value="5°">5°</option><option value="6°">6°</option></optgroup><optgroup label="III Ciclo"><option value="7°">7°</option><option value="8°">8°</option><option value="9°">9°</option></optgroup></select></div>
-                    <div><label class="text-[11px] font-bold text-blue-300 uppercase tracking-wider">Módulo</label><select id="select-modulo" class="input-modern w-full mt-1"><option value="Módulo 1">Módulo 1 (Primer semestre)</option><option value="Módulo 2">Módulo 2 (Segundo semestre)</option></select></div>
+                    <div><label class="text-[11px] font-bold text-blue-300 uppercase">Nivel educativo</label><select id="select-nivel" class="input-modern w-full mt-1"><option value="">-- Seleccionar grado --</option><optgroup label="Primera Infancia"><option value="0°">0° - Preescolar</option></optgroup><optgroup label="I Ciclo"><option value="1°">1°</option><option value="2°">2°</option><option value="3°">3°</option></optgroup><optgroup label="II Ciclo"><option value="4°">4°</option><option value="5°">5°</option><option value="6°">6°</option></optgroup><optgroup label="III Ciclo"><option value="7°">7°</option><option value="8°">8°</option><option value="9°">9°</option></optgroup></select></div>
+                    <div><label class="text-[11px] font-bold text-blue-300 uppercase">Módulo</label><select id="select-modulo" class="input-modern w-full mt-1"><option value="Módulo 1">Módulo 1 (Primer semestre)</option><option value="Módulo 2">Módulo 2 (Segundo semestre)</option></select></div>
                 </div>
-                <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn-primary-glow text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2">Cargar currículo →</button></div>
+                <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn-primary-glow text-white px-8 py-4 rounded-2xl font-bold">Cargar currículo →</button></div>
             </section>
 
             <!-- STEP 2 -->
-            <section id="step-2" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-primary/20 rounded-2xl text-2xl">📚</div><div><h2 class="text-2xl font-bold text-white">Selección de saberes</h2><p class="text-slate-300 text-sm">Marque áreas y saberes específicos para construir su planificación.</p></div></div>
-                <div class="mb-6"><p class="text-[11px] font-black text-primary-light uppercase tracking-wider mb-3">Áreas disponibles (PNFT)</p><div id="area-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>
-                <div id="saberes-section" class="hidden space-y-5"><div class="flex justify-between items-center border-b border-slate-700 pb-2"><span class="text-[10px] font-black text-primary-light tracking-[0.2em]">SABERES E INDICADORES POR ÁREA</span><span id="badge-count" class="badge-glow">0 SELECCIONADOS</span></div><div id="saberes-container" class="space-y-6 max-h-[540px] overflow-y-auto pr-2 custom-scrollbar"></div></div>
-                <div class="mt-10 flex justify-between items-center border-t border-slate-700 pt-6"><button onclick="showStep(1)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button><button onclick="goToStep3()" class="btn-gradient">Generar prompt →</button></div>
+            <section id="step-2" class="tab-content glass-card p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-blue-500/20 rounded-2xl text-2xl">📚</div><div><h2 class="text-2xl font-bold">Selección de saberes</h2><p class="text-white/60 text-sm">Marque áreas y saberes específicos.</p></div></div>
+                <div class="mb-6"><p class="text-[11px] font-bold text-blue-300 uppercase mb-3">Áreas disponibles (PNFT)</p><div id="area-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>
+                <div id="saberes-section" class="hidden space-y-5"><div class="flex justify-between items-center border-b border-white/20 pb-2"><span class="text-[10px] font-bold text-blue-300">SABERES E INDICADORES</span><span id="badge-count" class="bg-blue-600/60 text-white text-[11px] font-bold px-3 py-1.5 rounded-full">0 SELECCIONADOS</span></div><div id="saberes-container" class="space-y-6 max-h-[540px] overflow-y-auto pr-2"></div></div>
+                <div class="mt-10 flex justify-between items-center border-t border-white/20 pt-6"><button onclick="showStep(1)" class="text-white/50 hover:text-white">← Volver</button><button onclick="goToStep3()" class="btn-primary-glow px-8 py-3 rounded-xl font-bold">Generar prompt →</button></div>
             </section>
 
-        <!-- STEP 3 (corregido con botones Volver y Continuar) -->
-        <section id="step-3" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">✨</div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Prompt de mediación pedagógica</h2>
-                    <p class="text-slate-300 text-sm">Copie el siguiente prompt en su asistente IA para generar la planificación.</p>
+            <!-- STEP 3 -->
+            <section id="step-3" class="tab-content glass-card p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-blue-500/20 rounded-2xl text-2xl">✨</div><div><h2 class="text-2xl font-bold">Prompt de mediación pedagógica</h2><p class="text-white/60 text-sm">Copie el siguiente prompt en su asistente IA.</p></div></div>
+                <div class="relative"><textarea id="output-prompt" rows="20" class="w-full bg-slate-900/80 text-emerald-300 font-mono text-[12px] p-6 rounded-2xl outline-none ring-1 ring-white/20" readonly></textarea><button onclick="copyPrompt()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 p-2.5 rounded-xl">📋</button></div>
+                <div class="mt-8 flex justify-between items-center"><button onclick="showStep(2)" class="text-white/50 hover:text-white">← Volver</button><button onclick="showStep(4)" class="btn-primary-glow px-6 py-2 rounded-full">Continuar →</button></div>
+            </section>
+
+            <!-- STEP 4 -->
+            <section id="step-4" class="tab-content glass-card p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-blue-500/20 rounded-2xl text-2xl">🤖</div><div><h2 class="text-2xl font-bold">Asistentes de IA</h2><p class="text-white/60 text-sm">Elija su IA favorita, pegue el prompt del paso 3.</p></div></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <a href="https://gemini.google.com" target="_blank" class="bg-white/5 rounded-2xl p-5 flex flex-col items-center text-center hover:bg-white/10"><div class="text-4xl mb-2">🌐</div><h3 class="font-black">Gemini</h3><span class="mt-2 text-[10px] bg-blue-500/30 px-2 py-0.5 rounded-full">gratuito</span></a>
+                    <a href="https://chat.openai.com" target="_blank" class="bg-white/5 rounded-2xl p-5 flex flex-col items-center text-center hover:bg-white/10"><div class="text-4xl mb-2">💬</div><h3 class="font-black">ChatGPT</h3><span class="mt-2 text-[10px] bg-emerald-500/30 px-2 py-0.5 rounded-full">versión gratis</span></a>
+                    <a href="https://copilot.microsoft.com" target="_blank" class="bg-white/5 rounded-2xl p-5 flex flex-col items-center text-center hover:bg-white/10"><div class="text-4xl mb-2">🌀</div><h3 class="font-black">Copilot</h3><span class="mt-2 text-[10px] bg-sky-500/30 px-2 py-0.5 rounded-full">acceso libre</span></a>
+                    <a href="https://deepseek.com" target="_blank" class="bg-white/5 rounded-2xl p-5 flex flex-col items-center text-center hover:bg-white/10"><div class="text-4xl mb-2">🔍</div><h3 class="font-black">DeepSeek</h3><span class="mt-2 text-[10px] bg-amber-500/30 px-2 py-0.5 rounded-full">totalmente gratis</span></a>
                 </div>
-            </div>
-            <div class="relative group">
-                <textarea id="output-prompt" rows="20" class="w-full bg-slate-900/80 text-emerald-300 font-mono text-[12px] p-6 rounded-2xl outline-none ring-1 ring-slate-600 leading-relaxed custom-scrollbar" readonly></textarea>
-                <button onclick="copyPrompt()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-xl transition">📋</button>
-            </div>
-            <div class="mt-8 flex justify-between items-center">
-                <div class="flex gap-4">
-                    <button onclick="showStep(2)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
+                <div class="mt-8 p-4 bg-white/5 rounded-2xl flex justify-between items-center"><span>✨ Consejo: pegue el prompt generado en el paso 3</span><button onclick="showStep(3)" class="text-blue-300 text-sm">Ir al prompt 📋</button></div>
+                <div class="mt-6 flex justify-between items-center"><button onclick="showStep(3)" class="text-white/50 hover:text-white">← Volver</button><button onclick="showStep(5)" class="btn-primary-glow px-6 py-2 rounded-full">Continuar →</button></div>
+            </section>
+
+            <!-- STEP 5 -->
+            <section id="step-5" class="tab-content glass-card p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-blue-500/20 rounded-2xl text-2xl">📄</div><div><h2 class="text-2xl font-bold">Exporta gratis tu planificación</h2><p class="text-white/60 text-sm">Convierte el resultado de la IA en PDF, PPT o Word.</p></div></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <a href="https://office.com" target="_blank" class="bg-white/5 rounded-2xl p-4 flex items-center gap-4"><div class="text-3xl">📝</div><div><h3 class="font-bold">Microsoft Word (Web)</h3><p class="text-xs text-white/60">Pega, da formato y exporta a PDF.</p></div></a>
+                    <a href="https://office.com" target="_blank" class="bg-white/5 rounded-2xl p-4 flex items-center gap-4"><div class="text-3xl">📊</div><div><h3 class="font-bold">PowerPoint (Web)</h3><p class="text-xs text-white/60">Crea diapositivas, exporta a PDF o PPT.</p></div></a>
+                    <a href="https://www.canva.com" target="_blank" class="bg-white/5 rounded-2xl p-4 flex items-center gap-4"><div class="text-3xl">🎨</div><div><h3 class="font-bold">Canva 🔥</h3><p class="text-xs text-white/60">Plantillas educativas, descarga como PDF, PPT.</p></div></a>
+                    <a href="https://docs.google.com" target="_blank" class="bg-white/5 rounded-2xl p-4 flex items-center gap-4"><div class="text-3xl">📁</div><div><h3 class="font-bold">Google Docs</h3><p class="text-xs text-white/60">Pega, formatea y descarga como PDF o Word.</p></div></a>
+                    <a href="https://slides.google.com" target="_blank" class="bg-white/5 rounded-2xl p-4 flex items-center gap-4"><div class="text-3xl">🖼️</div><div><h3 class="font-bold">Google Slides</h3><p class="text-xs text-white/60">Convierte la mediación en presentación.</p></div></a>
                 </div>
-                <button onclick="showStep(4)" class="btn-gradient px-6 py-2 rounded-full flex items-center gap-2">Continuar →</button>
-            </div>
-        </section>
-        
-        <!-- STEP 4 (agregado botón Volver y ajustado Continuar) -->
-        <section id="step-4" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">🤖</div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Asistentes de inteligencia artificial</h2>
-                    <p class="text-slate-300 text-sm">Elija su IA favorita, pegue el prompt del paso 3 y obtenga su planificación.</p>
+                <div class="mt-8 flex justify-between items-center"><button onclick="showStep(4)" class="text-white/50 hover:text-white">← Volver</button><button onclick="showStep(6)" class="btn-primary-glow px-6 py-2 rounded-full">Continuar →</button></div>
+            </section>
+
+            <!-- STEP 6: FORMATEADOR PARA POWERPOINT -->
+            <section id="step-6" class="tab-content glass-card p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-blue-500/20 rounded-2xl text-2xl">🎯</div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Prepara tu contenido para PowerPoint</h2>
+                        <p class="text-white/60 text-sm">Pega el texto de la IA y conviértelo en diapositivas listas para copiar.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                <a href="https://gemini.google.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🌐</div><h3 class="font-black text-white">Gemini</h3><p class="text-xs text-slate-300">Google AI</p><span class="mt-2 text-[10px] bg-primary/30 text-primary-light px-2 py-0.5 rounded-full">gratuito</span></a>
-                <a href="https://chat.openai.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">💬</div><h3 class="font-black text-white">ChatGPT</h3><p class="text-xs text-slate-300">OpenAI</p><span class="mt-2 text-[10px] bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded-full">versión gratis</span></a>
-                <a href="https://copilot.microsoft.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🌀</div><h3 class="font-black text-white">Copilot</h3><p class="text-xs text-slate-300">Microsoft</p><span class="mt-2 text-[10px] bg-sky-500/30 text-sky-300 px-2 py-0.5 rounded-full">acceso libre</span></a>
-                <a href="https://deepseek.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🔍</div><h3 class="font-black text-white">DeepSeek</h3><p class="text-xs text-slate-300">IA china gratuita</p><span class="mt-2 text-[10px] bg-amber-500/30 text-amber-300 px-2 py-0.5 rounded-full">totalmente gratis</span></a>
-            </div>
-            <div class="mt-8 p-5 bg-slate-800/40 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-3">
-                <span class="text-sm font-medium text-slate-200">✨ Consejo: pegue el prompt generado en el paso 3 en cualquiera de estas IAs</span>
-                <button onclick="showStep(3)" class="text-primary-light text-sm font-bold">Ir al prompt 📋</button>
-            </div>
-            <div class="mt-8 flex justify-between items-center">
-                <button onclick="showStep(3)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
-                <button onclick="showStep(5)" class="btn-gradient px-6 py-2 rounded-full flex items-center gap-2">Continuar →</button>
-            </div>
-        </section>
-        
-        <!-- STEP 5 (agregado botón Volver y Continuar a paso 6) -->
-        <section id="step-5" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">📄</div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Exporta gratis tu planificación</h2>
-                    <p class="text-slate-300 text-sm">Convierte el resultado de la IA en PDF, PPT o Word sin instalar nada.</p>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-blue-300 mb-2">Texto generado por la IA:</label>
+                    <textarea id="ia-input" rows="8" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white" placeholder="Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
                 </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <a href="https://docs.google.com/document/u/0/" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📝</div><div><h3 class="font-black text-white">Microsoft Word (Web)</h3><p class="text-xs text-slate-300">Pega el contenido, da formato y exporta a PDF.</p></div></a>
-                <a href="https://docs.google.com/presentation/u/0/" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📊</div><div><h3 class="font-black text-white">PowerPoint (Web)</h3><p class="text-xs text-slate-300">Crea diapositivas desde la mediación, exporta a PDF o PPT.</p></div></a>
-                <a href="https://www.canva.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">🎨</div><div><h3 class="font-black text-white">Canva 🔥</h3><p class="text-xs text-slate-300">Plantillas educativas, descarga como PDF, PPT o imagen.</p></div></a>
-                <a href="https://docs.google.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📁</div><div><h3 class="font-black text-white">Google Docs</h3><p class="text-xs text-slate-300">Pega, formatea y descarga como PDF o Word.</p></div></a>
-                <a href="https://slides.google.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">🖼️</div><div><h3 class="font-black text-white">Google Slides</h3><p class="text-xs text-slate-300">Convierte la mediación en presentación, exporta a PDF o PPT.</p></div></a>
-                <div class="bg-slate-800/40 rounded-2xl p-4 col-span-1 md:col-span-2 flex items-center justify-between border border-white/10"><span>💡 Tip profesional: Usa Canva para rúbricas visuales y PowerPoint web para exposiciones MEP.</span><button onclick="copyFinalAdvice()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-lg text-sm transition">Copiar</button></div>
-            </div>
-            <div class="mt-8 flex justify-between items-center">
-                <button onclick="showStep(4)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
-                <button onclick="showStep(6)" class="btn-gradient px-6 py-2 rounded-full flex items-center gap-2">Continuar →</button>
-            </div>
-        </section>
-        
-        <!-- STEP 6 (agregado botón Volver) -->
-        <section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">📥</div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Integrador de actividades con tus plantillas PPT</h2>
-                    <p class="text-slate-300 text-sm">Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek. Luego aplica el contenido a tu plantilla PPT siguiendo las instrucciones.</p>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-blue-300 mb-2">Ciclo educativo (afecta el formato):</label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="preescolar" checked> 🎨 Preescolar / I Ciclo</label>
+                        <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="ii"> 📘 II Ciclo</label>
+                        <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="iii"> 📙 III Ciclo</label>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-6">
-                <label class="block text-sm font-bold text-primary-light mb-2">Contenido generado por la IA (pégalo aquí):</label>
-                <textarea id="ia-content" rows="10" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white textarea-glow" placeholder="Pega aquí el análisis, la actividad integrada o el informe que generaste con ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
-            </div>
-            <div class="mb-6">
-                <label class="block text-sm font-bold text-primary-light mb-2">Selecciona el ciclo educativo (plantilla PPT):</label>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="preescolar" checked> <span>🎨 Preescolar / I Ciclo</span></label>
-                    <label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="ii"> <span>📘 II Ciclo</span></label>
-                    <label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="iii"> <span>📙 III Ciclo</span></label>
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button id="preview-btn" class="btn-primary-glow px-5 py-2 rounded-full">👁️ Previsualizar</button>
+                    <button id="copy-ppt-btn" class="btn-primary-glow px-5 py-2 rounded-full">📋 Copiar para PowerPoint</button>
+                    <button id="download-ppt-txt" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-full">💾 Descargar .txt</button>
                 </div>
-            </div>
-            <div class="flex flex-wrap gap-4 mb-6">
-                <button id="copy-content-btn" class="btn-gradient flex items-center gap-2">📋 Copiar contenido</button>
-                <button id="download-txt-btn" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-full transition flex items-center gap-2">💾 Descargar .txt</button>
-            </div>
-            <div class="bg-slate-800/40 rounded-2xl p-5 border border-primary/30">
-                <h3 class="font-bold text-primary-light mb-3 flex items-center gap-2">📌 Cómo aplicar este contenido a tu plantilla PPT</h3>
-                <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
-                    <li>Abre tu plantilla de PowerPoint para el ciclo seleccionado.</li>
-                    <li>Copia el texto formateado usando el botón de arriba o seleccionándolo manualmente.</li>
-                    <li>Pega el contenido en las diapositivas según la estructura que sugirió la IA.</li>
-                    <li>Si tu plantilla tiene marcadores como <code class="bg-slate-700 px-1 rounded">{title}</code> o <code class="bg-slate-700 px-1 rounded">{content}</code>, reemplázalos.</li>
-                    <li>Ajusta el diseño, imágenes y colores según tu preferencia.</li>
-                    <li>Exporta a PDF o PPT final para usar en clase.</li>
-                </ol>
-                <div class="mt-4 p-3 bg-slate-700/30 rounded-xl">
-                    <p class="font-semibold text-primary-light">💡 Sugerencia:</p>
-                    <p class="text-sm text-slate-200">Si la IA generó una actividad con varias secciones, crea una diapositiva por sección. Usa títulos claros y viñetas.</p>
+                <div id="preview-area" class="hidden mb-6">
+                    <label class="block text-sm font-bold text-blue-300 mb-2">Vista previa:</label>
+                    <div id="preview-content" class="bg-slate-900/50 border border-slate-600 rounded-xl p-4 text-sm text-slate-200 whitespace-pre-wrap font-mono max-h-96 overflow-auto"></div>
                 </div>
-            </div>
-            <div class="mt-8 flex justify-between items-center">
-                <button onclick="showStep(5)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
-                <button onclick="showStep(1)" class="text-slate-400 hover:text-white font-medium transition">+ Nueva planificación</button>
-            </div>
-            <div class="mt-6 text-xs text-slate-400 text-center border-t border-slate-700 pt-4">🔒 Este paso es 100% local. No se envían datos a ningún servidor.</div>
-        </section>
+                <div class="mt-8 flex justify-between items-center">
+                    <button onclick="showStep(5)" class="text-white/50 hover:text-white">← Volver</button>
+                    <button onclick="showStep(1)" class="text-white/50 hover:text-white">+ Nueva planificación</button>
+                </div>
+                <div class="text-xs text-slate-400 text-center border-t border-white/20 pt-4 mt-4">
+                    💡 Al copiar y pegar en PowerPoint (Ctrl+V), cada "---" creará una nueva diapositiva. Las viñetas (•) se mantendrán.
+                </div>
+            </section>
         </main>
     </div>
 </div>
-
+    
 <script>
+
     // --------------------------------------------------------------
     // BASE DE DATOS PNFT COMPLETA (TODOS LOS GRADOS, MÓDULOS, SABERES)
     // --------------------------------------------------------------
@@ -1019,51 +913,8 @@
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
     function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
 
- 
-<!-- ==================== PASO 6: FORMATEADOR PARA POWERPOINT ==================== -->
-<section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-    <div class="flex items-center gap-4 mb-6">
-        <div class="p-3 bg-primary/20 rounded-2xl text-2xl">🎯</div>
-        <div>
-            <h2 class="text-2xl font-bold text-white">Prepara tu contenido para PowerPoint</h2>
-            <p class="text-slate-300 text-sm">Pega el texto de la IA y conviértelo en diapositivas listas para copiar.</p>
-        </div>
-    </div>
-
-    <div class="mb-6">
-        <label class="block text-sm font-bold text-primary-light mb-2">Texto generado por la IA:</label>
-        <textarea id="ia-input" rows="8" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white" placeholder="Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
-    </div>
-
-    <div class="mb-6">
-        <label class="block text-sm font-bold text-primary-light mb-2">Ciclo educativo (afecta el formato):</label>
-        <div class="flex flex-wrap gap-4">
-            <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="preescolar" checked> 🎨 Preescolar / I Ciclo</label>
-            <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="ii"> 📘 II Ciclo</label>
-            <label class="flex items-center gap-2 bg-slate-800/40 rounded-xl px-4 py-2 cursor-pointer"><input type="radio" name="pptCycle" value="iii"> 📙 III Ciclo</label>
-        </div>
-    </div>
-
-    <div class="flex flex-wrap gap-4 mb-6">
-        <button id="preview-btn" class="btn-gradient px-5 py-2 rounded-full flex items-center gap-2">👁️ Previsualizar</button>
-        <button id="copy-ppt-btn" class="btn-primary-glow px-5 py-2 rounded-full flex items-center gap-2">📋 Copiar para PowerPoint</button>
-        <button id="download-ppt-txt" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-full flex items-center gap-2">💾 Descargar .txt</button>
-    </div>
-
-    <div id="preview-area" class="hidden mb-6">
-        <label class="block text-sm font-bold text-primary-light mb-2">Vista previa (copia este texto a PowerPoint):</label>
-        <div id="preview-content" class="bg-slate-900/50 border border-slate-600 rounded-xl p-4 text-sm text-slate-200 whitespace-pre-wrap font-mono max-h-96 overflow-auto"></div>
-    </div>
-
-    <div class="mt-8 flex justify-between items-center">
-        <button onclick="showStep(5)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
-        <button onclick="showStep(1)" class="text-slate-400 hover:text-white font-medium transition">+ Nueva planificación</button>
-    </div>
-
-    <div class="text-xs text-slate-400 text-center border-t border-slate-700 pt-4 mt-4">
-        💡 Al copiar y pegar en PowerPoint (Ctrl+V), cada "---" creará una nueva diapositiva. Las viñetas (•) se mantendrán.
-    </div>
-</section>
+   window.onload = () => { resetSelection(); };
+</script>
 
 <script>
     (function() {
@@ -1080,49 +931,26 @@
                 if (!text.trim()) return "⚠️ No hay texto para formatear.";
                 let lines = text.split(/\r?\n/);
                 let result = [], currentSlide = [];
-                const titleKeywords = [
-                    "objetivo", "actividad", "evaluación", "rúbrica", "dua", "reflexión",
-                    "focalización", "exploración", "aplicación", "introducción", "desarrollo",
-                    "cierre", "conclusión", "recomendación", "materiales", "recursos"
-                ];
+                const titleKeywords = ["objetivo","actividad","evaluación","rúbrica","dua","reflexión","focalización","exploración","aplicación","introducción","desarrollo","cierre","conclusión","recomendación","materiales","recursos"];
                 for (let line of lines) {
                     line = line.trim();
                     if (line === "") continue;
                     let isTitle = false;
-                    if (line.length < 60 && (line === line.toUpperCase() || line.match(/^#{1,3}\s/))) {
-                        isTitle = true;
-                    } else {
-                        let lowerLine = line.toLowerCase();
-                        for (let kw of titleKeywords) {
-                            if (lowerLine.includes(kw) && line.length < 80) {
-                                isTitle = true;
-                                break;
-                            }
-                        }
-                    }
+                    if (line.length < 60 && (line === line.toUpperCase() || line.match(/^#{1,3}\s/))) isTitle = true;
+                    else { let lowerLine = line.toLowerCase(); for (let kw of titleKeywords) { if (lowerLine.includes(kw) && line.length < 80) { isTitle = true; break; } } }
                     if (isTitle) {
-                        if (currentSlide.length > 0) {
-                            result.push(currentSlide.join('\n'));
-                            currentSlide = [];
-                        }
+                        if (currentSlide.length > 0) { result.push(currentSlide.join('\n')); currentSlide = []; }
                         currentSlide.push(`🔹 ${line}`);
                     } else {
-                        if (!line.match(/^[\*\-\•]\s/)) {
-                            line = `• ${line}`;
-                        }
+                        if (!line.match(/^[\*\-\•]\s/)) line = `• ${line}`;
                         currentSlide.push(line);
                     }
                 }
                 if (currentSlide.length > 0) result.push(currentSlide.join('\n'));
                 let formatted = result.join('\n\n---\n\n');
-                if (cycle === 'preescolar') {
-                    formatted = "🎨 ACTIVIDAD PARA PREESCOLAR / I CICLO\n\n" + formatted;
-                    formatted = formatted.replace(/•/g, '🌟');
-                } else if (cycle === 'ii') {
-                    formatted = "📘 ACTIVIDAD PARA II CICLO\n\n" + formatted;
-                } else {
-                    formatted = "📙 ACTIVIDAD PARA III CICLO\n\n" + formatted;
-                }
+                if (cycle === 'preescolar') { formatted = "🎨 ACTIVIDAD PARA PREESCOLAR / I CICLO\n\n" + formatted; formatted = formatted.replace(/•/g, '🌟'); }
+                else if (cycle === 'ii') formatted = "📘 ACTIVIDAD PARA II CICLO\n\n" + formatted;
+                else formatted = "📙 ACTIVIDAD PARA III CICLO\n\n" + formatted;
                 return formatted;
             }
 
@@ -1133,19 +961,13 @@
                 previewContent.innerText = formatted;
                 previewArea.classList.remove('hidden');
             });
-
             copyBtn?.addEventListener('click', async () => {
                 const original = inputTextarea.value;
                 const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
                 const formatted = formatForPowerPoint(original, cycle);
-                try {
-                    await navigator.clipboard.writeText(formatted);
-                    alert("✅ Texto formateado copiado. Ahora pega en PowerPoint (Ctrl+V).");
-                } catch (err) {
-                    alert("Error al copiar. Selecciona manualmente el texto de la vista previa.");
-                }
+                try { await navigator.clipboard.writeText(formatted); alert("✅ Texto formateado copiado. Ahora pega en PowerPoint (Ctrl+V)."); }
+                catch (err) { alert("Error al copiar. Selecciona manualmente el texto de la vista previa."); }
             });
-
             downloadBtn?.addEventListener('click', () => {
                 const original = inputTextarea.value;
                 const cycle = document.querySelector('input[name="pptCycle"]:checked').value;
@@ -1158,12 +980,8 @@
                 URL.revokeObjectURL(link.href);
             });
         }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPaso6);
-        } else {
-            initPaso6();
-        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPaso6);
+        else initPaso6();
     })();
 </script>
 </body>
