@@ -195,57 +195,122 @@
                 <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn-primary-glow text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2">Cargar currículo →</button></div>
             </section>
 
-            <!-- STEP 2 -->
-            <section id="step-2" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-primary/20 rounded-2xl text-2xl">📚</div><div><h2 class="text-2xl font-bold text-white">Selección de saberes</h2><p class="text-slate-300 text-sm">Marque áreas y saberes específicos para construir su planificación.</p></div></div>
-                <div class="mb-6"><p class="text-[11px] font-black text-primary-light uppercase tracking-wider mb-3">Áreas disponibles (PNFT)</p><div id="area-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>
-                <div id="saberes-section" class="hidden space-y-5"><div class="flex justify-between items-center border-b border-slate-700 pb-2"><span class="text-[10px] font-black text-primary-light tracking-[0.2em]">SABERES E INDICADORES POR ÁREA</span><span id="badge-count" class="badge-glow">0 SELECCIONADOS</span></div><div id="saberes-container" class="space-y-6 max-h-[540px] overflow-y-auto pr-2 custom-scrollbar"></div></div>
-                <div class="mt-10 flex justify-between items-center border-t border-slate-700 pt-6"><button onclick="showStep(1)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button><button onclick="goToStep3()" class="btn-gradient">Generar prompt →</button></div>
-            </section>
-
-            <!-- STEP 3 -->
-            <section id="step-3" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-primary/20 rounded-2xl text-2xl">✨</div><div><h2 class="text-2xl font-bold text-white">Prompt de mediación pedagógica</h2><p class="text-slate-300 text-sm">Copie el siguiente prompt en su asistente IA para generar la planificación.</p></div></div>
-                <div class="relative group"><textarea id="output-prompt" rows="20" class="w-full bg-slate-900/80 text-emerald-300 font-mono text-[12px] p-6 rounded-2xl outline-none ring-1 ring-slate-600 leading-relaxed custom-scrollbar" readonly></textarea><button onclick="copyPrompt()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-xl transition">📋</button></div>
-                <div class="mt-8 flex justify-center"> <button onclick="showStep(2)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button> <button onclick="showStep(1)" class="text-slate-400 hover:text-white font-medium transition">+ Nueva planificación</button> <button onclick="showStep(4)" class="btn-gradient px-6 py-2 rounded-full flex items-center gap-2">Continuar →</button> </div>
-            </section>
-
-            <!-- STEP 4 -->
-            <section id="step-4" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-primary/20 rounded-2xl text-2xl">🤖</div><div><h2 class="text-2xl font-bold text-white">Asistentes de inteligencia artificial</h2><p class="text-slate-300 text-sm">Elija su IA favorita, pegue el prompt del paso 3 y obtenga su planificación.</p></div></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <a href="https://gemini.google.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🌐</div><h3 class="font-black text-white">Gemini</h3><p class="text-xs text-slate-300">Google AI</p><span class="mt-2 text-[10px] bg-primary/30 text-primary-light px-2 py-0.5 rounded-full">gratuito</span></a>
-                    <a href="https://chat.openai.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">💬</div><h3 class="font-black text-white">ChatGPT</h3><p class="text-xs text-slate-300">OpenAI</p><span class="mt-2 text-[10px] bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded-full">versión gratis</span></a>
-                    <a href="https://copilot.microsoft.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🌀</div><h3 class="font-black text-white">Copilot</h3><p class="text-xs text-slate-300">Microsoft</p><span class="mt-2 text-[10px] bg-sky-500/30 text-sky-300 px-2 py-0.5 rounded-full">acceso libre</span></a>
-                    <a href="https://deepseek.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🔍</div><h3 class="font-black text-white">DeepSeek</h3><p class="text-xs text-slate-300">IA china gratuita</p><span class="mt-2 text-[10px] bg-amber-500/30 text-amber-300 px-2 py-0.5 rounded-full">totalmente gratis</span></a>
+        <!-- STEP 3 (corregido con botones Volver y Continuar) -->
+        <section id="step-3" class="tab-content card-3d rounded-3xl p-6 md:p-8">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">✨</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Prompt de mediación pedagógica</h2>
+                    <p class="text-slate-300 text-sm">Copie el siguiente prompt en su asistente IA para generar la planificación.</p>
                 </div>
-                <div class="mt-8 p-5 bg-slate-800/40 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-3"><span class="text-sm font-medium text-slate-200">✨ Consejo: pegue el prompt generado en el paso 3 en cualquiera de estas IAs</span><button onclick="showStep(3)" class="text-primary-light text-sm font-bold">Ir al prompt 📋</button></div>
-                <div class="mt-6 flex justify-end"><button onclick="showStep(5)" class="btn-gradient">Siguiente: herramientas gratuitas →</button></div>
-            </section>
-
-            <!-- STEP 5 -->
-            <section id="step-5" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-primary/20 rounded-2xl text-2xl">📄</div><div><h2 class="text-2xl font-bold text-white">Exporta gratis tu planificación</h2><p class="text-slate-300 text-sm">Convierte el resultado de la IA en PDF, PPT o Word sin instalar nada.</p></div></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <a href="https://docs.google.com/document/u/0/" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📝</div><div><h3 class="font-black text-white">Microsoft Word (Web)</h3><p class="text-xs text-slate-300">Pega el contenido, da formato y exporta a PDF.</p></div></a>
-                    <a href="https://docs.google.com/presentation/u/0/" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📊</div><div><h3 class="font-black text-white">PowerPoint (Web)</h3><p class="text-xs text-slate-300">Crea diapositivas desde la mediación, exporta a PDF o PPT.</p></div></a>
-                    <a href="https://www.canva.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">🎨</div><div><h3 class="font-black text-white">Canva 🔥</h3><p class="text-xs text-slate-300">Plantillas educativas, descarga como PDF, PPT o imagen.</p></div></a>
-                    <a href="https://docs.google.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📁</div><div><h3 class="font-black text-white">Google Docs</h3><p class="text-xs text-slate-300">Pega, formatea y descarga como PDF o Word.</p></div></a>
-                    <a href="https://slides.google.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">🖼️</div><div><h3 class="font-black text-white">Google Slides</h3><p class="text-xs text-slate-300">Convierte la mediación en presentación, exporta a PDF o PPT.</p></div></a>
-                    <div class="bg-slate-800/40 rounded-2xl p-4 col-span-1 md:col-span-2 flex items-center justify-between border border-white/10"><span>💡 Tip profesional: Usa Canva para rúbricas visuales y PowerPoint web para exposiciones MEP.</span><button onclick="copyFinalAdvice()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-lg text-sm transition">Copiar</button></div>
+            </div>
+            <div class="relative group">
+                <textarea id="output-prompt" rows="20" class="w-full bg-slate-900/80 text-emerald-300 font-mono text-[12px] p-6 rounded-2xl outline-none ring-1 ring-slate-600 leading-relaxed custom-scrollbar" readonly></textarea>
+                <button onclick="copyPrompt()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-xl transition">📋</button>
+            </div>
+            <div class="mt-8 flex justify-between items-center">
+                <div class="flex gap-4">
+                    <button onclick="showStep(2)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
+                    <button onclick="showStep(1)" class="text-slate-400 hover:text-white font-medium transition">+ Nueva planificación</button>
                 </div>
-                <div class="mt-8 flex justify-center"><button onclick="showStep(1)" class="text-slate-400 hover:text-white text-sm font-medium">← Iniciar nueva planificación</button></div>
-            </section>
-
-            <!-- STEP 6 -->
-            <section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
-                <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-primary/20 rounded-2xl text-2xl">📥</div><div><h2 class="text-2xl font-bold text-white">Integrador de actividades con tus plantillas PPT</h2><p class="text-slate-300 text-sm">Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek. Luego aplica el contenido a tu plantilla PPT siguiendo las instrucciones.</p></div></div>
-                <div class="mb-6"><label class="block text-sm font-bold text-primary-light mb-2">Contenido generado por la IA (pégalo aquí):</label><textarea id="ia-content" rows="10" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white textarea-glow" placeholder="Pega aquí el análisis, la actividad integrada o el informe que generaste con ChatGPT, Gemini, Copilot o DeepSeek..."></textarea></div>
-                <div class="mb-6"><label class="block text-sm font-bold text-primary-light mb-2">Selecciona el ciclo educativo (plantilla PPT):</label><div class="grid grid-cols-1 sm:grid-cols-3 gap-4"><label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="preescolar" checked> <span>🎨 Preescolar / I Ciclo</span></label><label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="ii"> <span>📘 II Ciclo</span></label><label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="iii"> <span>📙 III Ciclo</span></label></div></div>
-                <div class="flex flex-wrap gap-4 mb-6"><button id="copy-content-btn" class="btn-gradient flex items-center gap-2">📋 Copiar contenido</button><button id="download-txt-btn" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-full transition flex items-center gap-2">💾 Descargar .txt</button></div>
-                <div class="bg-slate-800/40 rounded-2xl p-5 border border-primary/30"><h3 class="font-bold text-primary-light mb-3 flex items-center gap-2">📌 Cómo aplicar este contenido a tu plantilla PPT</h3><ol class="list-decimal list-inside space-y-2 text-sm text-slate-200"><li>Abre tu plantilla de PowerPoint para el ciclo seleccionado.</li><li>Copia el texto formateado usando el botón de arriba o seleccionándolo manualmente.</li><li>Pega el contenido en las diapositivas según la estructura que sugirió la IA.</li><li>Si tu plantilla tiene marcadores como <code class="bg-slate-700 px-1 rounded">{title}</code> o <code class="bg-slate-700 px-1 rounded">{content}</code>, reemplázalos.</li><li>Ajusta el diseño, imágenes y colores según tu preferencia.</li><li>Exporta a PDF o PPT final para usar en clase.</li></ol><div class="mt-4 p-3 bg-slate-700/30 rounded-xl"><p class="font-semibold text-primary-light">💡 Sugerencia:</p><p class="text-sm text-slate-200">Si la IA generó una actividad con varias secciones, crea una diapositiva por sección. Usa títulos claros y viñetas.</p></div></div>
-                <div class="mt-6 text-xs text-slate-400 text-center border-t border-slate-700 pt-4">🔒 Este paso es 100% local. No se envían datos a ningún servidor.</div>
-            </section>
+                <button onclick="showStep(4)" class="btn-gradient px-6 py-2 rounded-full flex items-center gap-2">Continuar →</button>
+            </div>
+        </section>
+        
+        <!-- STEP 4 (agregado botón Volver y ajustado Continuar) -->
+        <section id="step-4" class="tab-content card-3d rounded-3xl p-6 md:p-8">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">🤖</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Asistentes de inteligencia artificial</h2>
+                    <p class="text-slate-300 text-sm">Elija su IA favorita, pegue el prompt del paso 3 y obtenga su planificación.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <a href="https://gemini.google.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🌐</div><h3 class="font-black text-white">Gemini</h3><p class="text-xs text-slate-300">Google AI</p><span class="mt-2 text-[10px] bg-primary/30 text-primary-light px-2 py-0.5 rounded-full">gratuito</span></a>
+                <a href="https://chat.openai.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">💬</div><h3 class="font-black text-white">ChatGPT</h3><p class="text-xs text-slate-300">OpenAI</p><span class="mt-2 text-[10px] bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded-full">versión gratis</span></a>
+                <a href="https://copilot.microsoft.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🌀</div><h3 class="font-black text-white">Copilot</h3><p class="text-xs text-slate-300">Microsoft</p><span class="mt-2 text-[10px] bg-sky-500/30 text-sky-300 px-2 py-0.5 rounded-full">acceso libre</span></a>
+                <a href="https://deepseek.com" target="_blank" class="tool-card rounded-2xl p-5 flex flex-col items-center text-center border border-white/10"><div class="text-4xl mb-2">🔍</div><h3 class="font-black text-white">DeepSeek</h3><p class="text-xs text-slate-300">IA china gratuita</p><span class="mt-2 text-[10px] bg-amber-500/30 text-amber-300 px-2 py-0.5 rounded-full">totalmente gratis</span></a>
+            </div>
+            <div class="mt-8 p-5 bg-slate-800/40 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-3">
+                <span class="text-sm font-medium text-slate-200">✨ Consejo: pegue el prompt generado en el paso 3 en cualquiera de estas IAs</span>
+                <button onclick="showStep(3)" class="text-primary-light text-sm font-bold">Ir al prompt 📋</button>
+            </div>
+            <div class="mt-8 flex justify-between items-center">
+                <button onclick="showStep(3)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
+                <button onclick="showStep(5)" class="btn-gradient px-6 py-2 rounded-full flex items-center gap-2">Continuar →</button>
+            </div>
+        </section>
+        
+        <!-- STEP 5 (agregado botón Volver y Continuar a paso 6) -->
+        <section id="step-5" class="tab-content card-3d rounded-3xl p-6 md:p-8">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">📄</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Exporta gratis tu planificación</h2>
+                    <p class="text-slate-300 text-sm">Convierte el resultado de la IA en PDF, PPT o Word sin instalar nada.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <a href="https://docs.google.com/document/u/0/" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📝</div><div><h3 class="font-black text-white">Microsoft Word (Web)</h3><p class="text-xs text-slate-300">Pega el contenido, da formato y exporta a PDF.</p></div></a>
+                <a href="https://docs.google.com/presentation/u/0/" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📊</div><div><h3 class="font-black text-white">PowerPoint (Web)</h3><p class="text-xs text-slate-300">Crea diapositivas desde la mediación, exporta a PDF o PPT.</p></div></a>
+                <a href="https://www.canva.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">🎨</div><div><h3 class="font-black text-white">Canva 🔥</h3><p class="text-xs text-slate-300">Plantillas educativas, descarga como PDF, PPT o imagen.</p></div></a>
+                <a href="https://docs.google.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">📁</div><div><h3 class="font-black text-white">Google Docs</h3><p class="text-xs text-slate-300">Pega, formatea y descarga como PDF o Word.</p></div></a>
+                <a href="https://slides.google.com" target="_blank" class="tool-card rounded-2xl p-4 flex items-center gap-4 border border-white/10"><div class="text-3xl">🖼️</div><div><h3 class="font-black text-white">Google Slides</h3><p class="text-xs text-slate-300">Convierte la mediación en presentación, exporta a PDF o PPT.</p></div></a>
+                <div class="bg-slate-800/40 rounded-2xl p-4 col-span-1 md:col-span-2 flex items-center justify-between border border-white/10"><span>💡 Tip profesional: Usa Canva para rúbricas visuales y PowerPoint web para exposiciones MEP.</span><button onclick="copyFinalAdvice()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-lg text-sm transition">Copiar</button></div>
+            </div>
+            <div class="mt-8 flex justify-between items-center">
+                <button onclick="showStep(4)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
+                <button onclick="showStep(6)" class="btn-gradient px-6 py-2 rounded-full flex items-center gap-2">Continuar →</button>
+            </div>
+        </section>
+        
+        <!-- STEP 6 (agregado botón Volver) -->
+        <section id="step-6" class="tab-content card-3d rounded-3xl p-6 md:p-8">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="p-3 bg-primary/20 rounded-2xl text-2xl">📥</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Integrador de actividades con tus plantillas PPT</h2>
+                    <p class="text-slate-300 text-sm">Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek. Luego aplica el contenido a tu plantilla PPT siguiendo las instrucciones.</p>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-primary-light mb-2">Contenido generado por la IA (pégalo aquí):</label>
+                <textarea id="ia-content" rows="10" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white textarea-glow" placeholder="Pega aquí el análisis, la actividad integrada o el informe que generaste con ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-primary-light mb-2">Selecciona el ciclo educativo (plantilla PPT):</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="preescolar" checked> <span>🎨 Preescolar / I Ciclo</span></label>
+                    <label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="ii"> <span>📘 II Ciclo</span></label>
+                    <label class="flex items-center gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-600 cursor-pointer hover:bg-slate-700/50 transition"><input type="radio" name="cycle" value="iii"> <span>📙 III Ciclo</span></label>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-4 mb-6">
+                <button id="copy-content-btn" class="btn-gradient flex items-center gap-2">📋 Copiar contenido</button>
+                <button id="download-txt-btn" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-full transition flex items-center gap-2">💾 Descargar .txt</button>
+            </div>
+            <div class="bg-slate-800/40 rounded-2xl p-5 border border-primary/30">
+                <h3 class="font-bold text-primary-light mb-3 flex items-center gap-2">📌 Cómo aplicar este contenido a tu plantilla PPT</h3>
+                <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                    <li>Abre tu plantilla de PowerPoint para el ciclo seleccionado.</li>
+                    <li>Copia el texto formateado usando el botón de arriba o seleccionándolo manualmente.</li>
+                    <li>Pega el contenido en las diapositivas según la estructura que sugirió la IA.</li>
+                    <li>Si tu plantilla tiene marcadores como <code class="bg-slate-700 px-1 rounded">{title}</code> o <code class="bg-slate-700 px-1 rounded">{content}</code>, reemplázalos.</li>
+                    <li>Ajusta el diseño, imágenes y colores según tu preferencia.</li>
+                    <li>Exporta a PDF o PPT final para usar en clase.</li>
+                </ol>
+                <div class="mt-4 p-3 bg-slate-700/30 rounded-xl">
+                    <p class="font-semibold text-primary-light">💡 Sugerencia:</p>
+                    <p class="text-sm text-slate-200">Si la IA generó una actividad con varias secciones, crea una diapositiva por sección. Usa títulos claros y viñetas.</p>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-between items-center">
+                <button onclick="showStep(5)" class="text-slate-400 hover:text-white font-bold flex gap-2 transition">← Volver</button>
+                <button onclick="showStep(1)" class="text-slate-400 hover:text-white font-medium transition">+ Nueva planificación</button>
+            </div>
+            <div class="mt-6 text-xs text-slate-400 text-center border-t border-slate-700 pt-4">🔒 Este paso es 100% local. No se envían datos a ningún servidor.</div>
+        </section>
         </main>
     </div>
 </div>
