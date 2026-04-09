@@ -120,6 +120,16 @@
         .tab-content {
             animation: fadeSlideUp 0.4s ease-out;
         }
+
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeSlideUp 0.4s ease-out;
+        }
+
+        
     </style>
 </head>
 <body class="text-white relative">
@@ -795,13 +805,41 @@
     let selectedAreas = new Set();
     let currentNivel = "", currentModulo = "";
 
-    function showStep(step) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.getElementById(`step-${step}`).classList.add('active');
-        const btns = document.querySelectorAll('#nav-steps button');
-        btns.forEach((btn, i) => { if (i+1 === step) btn.classList.add('step-active'); else btn.classList.remove('step-active'); });
-        if (step === 3) generatePromptContent();
+   function showStep(step) {
+    // Ocultar todas las secciones
+    const sections = document.querySelectorAll('.tab-content');
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Mostrar la sección seleccionada
+    const activeSection = document.getElementById(`step-${step}`);
+    if (activeSection) {
+        activeSection.classList.add('active');
+    } else {
+        console.error(`No se encontró la sección con id step-${step}`);
+        return;
     }
+    
+    // Actualizar estilos de los botones laterales
+    for (let i = 1; i <= 6; i++) {
+        const btn = document.getElementById(`btn-step-${i}`);
+        if (btn) {
+            if (i === step) {
+                btn.classList.add('step-active');
+                btn.classList.remove('opacity-50');
+            } else {
+                btn.classList.remove('step-active');
+                btn.classList.add('opacity-50');
+            }
+        }
+    }
+    
+    // Si es el paso 3, regenerar el prompt (opcional)
+    if (step === 3 && typeof generatePromptContent === 'function') {
+        generatePromptContent();
+    }
+}
 
     function resetSelection() { selectedAreas.clear(); document.getElementById('saberes-section')?.classList.add('hidden'); }
     function goToStep2() {
