@@ -100,6 +100,19 @@
             cursor: pointer;
             border: none;
         }
+
+            .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+            
 </style>
     </style>
 </head>
@@ -155,8 +168,8 @@
             <section id="step-1" class="tab-content active glass-card p-6 md:p-8">
                 <div class="flex items-center gap-4 mb-8"><div class="p-3 bg-blue-500/20 rounded-2xl text-blue-300 text-2xl">🧭</div><div><h2 class="text-2xl font-bold">Definir coordenadas</h2><p class="text-white/60 text-sm">Selecciona nivel y módulo para cargar los saberes PNFT.</p></div></div>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div><label class="text-[11px] font-bold text-blue-300 uppercase">Nivel educativo</label><select id="select-nivel" class="input-modern w-full mt-1"><option value="">-- Seleccionar grado --</option><optgroup label="Primera Infancia"><option value="0°">0° - Preescolar</option></optgroup><optgroup label="I Ciclo"><option value="1°">1°</option><option value="2°">2°</option><option value="3°">3°</option></optgroup><optgroup label="II Ciclo"><option value="4°">4°</option><option value="5°">5°</option><option value="6°">6°</option></optgroup><optgroup label="III Ciclo"><option value="7°">7°</option><option value="8°">8°</option><option value="9°">9°</option></optgroup></select></div>
-                    <div><label class="text-[11px] font-bold text-blue-300 uppercase">Módulo</label><select id="select-modulo" class="input-modern w-full mt-1"><option value="Módulo 1">Módulo 1 (Primer semestre)</option><option value="Módulo 2">Módulo 2 (Segundo semestre)</option></select></div>
+                    <div><label for="select-nivel" class="text-[11px] font-bold text-blue-300 uppercase">Nivel educativo</label><select id="select-nivel" class="input-modern w-full mt-1"><option value="">-- Seleccionar grado --</option><optgroup label="Primera Infancia"><option value="0°">0° - Preescolar</option></optgroup><optgroup label="I Ciclo"><option value="1°">1°</option><option value="2°">2°</option><option value="3°">3°</option></optgroup><optgroup label="II Ciclo"><option value="4°">4°</option><option value="5°">5°</option><option value="6°">6°</option></optgroup><optgroup label="III Ciclo"><option value="7°">7°</option><option value="8°">8°</option><option value="9°">9°</option></optgroup></select></div>
+                    <div><label for="select-modulo" class="text-[11px] font-bold text-blue-300 uppercase">Módulo</label><select id="select-modulo" class="input-modern w-full mt-1"><option value="Módulo 1">Módulo 1 (Primer semestre)</option><option value="Módulo 2">Módulo 2 (Segundo semestre)</option></select></div>
                 </div>
                 <div class="mt-10 flex justify-end"><button onclick="goToStep2()" class="btn-primary-glow text-white px-8 py-4 rounded-2xl font-bold">Cargar currículo →</button></div>
             </section>
@@ -221,7 +234,7 @@
                     </div>
                 </div>
                 <div class="mb-6">
-                    <label class="block text-sm font-bold text-blue-300 mb-2">Texto generado por la IA:</label>
+                    <label for="ia-input" class="block text-sm font-bold text-blue-300 mb-2">Texto generado por la IA:</label>
                     <textarea id="ia-input" rows="8" class="w-full bg-slate-800/50 border border-slate-600 rounded-xl p-4 text-white" placeholder="Pega aquí el resultado de ChatGPT, Gemini, Copilot o DeepSeek..."></textarea>
                 </div>
                 <div class="mb-6">
