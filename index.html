@@ -42,12 +42,14 @@
             color: rgba(255,255,255,0.7);
             cursor: pointer;
         }
-        /* Estilo activo - AZUL con borde blanco */
+      
+        /* Estilo activo - AZUL con borde blanco (máxima prioridad) */
         .step-btn-active {
             background: linear-gradient(135deg, #2563eb, #1e40af) !important;
             border-left: 4px solid white !important;
             color: white !important;
             box-shadow: 0 8px 20px -6px rgba(37,99,235,0.4) !important;
+            opacity: 1 !important;
         }
         .step-btn.opacity-50 {
             opacity: 0.5;
@@ -55,6 +57,7 @@
         
         .step-btn.opacity-50:hover {
             opacity: 0.8;
+            background: rgba(59,130,246,0.2);
         }
         .btn-primary-glow {
             background: linear-gradient(105deg, #2563eb, #3b82f6);
@@ -957,7 +960,6 @@
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
     function copyFinalAdvice() { navigator.clipboard.writeText("📌 Recomendación: usa Canva para rúbricas atractivas, PowerPoint web para exponer y Word para el documento oficial MEP."); alert("Consejo copiado"); }
 
-   window.onload = () => { resetSelection(); };
 </script>
 
 <script>
