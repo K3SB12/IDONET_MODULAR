@@ -223,7 +223,7 @@
                 <div class="text-xs text-slate-400 text-center border-t border-white/20 pt-4 mt-4">💡 Al copiar y pegar en PowerPoint (Ctrl+V), cada "---" creará una nueva diapositiva. Las viñetas (•) se mantendrán.</div>
             </section>
 
-            <!-- STEP 7: TABLERO DE PROGRESO (con ejes transversales) -->
+            <!-- STEP 7: TABLERO DE PROGRESO -->
             <section id="step-7" class="tab-content glass-card p-6 md:p-8">
                 <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-blue-500/20 rounded-2xl text-2xl">📊</div><div><h2 class="text-2xl font-bold">Tablero de progreso curricular</h2><p class="text-white/60 text-sm">Visualiza cómo los saberes seleccionados contribuyen a los RDA, perfiles de salida y ejes transversales.</p></div></div>
                 <div id="progress-summary" class="mb-6 p-4 bg-white/5 rounded-xl border border-white/10"></div>
@@ -231,6 +231,7 @@
                 <div class="mb-8"><h3 class="text-lg font-bold text-blue-300 mb-3">🎓 Perfiles de salida</h3><div id="perfiles-progress-list" class="space-y-4"></div></div>
                 <div class="mb-8"><h3 class="text-lg font-bold text-blue-300 mb-3">⚙️ Ejes transversales</h3><div id="ejes-progress-list" class="space-y-4"></div></div>
                 <div class="mb-6 p-4 bg-indigo-500/10 rounded-xl border border-indigo-500/30"><h3 class="font-bold text-indigo-300 mb-2 flex items-center gap-2">💡 Sugerencias para avanzar</h3><div id="suggestions-container" class="text-sm text-slate-200 space-y-2"></div></div>
+                <div class="flex justify-end mb-4"><button id="refresh-progress" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm">⟳ Refrescar progreso</button></div>
                 <div class="text-xs text-slate-400 text-center border-t border-white/20 pt-4 mt-4">✅ Los saberes que selecciones en el Paso 2 se reflejan automáticamente aquí. El progreso se guarda en tu navegador.</div>
             </section>
         </main>
@@ -239,9 +240,11 @@
 
 <script>
     // =========================================================================
-    // 1. BASE DE DATOS PNFT COMPLETA (0° a 9°, Módulo 1 y 2, todos los saberes)
+    // 1. BASE DE DATOS PNFT COMPLETA (DEBE REEMPLAZAR POR SU OBJETO REAL)
     // =========================================================================
-const PNFT_DATA = {
+    // NOTA: Aquí debe pegar el objeto PNFT_DATA completo que tiene en su archivo
+    // "Bases Datos PNFT saberes-RdA.docx". He puesto un ejemplo mínimo para que la estructura no falle.
+    const PNFT_DATA = {
             // ========== MATERNO INFANTIL / TRANSICIÓN ==========
             "0°": {
                 "Módulo 1": {
@@ -823,55 +826,55 @@ const PNFT_DATA = {
         }
     };
     // =========================================================================
-    // 3. PALABRAS CLAVE PARA ASOCIAR SABERES A RDA Y PERFILES (ajustadas a nombres reales)
+    // 3. PALABRAS CLAVE PARA ASOCIAR SABERES A RDA (ajustadas a nombres comunes)
     // =========================================================================
     const RDA_KEYWORDS = {
         "Identifica los dispositivos digitales considerando características funcionales, experimentando su utilidad y reconociendo la autoría, durante la accesibilidad, interacción y comunicación en la creación de recursos digitales.": {
-            keywords: ["computadora", "hardware", "software", "internet", "conexión", "bluetooth", "multimedia", "editor gráfico", "grabadora"],
+            keywords: ["computadora", "hardware", "software", "internet", "conexión", "bluetooth", "multimedia", "editor gráfico", "grabadora", "dispositivo", "tableta", "teléfono", "periférico"],
             perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología"]
         },
         "Ordena secuencias integrando conceptos de programación como dato, evento, estado, ciclos, así como nociones de lateralidad y orientación espacial, en la solución de desafíos propuestos, utilizando la programación iconográfica por bloques.": {
-            keywords: ["programación", "bloques", "lateralidad", "orientación", "evento", "estado", "ciclo", "algoritmo", "dato", "secuencia"],
+            keywords: ["programación", "bloques", "lateralidad", "orientación", "evento", "estado", "ciclo", "algoritmo", "dato", "secuencia", "patrones", "entorno iconográfico"],
             perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
         },
         "Reconoce el funcionamiento de los robots, así como sus componentes (cuerpo, sistema sensorial, sistemas de control), al clasificarlos por su uso y programarlos para resolver retos.": {
-            keywords: ["robot", "componentes", "sensor", "actuador", "microcontrolador"],
+            keywords: ["robot", "componentes", "sensor", "actuador", "microcontrolador", "cuerpo", "sistema sensorial", "control"],
             perfiles: ["Principios de computación física y robótica"]
         },
         "Reconoce los conceptos básicos relacionados con la recopilación, organización e interpretación de datos, mediante gráficos pictóricos en la resolución de problemas, fomentando el pensamiento crítico y la curiosidad hacia el mundo que lo rodea.": {
-            keywords: ["dato", "recolección", "organización", "gráficos", "pictóricos", "realidad aumentada"],
+            keywords: ["dato", "recolección", "organización", "gráficos", "pictóricos", "realidad aumentada", "clasificar", "tabla"],
             perfiles: ["Introducción a los datos", "Organización y representación de datos"]
         },
         "Selecciona los dispositivos digitales y herramientas de productividad, mediante el uso de software y hardware, en la creación de archivos, creación y edición de contenido multimedia, aprovechando Internet y respetando la propiedad intelectual en la realización de tareas para la accesibilidad a la información de forma segura y responsable.": {
-            keywords: ["hardware", "software", "productividad", "procesador de texto", "presentaciones", "internet", "buscador", "netiqueta", "huella digital", "virus"],
+            keywords: ["hardware", "software", "productividad", "procesador de texto", "presentaciones", "internet", "buscador", "netiqueta", "huella digital", "virus", "archivo", "carpeta", "multimedia", "editor gráfico", "grabadora"],
             perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología", "Seguridad digital y gestión de riesgos"]
         },
         "Selecciona conceptos de programación como dato, secuencia, evento, estado, variables, operadores aritméticos y relacionales, condicionales simples, ciclo finito e infinito, en la programación por bloques para la solución de problemas.": {
-            keywords: ["dato", "secuencia", "evento", "estado", "variable", "operador", "condicional", "ciclo", "bloques", "patrones"],
+            keywords: ["dato", "secuencia", "evento", "estado", "variable", "operador", "condicional", "ciclo", "bloques", "patrones", "algoritmo"],
             perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
         },
         "Reconoce los fundamentos de la inteligencia artificial y su presencia en la vida cotidiana, mediante ejemplos concretos como asistentes virtuales, valorando el uso seguro y responsable de estas tecnologías.": {
-            keywords: ["inteligencia artificial", "asistente virtual", "ia"],
+            keywords: ["inteligencia artificial", "asistente virtual", "ia", "chatbot", "fundamentos ia"],
             perfiles: ["Introducción a la inteligencia artificial"]
         },
         "Selecciona la configuración de programas locales y en línea para su correcto uso al crear, buscar, compartir, organizar y administrar información en la realización de diferentes tareas de manera comprensiva, segura y responsable.": {
-            keywords: ["configuración", "programas", "archivos", "carpetas", "compresión", "navegador", "buscador", "seguridad"],
+            keywords: ["configuración", "programas", "archivos", "carpetas", "compresión", "navegador", "buscador", "seguridad", "almacenamiento", "compartir"],
             perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología", "Seguridad digital y gestión de riesgos"]
         },
         "Crea algoritmos que integran los conceptos de programación como secuencia, evento, estructuras de control (condicionales simples y ciclos), en la solución a problemas del contexto mediante la programación por bloques.": {
-            keywords: ["algoritmo", "secuencia", "evento", "condicional", "ciclo", "bloques", "diagrama de flujo"],
+            keywords: ["algoritmo", "secuencia", "evento", "condicional", "ciclo", "bloques", "diagrama de flujo", "pseudocódigo"],
             perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
         },
         "Crea algoritmos que permiten la simulación de comportamientos de aparatos tecnológicos, aplicando elementos de computación física, programación y electrónica para la resolución de un problema.": {
-            keywords: ["computación física", "simulación", "circuito", "microcontrolador", "sensor", "actuador", "prototipo"],
+            keywords: ["computación física", "simulación", "circuito", "microcontrolador", "sensor", "actuador", "prototipo", "electrónica"],
             perfiles: ["Electrónica y circuitos", "Creación de prototipos"]
         },
         "Reconoce el uso de la inteligencia artificial en contextos cotidianos y aplica técnicas básicas de recolección, análisis y representación de datos mediante tablas y gráficos.": {
-            keywords: ["inteligencia artificial", "datos", "recolección", "tabla", "gráfico", "visualización"],
+            keywords: ["inteligencia artificial", "datos", "recolección", "tabla", "gráfico", "visualización", "análisis"],
             perfiles: ["Introducción a los datos", "Organización y representación de datos", "Introducción a la inteligencia artificial"]
         },
         "Combina herramientas digitales, tomando en cuenta fundamentos de tecnología, impacto de las TIC, seguridad y privacidad digital y, su experiencia de uso, en la realización de productos digitales.": {
-            keywords: ["herramientas digitales", "fundamentos", "seguridad", "privacidad", "producto digital", "almacenamiento en la nube", "colaboración"],
+            keywords: ["herramientas digitales", "fundamentos", "seguridad", "privacidad", "producto digital", "almacenamiento en la nube", "colaboración", "tic"],
             perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología", "Seguridad digital y gestión de riesgos"]
         },
         "Integra conceptos de programación como eventos, operadores, estructuras de datos, estructuras de control, procedimientos, funciones, colecciones de datos y algoritmos (diagrama de flujo y pseudocódigo), en la solución de problemas reales.": {
@@ -879,11 +882,11 @@ const PNFT_DATA = {
             perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
         },
         "Aplica fundamentos de robótica, computación física, electrónica, mecánica y sistemas robóticos autónomos en la programación y construcción de prototipos que resuelven un problema.": {
-            keywords: ["robótica", "computación física", "electrónica", "mecánica", "sistemas autónomos", "prototipo", "microcontrolador", "sensor", "actuador"],
+            keywords: ["robótica", "computación física", "electrónica", "mecánica", "sistemas autónomos", "prototipo", "microcontrolador", "sensor", "actuador", "circuito"],
             perfiles: ["Principios de computación física y robótica", "Mecánica y diseño de robots", "Electrónica y circuitos", "Creación de prototipos"]
         },
         "Analiza datos mediante herramientas digitales que permiten su visualización para la toma de decisiones en situaciones cotidianas y reconoce aspectos fundamentales de la inteligencia artificial, incluyendo sus aplicaciones actuales y desafíos asociados.": {
-            keywords: ["datos", "visualización", "toma de decisiones", "inteligencia artificial", "herramientas generativas", "desafíos éticos"],
+            keywords: ["datos", "visualización", "toma de decisiones", "inteligencia artificial", "herramientas generativas", "desafíos éticos", "big data"],
             perfiles: ["Introducción a los datos", "Organización y representación de datos", "Introducción a la inteligencia artificial"]
         }
     };
@@ -941,25 +944,26 @@ const PNFT_DATA = {
     // =========================================================================
     const EJES_TRANSVERSALES = {
         "Pensamiento computacional": {
-            keywords: ["algoritmo", "secuencia", "descomposición", "patrones", "abstracción", "lógica", "condicional", "ciclo", "diagrama de flujo", "pseudocódigo"],
+            keywords: ["algoritmo", "secuencia", "descomposición", "patrones", "abstracción", "lógica", "condicional", "ciclo", "diagrama de flujo", "pseudocódigo", "pensamiento computacional"],
             descripcion: "Desarrolla habilidades de pensamiento algorítmico, abstracción, descomposición y reconocimiento de patrones para resolver problemas."
         },
         "Ciudadanía y Ética digital": {
-            keywords: ["netiqueta", "huella digital", "privacidad", "seguridad", "contraseña", "derechos de autor", "licencia", "ciberacoso", "identidad digital"],
+            keywords: ["netiqueta", "huella digital", "privacidad", "seguridad", "contraseña", "derechos de autor", "licencia", "ciberacoso", "identidad digital", "ética digital"],
             descripcion: "Promueve el uso responsable, ético y seguro de la tecnología, respetando la privacidad y los derechos de los demás."
         },
         "Emprendimiento e innovación": {
-            keywords: ["emprendimiento", "innovación", "colaboración", "prototipo", "creatividad", "planificación", "liderazgo", "trabajo en equipo"],
+            keywords: ["emprendimiento", "innovación", "colaboración", "prototipo", "creatividad", "planificación", "liderazgo", "trabajo en equipo", "idea", "producto"],
             descripcion: "Fomenta la capacidad de generar ideas, trabajar en equipo, planificar y desarrollar soluciones creativas e innovadoras."
         }
     };
     // =========================================================================
-    // FUNCIONES DE PROGRESO (actualizadas con ejes transversales)
+    // FUNCIONES DE PROGRESO
     // =========================================================================
     let selectedSaberes = [];
     function saveSelectedSaberes() { localStorage.setItem('pia_selected_saberes', JSON.stringify(selectedSaberes)); }
     function loadSelectedSaberes() { const saved = localStorage.getItem('pia_selected_saberes'); if (saved) selectedSaberes = JSON.parse(saved); }
     function getCycleFromGrade(g) { if (g === "0°") return "Materno Infantil/Transición"; const n = parseInt(g); if (n <= 3) return "I Ciclo"; if (n <= 6) return "II Ciclo"; return "III Ciclo"; }
+    let currentNivel = "", currentModulo = "";
     function getCurrentCycle() { return getCycleFromGrade(currentNivel); }
     function getCurrentRDA() {
         const cycle = getCurrentCycle();
@@ -1027,9 +1031,7 @@ const PNFT_DATA = {
         const porcentaje = total > 0 ? Math.min(100, Math.round((covered / total) * 100)) : 0;
         return { porcentaje };
     }
-    function getCurrentEjes() {
-        return Object.keys(EJES_TRANSVERSALES);
-    }
+    function getCurrentEjes() { return Object.keys(EJES_TRANSVERSALES); }
     function calculateEjeContribution(ejeName) {
         const info = EJES_TRANSVERSALES[ejeName];
         if (!info) return { porcentaje: 0, saberesFaltantes: [] };
@@ -1041,13 +1043,7 @@ const PNFT_DATA = {
         }
         const total = keywords.length;
         const porcentaje = total > 0 ? Math.min(100, Math.round((covered / total) * 100)) : 0;
-        const coveredKeywords = new Set();
-        for (const saber of selectedSaberes) {
-            const saberLower = saber.nombre.toLowerCase();
-            for (const kw of keywords) if (saberLower.includes(kw)) coveredKeywords.add(kw);
-        }
-        const faltantes = keywords.filter(kw => !coveredKeywords.has(kw));
-        return { porcentaje, saberesFaltantes: faltantes.slice(0, 3) };
+        return { porcentaje };
     }
     function updateProgressTab() {
         if (!document.getElementById('step-7')) return;
@@ -1102,7 +1098,7 @@ const PNFT_DATA = {
         saveSelectedSaberes();
         if (document.getElementById('step-7') && document.getElementById('step-7').classList.contains('active')) updateProgressTab();
     }
-    // Sobrescribir updateSelectedCount para sincronizar
+    // Sobrescribir updateSelectedCount
     const originalUpdateSelectedCount = window.updateSelectedCount;
     window.updateSelectedCount = function() { if (originalUpdateSelectedCount) originalUpdateSelectedCount(); syncSelectedSaberesFromCheckboxes(); };
     // =========================================================================
@@ -1111,7 +1107,6 @@ const PNFT_DATA = {
     function getRDAForArea(g, a) { const c = getCycleFromGrade(g); return RDA_POR_CICLO[c]?.[a] || "Resultado de aprendizaje según MEP."; }
     function getCompetenciaForArea(g, a) { const c = getCycleFromGrade(g); return COMPETENCIAS_POR_CICLO[c]?.[a] || "Competencia específica no definida."; }
     let selectedAreas = new Set();
-    let currentNivel = "", currentModulo = "";
     function showStep(step) {
         document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
         const activeSection = document.getElementById(`step-${step}`);
@@ -1133,7 +1128,7 @@ const PNFT_DATA = {
         currentModulo = document.getElementById('select-modulo').value;
         buildAreaSelector();
         showStep(2);
-        if (typeof updateProgressTab === 'function') updateProgressTab(); // Actualiza progreso al cambiar nivel
+        if (typeof updateProgressTab === 'function') updateProgressTab();
     }
     function buildAreaSelector() {
         const gradeData = PNFT_DATA[currentNivel]?.[currentModulo];
@@ -1209,6 +1204,7 @@ const PNFT_DATA = {
     function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
     // Inicialización
     window.onload = function() { resetSelection(); loadSelectedSaberes(); showStep(1); };
+    document.getElementById('refresh-progress')?.addEventListener('click', () => { if (currentNivel) updateProgressTab(); else alert("Primero seleccione un nivel en el paso 1."); });
 </script>
 <script>
     // Paso 6: formateador (independiente)
