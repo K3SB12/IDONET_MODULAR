@@ -1320,8 +1320,30 @@ ${curriculumText}
 ${saberesPAText}
 ${ejesText}
 
-TAREA: Diseñar una Estrategia de Mediación Pedagógica completa que integre todos los saberes y ejes seleccionados. Incluir: título creativo, momentos MEP (Focalización, Exploración, Reflexión, Aplicación), evaluación formativa con rúbrica de 3 niveles, recomendaciones DUA, y resumen curricular. Redacción profesional y detallada.`;
-    document.getElementById('output-prompt').value = prompt;
+TAREA: Diseñar una Estrategia de Mediación Pedagógica completa:
+1. Título creativo y motivador.
+2. Momentos pedagógicos (Focalización, Exploración, Reflexión, Aplicación) alineados a los indicadores descritos.
+3. Evaluación formativa: Rúbrica analítica de 3 niveles (Inicial, Intermedio, Avanzado) basada en los indicadores.
+4. Recomendaciones DUA (Principios: Representación, Acción/Expresión, Motivación) para inclusión.
+5. Preguntar al usuario si necesita algún tipo de formato (ppt, pdf, word, json o inclusive infografías) para entregar la información.
+6. Condiciones obligatorias:
+- NO resumir ni omitir información.
+- Mantener la redacción completa y profesional.
+- Incluir TODOS los apartados:
+  1. Título
+  2. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con todas sus actividades
+  3. Evaluación formativa (rúbrica analítica completa)
+  4. Recomendaciones DUA (Representación, Acción/Expresión, Motivación)
+  5. Resumen de alineación curricular.
+- Distribuir el contenido en varias diapositivas u hojas en caso de formatos (pdf o word) de forma clara (puede dividir un mismo apartado en varias diapositivas u hojas si es necesario).
+- Evitar formato de palabras sueltas; usar ideas completas comprensibles para docentes.
+- Agregar títulos por diapositiva u hojas en caso de pdf o word, coherentes con cada sección.
+- Cada momento pedagógico debe ocupar al menos 2 diapositivas o 1 hoja en caso de ser en formato pdf o word.
+- La rúbrica debe presentarse en formato de tabla.
+- El resumen curricular debe aparecer en una diapositiva final claramente identificada.
+
+Redacción profesional, inspiradora, coherente con el enfoque por competencias. Asegúrese de que cada indicador se evidencie en las actividades.`;
+
 }
 function copyPrompt() { const txt = document.getElementById('output-prompt'); txt.select(); document.execCommand('copy'); alert("✅ Prompt copiado."); }
 // Inicialización
