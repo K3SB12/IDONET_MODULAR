@@ -118,7 +118,7 @@
             <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg"><span class="text-xl font-black">P</span></div>
             <div>
                 <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-white via-blue-200 to-blue-400 bg-clip-text text-transparent">PIA · Planificación Integral y Ágil</h1>
-                <p class="text-blue-300 text-sm">PNFT 2026 · Con seguimiento de progreso y ejes transversales</p>
+                <p class="text-blue-300 text-sm">PNFT 2026 · Con seguimiento de progreso por RDA y perfiles</p>
             </div>
         </div>
         <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span><span class="text-[11px] font-semibold">PNFT · Currículo 2026</span></div>
@@ -223,7 +223,7 @@
                 <div class="text-xs text-slate-400 text-center border-t border-white/20 pt-4 mt-4">💡 Al copiar y pegar en PowerPoint (Ctrl+V), cada "---" creará una nueva diapositiva. Las viñetas (•) se mantendrán.</div>
             </section>
 
-            <!-- STEP 7: TABLERO DE PROGRESO -->
+            <!-- STEP 7: TABLERO DE PROGRESO (basado en estructura curricular) -->
             <section id="step-7" class="tab-content glass-card p-6 md:p-8">
                 <div class="flex items-center gap-4 mb-6"><div class="p-3 bg-blue-500/20 rounded-2xl text-2xl">📊</div><div><h2 class="text-2xl font-bold">Tablero de progreso curricular</h2><p class="text-white/60 text-sm">Visualiza cómo los saberes seleccionados contribuyen a los RDA, perfiles de salida y ejes transversales.</p></div></div>
                 <div id="progress-summary" class="mb-6 p-4 bg-white/5 rounded-xl border border-white/10"></div>
@@ -244,7 +244,7 @@
     // =========================================================================
     // NOTA: Aquí debe pegar el objeto PNFT_DATA completo que tiene en su archivo
     // "Bases Datos PNFT saberes-RdA.docx". He puesto un ejemplo mínimo para que la estructura no falle.
-    const PNFT_DATA = {
+const PNFT_DATA = {
             // ========== MATERNO INFANTIL / TRANSICIÓN ==========
             "0°": {
                 "Módulo 1": {
@@ -826,138 +826,73 @@
         }
     };
     // =========================================================================
-    // 3. PALABRAS CLAVE PARA ASOCIAR SABERES A RDA (ajustadas a nombres comunes)
-    // =========================================================================
-    const RDA_KEYWORDS = {
-        "Identifica los dispositivos digitales considerando características funcionales, experimentando su utilidad y reconociendo la autoría, durante la accesibilidad, interacción y comunicación en la creación de recursos digitales.": {
-            keywords: ["computadora", "hardware", "software", "internet", "conexión", "bluetooth", "multimedia", "editor gráfico", "grabadora", "dispositivo", "tableta", "teléfono", "periférico"],
-            perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología"]
-        },
-        "Ordena secuencias integrando conceptos de programación como dato, evento, estado, ciclos, así como nociones de lateralidad y orientación espacial, en la solución de desafíos propuestos, utilizando la programación iconográfica por bloques.": {
-            keywords: ["programación", "bloques", "lateralidad", "orientación", "evento", "estado", "ciclo", "algoritmo", "dato", "secuencia", "patrones", "entorno iconográfico"],
-            perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
-        },
-        "Reconoce el funcionamiento de los robots, así como sus componentes (cuerpo, sistema sensorial, sistemas de control), al clasificarlos por su uso y programarlos para resolver retos.": {
-            keywords: ["robot", "componentes", "sensor", "actuador", "microcontrolador", "cuerpo", "sistema sensorial", "control"],
-            perfiles: ["Principios de computación física y robótica"]
-        },
-        "Reconoce los conceptos básicos relacionados con la recopilación, organización e interpretación de datos, mediante gráficos pictóricos en la resolución de problemas, fomentando el pensamiento crítico y la curiosidad hacia el mundo que lo rodea.": {
-            keywords: ["dato", "recolección", "organización", "gráficos", "pictóricos", "realidad aumentada", "clasificar", "tabla"],
-            perfiles: ["Introducción a los datos", "Organización y representación de datos"]
-        },
-        "Selecciona los dispositivos digitales y herramientas de productividad, mediante el uso de software y hardware, en la creación de archivos, creación y edición de contenido multimedia, aprovechando Internet y respetando la propiedad intelectual en la realización de tareas para la accesibilidad a la información de forma segura y responsable.": {
-            keywords: ["hardware", "software", "productividad", "procesador de texto", "presentaciones", "internet", "buscador", "netiqueta", "huella digital", "virus", "archivo", "carpeta", "multimedia", "editor gráfico", "grabadora"],
-            perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología", "Seguridad digital y gestión de riesgos"]
-        },
-        "Selecciona conceptos de programación como dato, secuencia, evento, estado, variables, operadores aritméticos y relacionales, condicionales simples, ciclo finito e infinito, en la programación por bloques para la solución de problemas.": {
-            keywords: ["dato", "secuencia", "evento", "estado", "variable", "operador", "condicional", "ciclo", "bloques", "patrones", "algoritmo"],
-            perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
-        },
-        "Reconoce los fundamentos de la inteligencia artificial y su presencia en la vida cotidiana, mediante ejemplos concretos como asistentes virtuales, valorando el uso seguro y responsable de estas tecnologías.": {
-            keywords: ["inteligencia artificial", "asistente virtual", "ia", "chatbot", "fundamentos ia"],
-            perfiles: ["Introducción a la inteligencia artificial"]
-        },
-        "Selecciona la configuración de programas locales y en línea para su correcto uso al crear, buscar, compartir, organizar y administrar información en la realización de diferentes tareas de manera comprensiva, segura y responsable.": {
-            keywords: ["configuración", "programas", "archivos", "carpetas", "compresión", "navegador", "buscador", "seguridad", "almacenamiento", "compartir"],
-            perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología", "Seguridad digital y gestión de riesgos"]
-        },
-        "Crea algoritmos que integran los conceptos de programación como secuencia, evento, estructuras de control (condicionales simples y ciclos), en la solución a problemas del contexto mediante la programación por bloques.": {
-            keywords: ["algoritmo", "secuencia", "evento", "condicional", "ciclo", "bloques", "diagrama de flujo", "pseudocódigo"],
-            perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
-        },
-        "Crea algoritmos que permiten la simulación de comportamientos de aparatos tecnológicos, aplicando elementos de computación física, programación y electrónica para la resolución de un problema.": {
-            keywords: ["computación física", "simulación", "circuito", "microcontrolador", "sensor", "actuador", "prototipo", "electrónica"],
-            perfiles: ["Electrónica y circuitos", "Creación de prototipos"]
-        },
-        "Reconoce el uso de la inteligencia artificial en contextos cotidianos y aplica técnicas básicas de recolección, análisis y representación de datos mediante tablas y gráficos.": {
-            keywords: ["inteligencia artificial", "datos", "recolección", "tabla", "gráfico", "visualización", "análisis"],
-            perfiles: ["Introducción a los datos", "Organización y representación de datos", "Introducción a la inteligencia artificial"]
-        },
-        "Combina herramientas digitales, tomando en cuenta fundamentos de tecnología, impacto de las TIC, seguridad y privacidad digital y, su experiencia de uso, en la realización de productos digitales.": {
-            keywords: ["herramientas digitales", "fundamentos", "seguridad", "privacidad", "producto digital", "almacenamiento en la nube", "colaboración", "tic"],
-            perfiles: ["Fundamentos de tecnología", "Experiencias de uso con la tecnología", "Seguridad digital y gestión de riesgos"]
-        },
-        "Integra conceptos de programación como eventos, operadores, estructuras de datos, estructuras de control, procedimientos, funciones, colecciones de datos y algoritmos (diagrama de flujo y pseudocódigo), en la solución de problemas reales.": {
-            keywords: ["eventos", "operadores", "estructuras de datos", "estructuras de control", "procedimientos", "funciones", "colecciones", "algoritmo", "diagrama de flujo", "pseudocódigo"],
-            perfiles: ["Fundamentos de programación", "Lenguajes de programación"]
-        },
-        "Aplica fundamentos de robótica, computación física, electrónica, mecánica y sistemas robóticos autónomos en la programación y construcción de prototipos que resuelven un problema.": {
-            keywords: ["robótica", "computación física", "electrónica", "mecánica", "sistemas autónomos", "prototipo", "microcontrolador", "sensor", "actuador", "circuito"],
-            perfiles: ["Principios de computación física y robótica", "Mecánica y diseño de robots", "Electrónica y circuitos", "Creación de prototipos"]
-        },
-        "Analiza datos mediante herramientas digitales que permiten su visualización para la toma de decisiones en situaciones cotidianas y reconoce aspectos fundamentales de la inteligencia artificial, incluyendo sus aplicaciones actuales y desafíos asociados.": {
-            keywords: ["datos", "visualización", "toma de decisiones", "inteligencia artificial", "herramientas generativas", "desafíos éticos", "big data"],
-            perfiles: ["Introducción a los datos", "Organización y representación de datos", "Introducción a la inteligencia artificial"]
-        }
-    };
-    // =========================================================================
-    // 4. PERFILES DE SALIDA POR CICLO (extraídos del archivo)
+    // 3. PERFILES DE SALIDA POR CICLO (asociados a áreas)
     // =========================================================================
     const PERFILES_POR_CICLO = {
-        "Materno Infantil/Transición": {
-            "Fundamentos de tecnología": "Conoce las características de dispositivos tecnológicos comunes, así como sus periféricos.",
-            "Experiencias de uso con la tecnología": "Conoce funciones básicas de los dispositivos tecnológicos que utiliza, como encender/apagar, acceder a aplicaciones.",
-            "Fundamentos de programación": "Sigue instrucciones específicas para realizar una serie de acciones asociadas a lateralidad. Reconoce patrones visuales y secuenciales.",
-            "Lenguajes de programación": "Reconoce conceptos básicos de programación: evento, estado, secuencias, ciclos. Programa objetos modificando estado.",
-            "Principios de computación física y robótica": "Reconoce qué es un robot, sus partes y usos. Programa movimientos simples.",
-            "Introducción a los datos": "Recopila datos simples de su entorno. Reconoce datos con base en características específicas.",
-            "Organización y representación de datos": "Clasifica objetos según forma, color, tamaño o cantidad.",
-            "Entornos virtuales": "Participa en experiencias lúdicas de realidad aumentada."
-        },
-        "I Ciclo": {
-            "Fundamentos de tecnología": "Identifica vocabulario técnico básico (software, hardware, red, wifi, bluetooth, archivos, carpetas).",
-            "Experiencias de uso con la tecnología": "Utiliza aplicaciones de productividad, editores gráficos, navegadores, grabadora de audio.",
-            "Seguridad digital y gestión de riesgos": "Realiza búsquedas seguras. Reconoce netiqueta, huella digital, software malicioso.",
-            "Fundamentos de programación": "Resuelve desafíos con algoritmos, secuencias, condicionales, ciclos, datos, estado, variables, operadores.",
-            "Lenguajes de programación": "Utiliza entornos iconográficos y por bloques para resolver problemas.",
-            "Introducción a la inteligencia artificial": "Reconoce qué es la IA y los asistentes virtuales, uso seguro y responsable."
-        },
-        "II Ciclo": {
-            "Fundamentos de tecnología": "Utiliza vocabulario técnico: virus, compresión, sistema operativo, periféricos, direcciones IP.",
-            "Experiencias de uso con la tecnología": "Realiza búsquedas seleccionando información confiable. Configura programas según necesidades.",
-            "Seguridad digital y gestión de riesgos": "Reconoce prácticas seguras al compartir información.",
-            "Fundamentos de programación": "Aplica ciclos, estructuras de control, operadores, procedimientos, diagramas de flujo, pseudocódigo.",
-            "Lenguajes de programación": "Diseña juegos o simulaciones con bloques. Programa computación física.",
-            "Electrónica y circuitos": "Identifica qué es un circuito y cómo funciona. Comprende pines, señales analógicas/digitales.",
-            "Creación de prototipos": "Utiliza sensores y actuadores conectados a microcontrolador. Programa según necesidad.",
-            "Introducción a los datos": "Comprende tipos de datos, importancia y uso actual.",
-            "Organización y representación de datos": "Clasifica datos en tablas simples.",
-            "Introducción a la inteligencia artificial": "Reconoce IA, asistentes virtuales, herramientas generativas, uso ético y seguro."
-        },
-        "III Ciclo": {
-            "Fundamentos de tecnología": "Implementa vocabulario técnico: IoT, protocolos, IDE, hacker, almacenamiento en la nube, base de datos.",
-            "Experiencias de uso con la tecnología": "Utiliza herramientas de comunicación digital, programas de diseño, edición de video, almacenamiento colaborativo.",
-            "Seguridad digital y gestión de riesgos": "Aplica medidas de seguridad para proteger privacidad y disminuir riesgos en línea.",
-            "Fundamentos de programación": "Diseña interfaces, aplica funciones, variables, estructuras de datos, control de flujo.",
-            "Lenguajes de programación": "Resuelve problemas con programación por bloques o textual. Crea prototipos físicos programados.",
-            "Principios de computación física y robótica": "Aplica principios de diseño de robots, desafíos éticos y legales.",
-            "Mecánica y diseño de robots": "Implementa mecanismos para generar fuerza y velocidad.",
-            "Electrónica y circuitos": "Experimenta con resistencias, LEDs, circuitos.",
-            "Creación de prototipos": "Crea prototipos de artefactos físicos o robots.",
-            "Introducción a los datos": "Conoce importancia de datos en redes sociales, historial, localización.",
-            "Organización y representación de datos": "Comprende recolección y organización de datos personales.",
-            "Introducción a la inteligencia artificial": "Conoce fundamentos de IA, reflexiona sobre beneficios, riesgos y desafíos. Identifica funcionamiento de asistentes y herramientas generativas."
-        }
+        "Materno Infantil/Transición": [
+            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Principios de computación física y robótica", areas: ["Computación física y Robótica"] },
+            { nombre: "Introducción a los datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
+            { nombre: "Organización y representación de datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
+            { nombre: "Entornos virtuales", areas: ["Ciencia de datos e Inteligencia artificial"] }
+        ],
+        "I Ciclo": [
+            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Seguridad digital y gestión de riesgos", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Introducción a la inteligencia artificial", areas: ["Ciencia de datos e Inteligencia artificial"] }
+        ],
+        "II Ciclo": [
+            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Seguridad digital y gestión de riesgos", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Electrónica y circuitos", areas: ["Computación física y Robótica"] },
+            { nombre: "Creación de prototipos", areas: ["Computación física y Robótica"] },
+            { nombre: "Introducción a los datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
+            { nombre: "Organización y representación de datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
+            { nombre: "Introducción a la inteligencia artificial", areas: ["Ciencia de datos e Inteligencia artificial"] }
+        ],
+        "III Ciclo": [
+            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Seguridad digital y gestión de riesgos", areas: ["Apropiación tecnológica y Digital"] },
+            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
+            { nombre: "Principios de computación física y robótica", areas: ["Computación física y Robótica"] },
+            { nombre: "Mecánica y diseño de robots", areas: ["Computación física y Robótica"] },
+            { nombre: "Electrónica y circuitos", areas: ["Computación física y Robótica"] },
+            { nombre: "Creación de prototipos", areas: ["Computación física y Robótica"] },
+            { nombre: "Introducción a los datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
+            { nombre: "Organización y representación de datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
+            { nombre: "Introducción a la inteligencia artificial", areas: ["Ciencia de datos e Inteligencia artificial"] }
+        ]
     };
     // =========================================================================
-    // 5. EJES TRANSVERSALES (con palabras clave asociadas)
+    // 4. EJES TRANSVERSALES (con palabras clave asociadas)
     // =========================================================================
     const EJES_TRANSVERSALES = {
         "Pensamiento computacional": {
-            keywords: ["algoritmo", "secuencia", "descomposición", "patrones", "abstracción", "lógica", "condicional", "ciclo", "diagrama de flujo", "pseudocódigo", "pensamiento computacional"],
+            keywords: ["algoritmo", "secuencia", "descomposición", "patrones", "abstracción", "lógica", "condicional", "ciclo", "diagrama de flujo", "pseudocódigo"],
             descripcion: "Desarrolla habilidades de pensamiento algorítmico, abstracción, descomposición y reconocimiento de patrones para resolver problemas."
         },
         "Ciudadanía y Ética digital": {
-            keywords: ["netiqueta", "huella digital", "privacidad", "seguridad", "contraseña", "derechos de autor", "licencia", "ciberacoso", "identidad digital", "ética digital"],
+            keywords: ["netiqueta", "huella digital", "privacidad", "seguridad", "contraseña", "derechos de autor", "licencia", "ciberacoso", "identidad digital"],
             descripcion: "Promueve el uso responsable, ético y seguro de la tecnología, respetando la privacidad y los derechos de los demás."
         },
         "Emprendimiento e innovación": {
-            keywords: ["emprendimiento", "innovación", "colaboración", "prototipo", "creatividad", "planificación", "liderazgo", "trabajo en equipo", "idea", "producto"],
+            keywords: ["emprendimiento", "innovación", "colaboración", "prototipo", "creatividad", "planificación", "liderazgo", "trabajo en equipo"],
             descripcion: "Fomenta la capacidad de generar ideas, trabajar en equipo, planificar y desarrollar soluciones creativas e innovadoras."
         }
     };
     // =========================================================================
-    // FUNCIONES DE PROGRESO
+    // FUNCIONES DE PROGRESO (basadas en estructura curricular)
     // =========================================================================
     let selectedSaberes = [];
     function saveSelectedSaberes() { localStorage.setItem('pia_selected_saberes', JSON.stringify(selectedSaberes)); }
@@ -965,128 +900,160 @@
     function getCycleFromGrade(g) { if (g === "0°") return "Materno Infantil/Transición"; const n = parseInt(g); if (n <= 3) return "I Ciclo"; if (n <= 6) return "II Ciclo"; return "III Ciclo"; }
     let currentNivel = "", currentModulo = "";
     function getCurrentCycle() { return getCycleFromGrade(currentNivel); }
-    function getCurrentRDA() {
-        const cycle = getCurrentCycle();
-        const rdaList = [];
-        if (cycle === "Materno Infantil/Transición") {
-            rdaList.push("Identifica los dispositivos digitales considerando características funcionales...",
-                         "Ordena secuencias integrando conceptos de programación...",
-                         "Reconoce el funcionamiento de los robots...",
-                         "Reconoce los conceptos básicos relacionados con la recopilación...");
-        } else if (cycle === "I Ciclo") {
-            rdaList.push("Selecciona los dispositivos digitales y herramientas de productividad...",
-                         "Selecciona conceptos de programación como dato, secuencia, evento...",
-                         "Reconoce los fundamentos de la inteligencia artificial...");
-        } else if (cycle === "II Ciclo") {
-            rdaList.push("Selecciona la configuración de programas locales y en línea...",
-                         "Crea algoritmos que integran los conceptos de programación...",
-                         "Crea algoritmos que permiten la simulación de comportamientos...",
-                         "Reconoce el uso de la inteligencia artificial...");
-        } else {
-            rdaList.push("Combina herramientas digitales, tomando en cuenta fundamentos de tecnología...",
-                         "Integra conceptos de programación como eventos, operadores...",
-                         "Aplica fundamentos de robótica, computación física...",
-                         "Analiza datos mediante herramientas digitales...");
-        }
-        return rdaList;
-    }
-    function calculateRDAContribution(rdaText) {
-        const info = RDA_KEYWORDS[rdaText];
-        if (!info) return { porcentaje: 0, saberesFaltantes: [] };
-        const keywords = info.keywords.map(k => k.toLowerCase());
-        let covered = 0;
-        for (const saber of selectedSaberes) {
-            const saberLower = saber.nombre.toLowerCase();
-            if (keywords.some(kw => saberLower.includes(kw))) covered++;
-        }
-        const total = keywords.length;
-        const porcentaje = total > 0 ? Math.min(100, Math.round((covered / total) * 100)) : 0;
-        const coveredKeywords = new Set();
-        for (const saber of selectedSaberes) {
-            const saberLower = saber.nombre.toLowerCase();
-            for (const kw of keywords) if (saberLower.includes(kw)) coveredKeywords.add(kw);
-        }
-        const faltantes = keywords.filter(kw => !coveredKeywords.has(kw));
-        return { porcentaje, saberesFaltantes: faltantes.slice(0, 3) };
-    }
-    function getCurrentPerfiles() {
-        const cycle = getCurrentCycle();
-        const perfilesSet = new Set();
-        const rdaList = getCurrentRDA();
-        for (const rda of rdaList) {
-            const info = RDA_KEYWORDS[rda];
-            if (info && info.perfiles) info.perfiles.forEach(p => perfilesSet.add(p));
-        }
-        return Array.from(perfilesSet);
-    }
-    function calculatePerfilContribution(perfilName) {
-        let covered = 0, total = 0;
-        for (const [rda, info] of Object.entries(RDA_KEYWORDS)) {
-            if (info.perfiles && info.perfiles.includes(perfilName)) {
-                total++;
-                const rdaProgress = calculateRDAContribution(rda);
-                if (rdaProgress.porcentaje >= 70) covered++;
+    // Obtener todos los saberes disponibles en el grado y módulo actuales, organizados por área
+    function getAllSaberesPorArea() {
+        const gradeData = PNFT_DATA[currentNivel]?.[currentModulo];
+        if (!gradeData) return {};
+        const saberesPorArea = {};
+        for (const [area, content] of Object.entries(gradeData)) {
+            if (content.saberes) {
+                saberesPorArea[area] = content.saberes.map(s => s.nombre);
             }
         }
-        const porcentaje = total > 0 ? Math.min(100, Math.round((covered / total) * 100)) : 0;
-        return { porcentaje };
+        return saberesPorArea;
     }
-    function getCurrentEjes() { return Object.keys(EJES_TRANSVERSALES); }
-    function calculateEjeContribution(ejeName) {
+    // Obtener los RDA del ciclo actual (lista de objetos con área y texto)
+    function getRDAConAreas() {
+        const cycle = getCurrentCycle();
+        const rdaConAreas = [];
+        for (const [area, rdaText] of Object.entries(RDA_POR_CICLO[cycle] || {})) {
+            rdaConAreas.push({ area, texto: rdaText });
+        }
+        return rdaConAreas;
+    }
+    // Calcular progreso para un RDA dado: (saberes seleccionados de sus áreas / total saberes de esas áreas) * 100
+    function calculateRDAProgress(rdaArea) {
+        const saberesPorArea = getAllSaberesPorArea();
+        const totalSaberesArea = saberesPorArea[rdaArea] || [];
+        if (totalSaberesArea.length === 0) return { porcentaje: 0, total: 0, seleccionados: 0 };
+        const seleccionados = selectedSaberes.filter(s => s.area === rdaArea).length;
+        const porcentaje = Math.round((seleccionados / totalSaberesArea.length) * 100);
+        return { porcentaje, total: totalSaberesArea.length, seleccionados };
+    }
+    // Obtener perfiles del ciclo actual (con sus áreas asociadas)
+    function getPerfilesDelCiclo() {
+        const cycle = getCurrentCycle();
+        return PERFILES_POR_CICLO[cycle] || [];
+    }
+    // Calcular progreso para un perfil: (saberes seleccionados de sus áreas / total saberes de esas áreas) * 100
+    function calculatePerfilProgress(perfil) {
+        const saberesPorArea = getAllSaberesPorArea();
+        let totalSaberes = 0;
+        let seleccionados = 0;
+        for (const area of perfil.areas) {
+            const saberesArea = saberesPorArea[area] || [];
+            totalSaberes += saberesArea.length;
+            seleccionados += selectedSaberes.filter(s => s.area === area).length;
+        }
+        if (totalSaberes === 0) return { porcentaje: 0, total: 0, seleccionados: 0 };
+        const porcentaje = Math.round((seleccionados / totalSaberes) * 100);
+        return { porcentaje, total: totalSaberes, seleccionados };
+    }
+    // Calcular progreso para ejes transversales (por palabras clave)
+    function calculateEjeProgress(ejeName) {
         const info = EJES_TRANSVERSALES[ejeName];
-        if (!info) return { porcentaje: 0, saberesFaltantes: [] };
+        if (!info) return { porcentaje: 0 };
         const keywords = info.keywords.map(k => k.toLowerCase());
+        let total = keywords.length;
         let covered = 0;
         for (const saber of selectedSaberes) {
             const saberLower = saber.nombre.toLowerCase();
             if (keywords.some(kw => saberLower.includes(kw))) covered++;
         }
-        const total = keywords.length;
         const porcentaje = total > 0 ? Math.min(100, Math.round((covered / total) * 100)) : 0;
         return { porcentaje };
     }
     function updateProgressTab() {
         if (!document.getElementById('step-7')) return;
         const cycle = getCurrentCycle();
-        document.getElementById('progress-summary').innerHTML = `<p class="text-sm"><span class="font-bold">Ciclo:</span> ${cycle}</p><p class="text-sm"><span class="font-bold">Saberes seleccionados:</span> ${selectedSaberes.length}</p>`;
-        const rdaList = getCurrentRDA();
+        const saberesPorArea = getAllSaberesPorArea();
+        const totalSaberesDisponibles = Object.values(saberesPorArea).flat().length;
+        document.getElementById('progress-summary').innerHTML = `
+            <p class="text-sm"><span class="font-bold">Ciclo:</span> ${cycle}</p>
+            <p class="text-sm"><span class="font-bold">Saberes disponibles en este nivel/módulo:</span> ${totalSaberesDisponibles}</p>
+            <p class="text-sm"><span class="font-bold">Saberes seleccionados:</span> ${selectedSaberes.length}</p>
+        `;
+        // RDA
+        const rdaList = getRDAConAreas();
         const rdaContainer = document.getElementById('rda-progress-list');
         rdaContainer.innerHTML = '';
         for (const rda of rdaList) {
-            const progress = calculateRDAContribution(rda);
+            const progress = calculateRDAProgress(rda.area);
             const percentage = progress.porcentaje;
-            let message = percentage === 100 ? '✅ ¡RDA alcanzado!' : (percentage >= 70 ? '🎉 Muy cerca, ¡sigue así!' : (percentage >= 40 ? '📈 Buen avance, puedes reforzar con más saberes.' : '🌱 Comienza seleccionando saberes relacionados.'));
+            let message = '';
+            if (percentage === 100) message = '✅ ¡RDA alcanzado!';
+            else if (percentage >= 70) message = '🎉 Muy cerca, ¡sigue así!';
+            else if (percentage >= 40) message = '📈 Buen avance, puedes reforzar con más saberes.';
+            else message = '🌱 Comienza seleccionando saberes de esta área.';
             const barColor = percentage === 100 ? 'bg-emerald-500' : 'bg-blue-500';
-            rdaContainer.innerHTML += `<div class="bg-white/5 rounded-xl p-3"><div class="flex justify-between text-sm mb-1"><span class="font-medium tooltip" title="${rda.replace(/"/g, '&quot;')}">${rda.length > 100 ? rda.substring(0, 100) + '...' : rda}</span><span>${percentage}%</span></div><div class="w-full bg-slate-700 rounded-full h-2"><div class="${barColor} h-2 rounded-full progress-bar" style="width: ${percentage}%"></div></div><p class="text-xs text-slate-300 mt-2">${message}</p></div>`;
+            rdaContainer.innerHTML += `
+                <div class="bg-white/5 rounded-xl p-3">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-medium tooltip" title="${rda.texto.replace(/"/g, '&quot;')}">${rda.texto.length > 100 ? rda.texto.substring(0, 100) + '...' : rda.texto}</span>
+                        <span>${percentage}% (${progress.seleccionados}/${progress.total})</span>
+                    </div>
+                    <div class="w-full bg-slate-700 rounded-full h-2">
+                        <div class="${barColor} h-2 rounded-full progress-bar" style="width: ${percentage}%"></div>
+                    </div>
+                    <p class="text-xs text-slate-300 mt-2">${message}</p>
+                </div>
+            `;
         }
-        const perfiles = getCurrentPerfiles();
+        // Perfiles
+        const perfiles = getPerfilesDelCiclo();
         const perfilContainer = document.getElementById('perfiles-progress-list');
         perfilContainer.innerHTML = '';
         for (const perfil of perfiles) {
-            const progress = calculatePerfilContribution(perfil);
+            const progress = calculatePerfilProgress(perfil);
             const percentage = progress.porcentaje;
-            perfilContainer.innerHTML += `<div class="bg-white/5 rounded-xl p-3"><div class="flex justify-between text-sm mb-1"><span class="font-medium tooltip" title="${PERFILES_POR_CICLO[cycle]?.[perfil] || 'Perfil de salida'}">${perfil}</span><span>${percentage}%</span></div><div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full progress-bar" style="width: ${percentage}%"></div></div><p class="text-xs text-slate-300 mt-2">${percentage >= 80 ? '🌟 Perfil en desarrollo' : '📌 Puedes fortalecerlo con más saberes.'}</p></div>`;
+            let message = percentage >= 80 ? '🌟 Perfil en desarrollo' : '📌 Puedes fortalecerlo con más saberes.';
+            perfilContainer.innerHTML += `
+                <div class="bg-white/5 rounded-xl p-3">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-medium">${perfil.nombre}</span>
+                        <span>${percentage}% (${progress.seleccionados}/${progress.total})</span>
+                    </div>
+                    <div class="w-full bg-slate-700 rounded-full h-2">
+                        <div class="bg-purple-500 h-2 rounded-full progress-bar" style="width: ${percentage}%"></div>
+                    </div>
+                    <p class="text-xs text-slate-300 mt-2">${message}</p>
+                </div>
+            `;
         }
-        const ejes = getCurrentEjes();
+        // Ejes transversales
+        const ejes = Object.keys(EJES_TRANSVERSALES);
         const ejesContainer = document.getElementById('ejes-progress-list');
         ejesContainer.innerHTML = '';
         for (const eje of ejes) {
-            const progress = calculateEjeContribution(eje);
+            const progress = calculateEjeProgress(eje);
             const percentage = progress.porcentaje;
-            ejesContainer.innerHTML += `<div class="bg-white/5 rounded-xl p-3"><div class="flex justify-between text-sm mb-1"><span class="font-medium tooltip" title="${EJES_TRANSVERSALES[eje].descripcion}">${eje}</span><span>${percentage}%</span></div><div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full progress-bar" style="width: ${percentage}%"></div></div><p class="text-xs text-slate-300 mt-2">${percentage >= 70 ? '✅ Bien trabajado' : (percentage >= 30 ? '📌 En proceso' : '🌱 Inicial')}</p></div>`;
+            ejesContainer.innerHTML += `
+                <div class="bg-white/5 rounded-xl p-3">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-medium tooltip" title="${EJES_TRANSVERSALES[eje].descripcion}">${eje}</span>
+                        <span>${percentage}%</span>
+                    </div>
+                    <div class="w-full bg-slate-700 rounded-full h-2">
+                        <div class="bg-amber-500 h-2 rounded-full progress-bar" style="width: ${percentage}%"></div>
+                    </div>
+                    <p class="text-xs text-slate-300 mt-2">${percentage >= 70 ? '✅ Bien trabajado' : (percentage >= 30 ? '📌 En proceso' : '🌱 Inicial')}</p>
+                </div>
+            `;
         }
-        let lowestRda = null, lowestPercentage = 101;
+        // Sugerencias: encontrar el RDA con menor porcentaje (que no sea 100%)
+        let lowestRda = null;
+        let lowestPercentage = 101;
         for (const rda of rdaList) {
-            const progress = calculateRDAContribution(rda);
+            const progress = calculateRDAProgress(rda.area);
             if (progress.porcentaje < lowestPercentage && progress.porcentaje < 100) {
                 lowestPercentage = progress.porcentaje;
                 lowestRda = { rda, progress };
             }
         }
         const suggestionsDiv = document.getElementById('suggestions-container');
-        if (lowestRda && lowestRda.progress.saberesFaltantes.length > 0) {
-            const faltantes = lowestRda.progress.saberesFaltantes.map(kw => `"${kw}"`).join(', ');
-            suggestionsDiv.innerHTML = `<p>🔍 Para mejorar el RDA <strong>${lowestRda.rda.substring(0, 60)}...</strong>, considera agregar saberes relacionados con: ${faltantes}.</p>`;
+        if (lowestRda && lowestRda.progress.total > 0) {
+            const faltantes = lowestRda.progress.total - lowestRda.progress.seleccionados;
+            suggestionsDiv.innerHTML = `<p>🔍 Para mejorar el RDA de <strong>${lowestRda.rda.area}</strong>, selecciona ${faltantes} saber(es) más de esa área (${lowestRda.progress.seleccionados}/${lowestRda.progress.total}).</p>`;
         } else {
             suggestionsDiv.innerHTML = '<p>🎉 ¡Excelente! Estás cubriendo bien los aprendizajes. Sigue así.</p>';
         }
@@ -1094,15 +1061,26 @@
     function syncSelectedSaberesFromCheckboxes() {
         const checkboxes = document.querySelectorAll('.saber-check:checked');
         selectedSaberes = [];
-        checkboxes.forEach(cb => { selectedSaberes.push({ nombre: cb.dataset.saber, area: cb.dataset.area, rda: cb.dataset.areaRda }); });
+        checkboxes.forEach(cb => {
+            selectedSaberes.push({
+                nombre: cb.dataset.saber,
+                area: cb.dataset.area,
+                rda: cb.dataset.areaRda
+            });
+        });
         saveSelectedSaberes();
-        if (document.getElementById('step-7') && document.getElementById('step-7').classList.contains('active')) updateProgressTab();
+        if (document.getElementById('step-7') && document.getElementById('step-7').classList.contains('active')) {
+            updateProgressTab();
+        }
     }
     // Sobrescribir updateSelectedCount
     const originalUpdateSelectedCount = window.updateSelectedCount;
-    window.updateSelectedCount = function() { if (originalUpdateSelectedCount) originalUpdateSelectedCount(); syncSelectedSaberesFromCheckboxes(); };
+    window.updateSelectedCount = function() {
+        if (originalUpdateSelectedCount) originalUpdateSelectedCount();
+        syncSelectedSaberesFromCheckboxes();
+    };
     // =========================================================================
-    // FUNCIONES ORIGINALES (pasos 1-6)
+    // FUNCIONES ORIGINALES (pasos 1-6) - solo lógica de interfaz
     // =========================================================================
     function getRDAForArea(g, a) { const c = getCycleFromGrade(g); return RDA_POR_CICLO[c]?.[a] || "Resultado de aprendizaje según MEP."; }
     function getCompetenciaForArea(g, a) { const c = getCycleFromGrade(g); return COMPETENCIAS_POR_CICLO[c]?.[a] || "Competencia específica no definida."; }
@@ -1163,7 +1141,14 @@
             const areaCompetencia = getCompetenciaForArea(currentNivel, area);
             const areaDiv = document.createElement('div');
             areaDiv.className = "bg-slate-800/40 rounded-2xl p-5 border border-slate-700";
-            areaDiv.innerHTML = `<div class="mb-4 pb-2 border-b border-slate-700"><p class="text-[9px] font-black text-indigo-400 uppercase">RDA del Área</p><p class="text-xs text-slate-300 italic">${areaRda}</p><p class="text-[9px] font-black text-indigo-400 uppercase mt-2">Competencia específica</p><p class="text-xs text-slate-300 italic">${areaCompetencia}</p></div>`;
+            areaDiv.innerHTML = `
+                <div class="mb-4 pb-2 border-b border-slate-700">
+                    <p class="text-[9px] font-black text-indigo-400 uppercase">RDA del Área</p>
+                    <p class="text-xs text-slate-300 italic">${areaRda}</p>
+                    <p class="text-[9px] font-black text-indigo-400 uppercase mt-2">Competencia específica</p>
+                    <p class="text-xs text-slate-300 italic">${areaCompetencia}</p>
+                </div>
+            `;
             areaData.saberes.forEach(saber => {
                 const saberLabel = document.createElement('label');
                 saberLabel.className = "flex items-start gap-3 p-3 bg-slate-800/60 rounded-xl border border-slate-700 mb-2 cursor-pointer hover:bg-slate-700/50 transition";
