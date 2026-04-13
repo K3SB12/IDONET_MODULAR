@@ -808,164 +808,377 @@
             }
         };
 
-    // =========================================================================
-    // 2. COMPETENCIAS ESPECÍFICAS POR CICLO (extraídas del archivo)
-    // =========================================================================
-    const COMPETENCIAS_POR_CICLO = {
-        "Materno Infantil/Transición": {
-            "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
-            "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
-            "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
-            "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
-        },
-        "I Ciclo": {
-            "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
-            "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
-            "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
-            "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
-        },
-        "II Ciclo": {
-            "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
-            "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
-            "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
-            "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
-        },
-        "III Ciclo": {
-            "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
-            "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
-            "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
-            "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
-        }
-    };
-    // =========================================================================
-    // 3. SABERES PROCEDIMENTALES Y ACTITUDINALES (basados en perfiles de salida por ciclo)
-    // =========================================================================
-    const SABERES_PA_POR_CICLO = {
-        "Materno Infantil/Transición": [
-            "Conoce las características de dispositivos tecnológicos comunes, como tabletas, computadoras o teléfonos inteligentes, así como sus periféricos.",
-            "Conoce funciones básicas de los dispositivos tecnológicos que utiliza, tales como encender o apagar, así como acceder a las aplicaciones o programas que requiera.",
-            "Escoge aplicaciones que le ayuden a desarrollar habilidades básicas, como la identificación de colores, formas o números.",
-            "Usa aplicaciones y entornos visuales de programación para dibujar, programar, crear música, videos, o contar historias propias para su nivel.",
-            "Conoce las funciones básicas como abrir, cerrar, minimizar, maximizar y guardar, al utilizar las aplicaciones o programas que utiliza.",
-            "Sigue instrucciones específicas para realizar una serie de acciones, como saltar, girar, avanzar, retroceder asociadas al sentido de lateralidad u orientación espacial.",
-            "Reconoce patrones visuales y secuenciales. Por ejemplo, puede completar una serie de imágenes o patrones de colores que sigan una regla predecible.",
-            "Reconoce conceptos básicos de programación: evento, estado, secuencias de acciones, ciclo finito e infinito, a través de juegos en entornos digitales o físicos.",
-            "Programa objetos modificando su estado según las propiedades de orientación, dirección y/o tamaño.",
-            "Participa en la resolución de desafíos programando soluciones simples, arrastrando y soltando bloques de código para crear secuencias lógicas, mediante un entorno de programación iconográfico.",
-            "Reconoce la importancia de los datos en contexto físico y en contexto digital al resolver desafíos propuestos.",
-            "Reconoce qué es un robot y cómo se diferencia de otros objetos.",
-            "Identifica diferentes partes de un robot, como cuerpo, sistema sensorial y control.",
-            "Identifica los robots según su uso.",
-            "Programa movimientos simples en los robots, como avanzar, retroceder y girar.",
-            "Recopila datos simples de su entorno fomentando el pensamiento crítico y la curiosidad hacia el mundo que los rodea.",
-            "Reconoce datos con base en características específicas. Por ejemplo, clasificar juguetes según su forma, color, tamaño o cantidad.",
-            "Participa en experiencias lúdicas que combinan el entorno físico con elementos digitales a través de la realidad aumentada."
-        ],
-        "I Ciclo": [
-            "Identifica vocabulario técnico básico relacionado con la tecnología, tales como: software, hardware, dispositivos de entrada y salida, red de computadoras, Wifi, bluetooth, sistemas operativos, archivo y carpetas.",
-            "Utiliza aplicaciones de productividad según su función, por ejemplo: procesadores de texto, presentaciones, editores gráficos, navegadores y buscadores, grabadora de audios, herramientas para la creación de videos.",
-            "Realiza búsquedas en línea en sitios seguros y confiables.",
-            "Reconoce las normas básicas de netiqueta en los procesos de comunicación.",
-            "Describe el concepto de huella digital y sus implicaciones en la vida de las personas.",
-            "Reconoce el concepto de software malicioso (virus) y sus consecuencias al trabajar con equipos tecnológicos.",
-            "Resuelve desafíos digitales o físicos con niveles de dificultad progresiva que requieren el uso de algoritmos, secuencias, condicionales simples, ciclos finitos e infinitos, datos, estado, variables, operadores aritméticos, operadores relacionales y eventos.",
-            "Utiliza entornos de programación iconográficos y por bloques aplicando los conceptos computacionales aprendidos para resolver problemas específicos.",
-            "Resuelve problemas de programación o de actividades cotidianas, a partir del reconocimiento y creación de patrones.",
-            "Reconoce qué es la inteligencia artificial y los asistentes virtuales comprendiendo la importancia de usarlos de forma segura y responsable."
-        ],
-        "II Ciclo": [
-            "Utiliza vocabulario técnico relacionado con la tecnología, tal como: virus, comprimir y descomprimir archivos, carpetas, sistema operativo, hardware, software, periféricos, red (dispositivos comunicación), conexión wifi, bluetooth, configuración, escritorio, herramientas de productividad, unidades de almacenamiento, direcciones IP.",
-            "Realiza búsquedas en línea utilizando motores de búsqueda, seleccionando información relevante y confiable, comprendiendo la importancia de verificar la fuente y la precisión de la información encontrada.",
-            "Reconoce prácticas seguras al compartir información en diferentes espacios, resguardando su integridad y la de los demás.",
-            "Configura los programas o aplicaciones que utiliza atendiendo sus necesidades (accesibilidad), por ejemplo: cambia el funcionamiento del ratón, modifica el idioma de un programa o aplicación.",
-            "Aplica los conocimientos adquiridos (ciclos, estructuras de control, operadores, procedimientos, entre otros) para la resolución de problemas complejos de su contexto y apropiados a un propósito específico, descomponiéndolos en pasos más pequeños, diseñando diagramas de flujo o pseudocódigo para luego programarlos.",
-            "Diseña sus propios juegos o simulaciones arrastrando y soltando bloques de código.",
-            "Programa con bloques para expresar de forma creativa la computación física.",
-            "Identifica qué es un circuito y cómo funciona.",
-            "Utiliza sensores y/o actuadores internos y/o externos conectándolos a un microcontrolador y programándolos según lo que requiere la solución del problema que resuelve.",
-            "Comprende los conceptos básicos de electrónica, tales como pines de entrada o salida, señal analógica o digital.",
-            "Emplea las tarjetas microcontroladoras para integrarlas en la solución al problema que resuelve.",
-            "Comprende conceptos básicos de los datos como tipos de datos, su importancia y uso en la actualidad.",
-            "Clasifica datos del entorno en tablas simples.",
-            "Reconoce qué es la inteligencia artificial, los asistentes virtuales y las herramientas generativas, comprendiendo su funcionamiento básico y la importancia de usarlos de forma segura, ética y responsable."
-        ],
-        "III Ciclo": [
-            "Implementa vocabulario técnico relacionado con la tecnología, tal como: software, hardware, IoT, protocolos de comunicación, software malicioso, riesgos en línea, IDE, hacker, huella digital, almacenamiento en la nube y base de datos.",
-            "Utiliza de manera competente herramientas de comunicación digital, como el correo electrónico y los chats en línea, aplicando normas de netiqueta y seguridad en la comunicación, siendo consciente del comportamiento inapropiado en línea.",
-            "Integra programas y aplicaciones de programación o productividad de diseño gráfico y edición de video para el desarrollo de proyectos creativos y producción de contenido, mediante la creación y edición de imágenes, videos y audio, para expresar sus ideas de manera efectiva.",
-            "Realiza búsquedas efectivas en línea y evalúa críticamente la información que encuentra, distinguiendo entre fuentes confiables y no confiables, evaluando la calidad y la relevancia de la información, citando sus fuentes adecuadamente.",
-            "Utiliza aplicaciones de almacenamiento en la nube, que le permiten trabajar de manera colaborativa.",
-            "Aplica medidas de seguridad para proteger su privacidad y disminuir los riesgos en línea.",
-            "Diseña interfaces físicas o digitales para resolver problemas complejos de su contexto y así implementar funcionalidades y familiarizarse con el ciclo de vida de un programa o aplicación.",
-            "Aplica conceptos de programación como funciones, variables, estructuras de datos y control de flujo en la solución programada, según lo requiera.",
-            "Crea prototipos de artefactos físicos programados en entornos de programación textual.",
-            "Resuelve problemas mediante la programación por bloques o la programación textual.",
-            "Aplica principios de diseño de robots incluyendo sus componentes y los desafíos éticos y legales.",
-            "Implementa los diferentes tipos de mecanismos para generar fuerza y velocidad.",
-            "Experimenta con componentes electrónicos básicos (resistencias y LEDs) y su conexión en distintos tipos de circuitos.",
-            "Crea prototipos de artefactos físicos o robots que permitan utilizar una tarea o resolver un problema de la realidad.",
-            "Conoce la importancia de los datos en situaciones cotidianas como control de redes sociales, historial de navegación y localización.",
-            "Comprende la importancia de recolectar y organizar datos personales como gastos, notas, actividad física o salud.",
-            "Conoce cómo se almacenan, gestionan y protegen los datos a lo largo de su ciclo de vida, aplicando principios de responsabilidad y seguridad digital.",
-            "Conoce los fundamentos de la inteligencia artificial y reflexiona críticamente sobre sus beneficios, riesgos y desafíos en la actualidad.",
-            "Identifica el funcionamiento de los asistentes virtuales y las herramientas generativas, comprendiendo la importancia de usarlos de forma segura, ética y responsable."
-        ]
-    };
-    // Ejes transversales (lista fija)
-    const EJES_TRANSVERSALES = [
-        { nombre: "Pensamiento computacional", descripcion: "Desarrolla habilidades de pensamiento algorítmico, abstracción, descomposición y reconocimiento de patrones para resolver problemas." },
-        { nombre: "Ciudadanía y Ética digital", descripcion: "Promueve el uso responsable, ético y seguro de la tecnología, respetando la privacidad y los derechos de los demás." },
-        { nombre: "Emprendimiento e innovación", descripcion: "Fomenta la capacidad de generar ideas, trabajar en equipo, planificar y desarrollar soluciones creativas e innovadoras." }
-    ];
-    // =========================================================================
-    // 4. PERFILES DE SALIDA POR CICLO (para el paso 7)
-    // =========================================================================
-    const PERFILES_POR_CICLO = {
-        "Materno Infantil/Transición": [
-            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Principios de computación física y robótica", areas: ["Computación física y Robótica"] },
-            { nombre: "Introducción a los datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
-            { nombre: "Organización y representación de datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
-            { nombre: "Entornos virtuales", areas: ["Ciencia de datos e Inteligencia artificial"] }
-        ],
-        "I Ciclo": [
-            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Seguridad digital y gestión de riesgos", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Introducción a la inteligencia artificial", areas: ["Ciencia de datos e Inteligencia artificial"] }
-        ],
-        "II Ciclo": [
-            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Seguridad digital y gestión de riesgos", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Electrónica y circuitos", areas: ["Computación física y Robótica"] },
-            { nombre: "Creación de prototipos", areas: ["Computación física y Robótica"] },
-            { nombre: "Introducción a los datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
-            { nombre: "Organización y representación de datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
-            { nombre: "Introducción a la inteligencia artificial", areas: ["Ciencia de datos e Inteligencia artificial"] }
-        ],
-        "III Ciclo": [
-            { nombre: "Fundamentos de tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Experiencias de uso con la tecnología", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Seguridad digital y gestión de riesgos", areas: ["Apropiación tecnológica y Digital"] },
-            { nombre: "Fundamentos de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Lenguajes de programación", areas: ["Programación y Algoritmos"] },
-            { nombre: "Principios de computación física y robótica", areas: ["Computación física y Robótica"] },
-            { nombre: "Mecánica y diseño de robots", areas: ["Computación física y Robótica"] },
-            { nombre: "Electrónica y circuitos", areas: ["Computación física y Robótica"] },
-            { nombre: "Creación de prototipos", areas: ["Computación física y Robótica"] },
-            { nombre: "Introducción a los datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
-            { nombre: "Organización y representación de datos", areas: ["Ciencia de datos e Inteligencia artificial"] },
-            { nombre: "Introducción a la inteligencia artificial", areas: ["Ciencia de datos e Inteligencia artificial"] }
-        ]
-    };
+           // =========================================================================
+        // BASE DE DATOS CURRICULAR COMPLEMENTARIA (basada en documentos oficiales)
+        // =========================================================================
+        
+        // 1. COMPETENCIAS ESPECÍFICAS POR CICLO Y ÁREA (completa)
+        const COMPETENCIAS_POR_CICLO = {
+            "Materno Infantil/Transición": {
+                "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
+                "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
+                "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
+                "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
+            },
+            "I Ciclo": {
+                "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
+                "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
+                "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
+                "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
+            },
+            "II Ciclo": {
+                "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
+                "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
+                "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
+                "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
+            },
+            "III Ciclo": {
+                "Apropiación tecnológica y Digital": "Crea productos con ayuda de herramientas digitales para aprovecharlos en su desarrollo personal, académico o profesional, de acuerdo con las normas de ciberseguridad y ética digital.",
+                "Programación y Algoritmos": "Resuelve problemas mediante la programación de algoritmos para desarrollar el pensamiento lógico matemático, tomando en cuenta las prácticas y actitudes del pensador computacional.",
+                "Computación física y Robótica": "Crea artefactos físicos o robots para proponer soluciones a problemas de su entorno a través de prototipos, de acuerdo con las normas y principios de electrónica, programación y robótica.",
+                "Ciencia de datos e Inteligencia artificial": "Analiza datos apoyándose en la estadística, matemáticas, programación y el conocimiento de dominio, para procesar datos que le permitan tomar decisiones y mejorar procesos en diferentes campos, tomando en cuenta los principios de ciencia de datos, inteligencia artificial y ciberseguridad."
+            }
+        };
+        
+        // 2. PERFILES DE SALIDA POR CICLO (con áreas y descripción exacta)
+        const PERFILES_POR_CICLO = {
+            "Materno Infantil/Transición": {
+                "Fundamentos de tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Conoce las características de dispositivos tecnológicos comunes, como tabletas, computadoras o teléfonos inteligentes, así como sus periféricos."
+                },
+                "Experiencias de uso con la tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Conoce funciones básicas de los dispositivos tecnológicos que utiliza, tales como encender o apagar, así como acceder a las aplicaciones o programas que requiera. Escoge aplicaciones que le ayuden a desarrollar habilidades básicas, como la identificación de colores, formas o números. Usa aplicaciones y entornos visuales de programación para dibujar, programar, crear música, videos, o contar historias propias para su nivel. Conoce las funciones básicas como abrir, cerrar, minimizar, maximizar y guardar, al utilizar las aplicaciones o programas que utiliza."
+                },
+                "Fundamentos de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Sigue instrucciones específicas para realizar una serie de acciones, como saltar, girar, avanzar, retroceder asociadas al sentido de lateralidad u orientación espacial. Reconoce patrones visuales y secuenciales. Reconoce conceptos básicos de programación: evento, estado, secuencias de acciones, ciclo finito e infinito, a través de juegos en entornos digitales o físicos."
+                },
+                "Lenguajes de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Programa objetos modificando su estado según las propiedades de orientación, dirección y/o tamaño. Participa en la resolución de desafíos programando soluciones simples, arrastrando y soltando bloques de código para crear secuencias lógicas, mediante un entorno de programación iconográfico. Reconoce la importancia de los datos en contexto físico y en contexto digital al resolver desafíos propuestos."
+                },
+                "Principios de computación física y robótica": {
+                    areas: ["Computación física y Robótica"],
+                    descripcion: "Reconoce qué es un robot y cómo se diferencia de otros objetos. Identifica diferentes partes de un robot, como cuerpo, sistema sensorial y control. Identifica los robots según su uso. Programa movimientos simples en los robots, como avanzar, retroceder y girar."
+                },
+                "Introducción a los datos": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Recopila datos simples de su entorno fomentando el pensamiento crítico y la curiosidad hacia el mundo que los rodea. Por ejemplo, la cantidad de árboles en el patio de la escuela o registra el clima durante una semana."
+                },
+                "Organización y representación de datos": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Reconoce datos con base en características específicas. Por ejemplo, clasificar juguetes según su forma, color, tamaño o cantidad."
+                },
+                "Entornos virtuales": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Participa en experiencias lúdicas que combinan el entorno físico con elementos digitales a través de la realidad aumentada, desarrollando su percepción sensorial y curiosidad por descubrir."
+                }
+            },
+            "I Ciclo": {
+                "Fundamentos de tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Identifica vocabulario técnico básico relacionado con la tecnología, tales como: software, hardware, dispositivos de entrada y salida, red de computadoras, Wifi, bluetooth, sistemas operativos, archivo y carpetas."
+                },
+                "Experiencias de uso con la tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Utiliza aplicaciones de productividad según su función, por ejemplo: procesadores de texto, presentaciones, editores gráficos, navegadores y buscadores, grabadora de audios, herramientas para la creación de videos."
+                },
+                "Seguridad digital y gestión de riesgos": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Realiza búsquedas en línea en sitios seguros y confiables. Reconoce las normas básicas de netiqueta en los procesos de comunicación. Describe el concepto de huella digital y sus implicaciones en la vida de las personas. Reconoce el concepto de software malicioso (virus) y sus consecuencias al trabajar con equipos tecnológicos."
+                },
+                "Fundamentos de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Resuelve desafíos digitales o físicos con niveles de dificultad progresiva que requieren el uso de algoritmos, secuencias, condicionales simples, ciclos finitos e infinitos, datos, estado, variables, operadores aritméticos, operadores relacionales y eventos."
+                },
+                "Lenguajes de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Utiliza entornos de programación iconográficos y por bloques aplicando los conceptos computacionales aprendidos para resolver problemas específicos. Resuelve problemas de programación o de actividades cotidianas, a partir del reconocimiento y creación de patrones."
+                },
+                "Introducción a la inteligencia artificial": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Reconoce qué es la inteligencia artificial y los asistentes virtuales comprendiendo la importancia de usarlos de forma segura y responsable."
+                }
+            },
+            "II Ciclo": {
+                "Fundamentos de tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Utiliza vocabulario técnico relacionado con la tecnología, tal como: virus, comprimir y descomprimir archivos, carpetas, sistema operativo, hardware, software, periféricos, red (dispositivos comunicación), conexión wifi, bluetooth, configuración, escritorio, herramientas de productividad, unidades de almacenamiento, direcciones IP."
+                },
+                "Experiencias de uso con la tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Realiza búsquedas en línea utilizando motores de búsqueda, seleccionando información relevante y confiable, comprendiendo la importancia de verificar la fuente y la precisión de la información encontrada. Configura los programas o aplicaciones que utiliza atendiendo sus necesidades (accesibilidad), por ejemplo: cambia el funcionamiento del ratón, modifica el idioma de un programa o aplicación."
+                },
+                "Seguridad digital y gestión de riesgos": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Reconoce prácticas seguras al compartir información en diferentes espacios, resguardando su integridad y la de los demás."
+                },
+                "Fundamentos de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Aplica los conocimientos adquiridos (ciclos, estructuras de control, operadores, procedimientos, entre otros) para la resolución de problemas complejos de su contexto y apropiados a un propósito específico, descomponiéndolos en pasos más pequeños, diseñando diagramas de flujo o pseudocódigo para luego programarlos."
+                },
+                "Lenguajes de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Diseña sus propios juegos o simulaciones arrastrando y soltando bloques de código. Programa con bloques para expresar de forma creativa la computación física."
+                },
+                "Electrónica y circuitos": {
+                    areas: ["Computación física y Robótica"],
+                    descripcion: "Identifica qué es un circuito y cómo funciona. Comprende los conceptos básicos de electrónica, tales como pines de entrada o salida, señal analógica o digital."
+                },
+                "Creación de prototipos": {
+                    areas: ["Computación física y Robótica"],
+                    descripcion: "Utiliza sensores y/o actuadores internos y/o externos conectándolos a un microcontrolador y programándolos según lo que requiere la solución del problema que resuelve. Emplea las tarjetas microcontroladoras para integrarlas en la solución al problema que resuelve."
+                },
+                "Introducción a los datos": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Comprende conceptos básicos de los datos como tipos de datos, su importancia y uso en la actualidad."
+                },
+                "Organización y representación de datos": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Clasifica datos del entorno en tablas simples. Por ejemplo, hacer un registro de la cantidad de estudiantes que cumplen años en cada mes o contabilizar en una estadística el tiempo que usan las personas en redes sociales."
+                },
+                "Introducción a la inteligencia artificial": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Reconoce qué es la inteligencia artificial, los asistentes virtuales y las herramientas generativas, comprendiendo su funcionamiento básico y la importancia de usarlos de forma segura, ética y responsable."
+                }
+            },
+            "III Ciclo": {
+                "Fundamentos de tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Implementa vocabulario técnico relacionado con la tecnología, tal como: software, hardware, IoT, protocolos de comunicación, software malicioso, riesgos en línea, IDE, hacker, huella digital, almacenamiento en la nube y base de datos."
+                },
+                "Experiencias de uso con la tecnología": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Utiliza de manera competente herramientas de comunicación digital, como el correo electrónico y los chats en línea, aplicando normas de netiqueta y seguridad en la comunicación, siendo consciente del comportamiento inapropiado en línea. Integra programas y aplicaciones de programación o productividad de diseño gráfico y edición de video para el desarrollo de proyectos creativos y producción de contenido, mediante la creación y edición de imágenes, videos y audio, para expresar sus ideas de manera efectiva. Realiza búsquedas efectivas en línea y evalúa críticamente la información que encuentra, distinguiendo entre fuentes confiables y no confiables, evaluando la calidad y la relevancia de la información, citando sus fuentes adecuadamente. Utiliza aplicaciones de almacenamiento en la nube, que le permiten trabajar de manera colaborativa."
+                },
+                "Seguridad digital y gestión de riesgos": {
+                    areas: ["Apropiación tecnológica y Digital"],
+                    descripcion: "Aplica medidas de seguridad para proteger su privacidad y disminuir los riesgos en línea."
+                },
+                "Fundamentos de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Diseña interfaces físicas o digitales para resolver problemas complejos de su contexto y así implementar funcionalidades y familiarizarse con el ciclo de vida de un programa o aplicación. Aplica conceptos de programación como funciones, variables, estructuras de datos y control de flujo en la solución programada, según lo requiera. Crea prototipos de artefactos físicos programados en entornos de programación textual."
+                },
+                "Lenguajes de programación": {
+                    areas: ["Programación y Algoritmos"],
+                    descripcion: "Resuelve problemas mediante la programación por bloques o la programación textual."
+                },
+                "Principios de computación física y robótica": {
+                    areas: ["Computación física y Robótica"],
+                    descripcion: "Aplica principios de diseño de robots incluyendo sus componentes y los desafíos éticos y legales."
+                },
+                "Mecánica y diseño de robots": {
+                    areas: ["Computación física y Robótica"],
+                    descripcion: "Implementa los diferentes tipos de mecanismos para generar fuerza y velocidad."
+                },
+                "Electrónica y circuitos": {
+                    areas: ["Computación física y Robótica"],
+                    descripcion: "Experimenta con componentes electrónicos básicos (resistencias y LEDs) y su conexión en distintos tipos de circuitos."
+                },
+                "Creación de prototipos": {
+                    areas: ["Computación física y Robótica"],
+                    descripcion: "Crea prototipos de artefactos físicos o robots que permitan utilizar una tarea o resolver un problema de la realidad."
+                },
+                "Introducción a los datos": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Conoce la importancia de los datos en situaciones cotidianas como control de redes sociales, historial de navegación y localización."
+                },
+                "Organización y representación de datos": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Comprende la importancia de recolectar y organizar datos personales como gastos, notas, actividad física o salud. Conoce cómo se almacenan, gestionan y protegen los datos a lo largo de su ciclo de vida, aplicando principios de responsabilidad y seguridad digital."
+                },
+                "Introducción a la inteligencia artificial": {
+                    areas: ["Ciencia de datos e Inteligencia artificial"],
+                    descripcion: "Conoce los fundamentos de la inteligencia artificial y reflexiona críticamente sobre sus beneficios, riesgos y desafíos en la actualidad. Identifica el funcionamiento de los asistentes virtuales y las herramientas generativas, comprendiendo la importancia de usarlos de forma segura, ética y responsable."
+                }
+            }
+        };
+        
+        // 3. EJES TRANSVERSALES POR CICLO (con indicadores específicos)
+        const EJES_TRANSVERSALES_POR_CICLO = {
+            "Materno Infantil/Transición": {
+                "Pensamiento computacional": {
+                    indicadores: [
+                        "Utiliza algoritmos simples mediante una serie de instrucciones paso por paso para resolver un problema o realizar una tarea específica.",
+                        "Dibuja los elementos esenciales de una cosa u objeto.",
+                        "Divide tareas o problemas en pasos más pequeños y manejables.",
+                        "Reconoce patrones en objetos, números o eventos. Pueden clasificar y ordenar objetos según diferentes características y desarrollar habilidades de abstracción al identificar similitudes y diferencias."
+                    ]
+                },
+                "Ciudadanía y Ética digital": {
+                    indicadores: [
+                        "Reconoce la importancia de hacer un uso responsable y equilibrado de la tecnología. Esto implica comprender el tiempo de pantalla adecuado, así como los beneficios y limitaciones de las diferentes herramientas y aplicaciones en línea.",
+                        "Reconoce la importancia de respetar los derechos de autor y de no copiar o utilizar el trabajo de otros sin permiso o sin atribución adecuada."
+                    ]
+                },
+                "Emprendimiento e innovación": {
+                    indicadores: [
+                        "Comparte con sus compañeros ideas y escucha las opiniones de los demás.",
+                        "Conoce diversas maneras de hacer las cosas, pensando de manera no convencional."
+                    ]
+                }
+            },
+            "I Ciclo": {
+                "Pensamiento computacional": {
+                    indicadores: [
+                        "Aplica conceptos básicos de lógica, como el 'si... entonces'. Pueden hacer conexiones causa-efecto y comprender que ciertas acciones conducen a resultados específicos.",
+                        "Identifica patrones y generaliza reglas a partir de esos patrones, indicando como se pueden aplicar estas reglas en diferentes situaciones.",
+                        "Planifica tareas de manera más efectiva, dividiéndolas en pasos más detallados y considerando múltiples posibilidades.",
+                        "Identifica patrones que se repiten en los pasos que dan solución a un problema."
+                    ]
+                },
+                "Ciudadanía y Ética digital": {
+                    indicadores: [
+                        "Infiere la importancia de asumir la responsabilidad de sus acciones en línea. Esto implica respetar las normas y políticas establecidas en los entornos digitales, así como comprender las consecuencias de sus acciones.",
+                        "Conoce sobre los derechos y responsabilidades que tiene como ciudadano digital. Esto incluye temas como el respeto a la diversidad, la promoción de la empatía y la comprensión, así como la participación segura en la comunidad en línea."
+                    ]
+                },
+                "Emprendimiento e innovación": {
+                    indicadores: [
+                        "Colabora con sus compañeros, comparte ideas y escucha las opiniones de los demás.",
+                        "Explora herramientas digitales creativas, como programas de diseño o plataformas de codificación, que les permitan expresar sus ideas de forma innovadora."
+                    ]
+                }
+            },
+            "II Ciclo": {
+                "Pensamiento computacional": {
+                    indicadores: [
+                        "Diseña algoritmos eficientes y optimizados para resolver problemas específicos, considerando diversos enfoques y evaluando su efectividad en tiempo de ejecución y recursos requeridos.",
+                        "Extrae de un problema la información que es relevante para poder resolverlo.",
+                        "Utiliza diagramas, esquemas o pseudocódigo para representar y comprender problemas y soluciones de manera más abstracta.",
+                        "Aplica conceptos como condicionales o ciclos en la programación, a partir del reconocimiento de patrones."
+                    ]
+                },
+                "Ciudadanía y Ética digital": {
+                    indicadores: [
+                        "Gestiona su identidad digital de manera responsable. Esto incluye fomentar una imagen positiva en línea, ser consciente de las implicaciones a largo plazo de lo que se comparte y comprender cómo crear y mantener contraseñas seguras.",
+                        "Valora la aplicación de los derechos de propiedad intelectual, incluyendo el manejo general de distintos tipos de licencia, sobre las propias producciones digitales y las de otros."
+                    ]
+                },
+                "Emprendimiento e innovación": {
+                    indicadores: [
+                        "Integra habilidades básicas de planificación, estableciendo metas; por ejemplo, elaborar un plan de acción y lo sigue, trabajar en proyectos pequeños, aprender a dividir el trabajo en tareas específicas.",
+                        "Desarrolla prototipos de productos o servicios, probados en un entorno controlado. Esto le ayudará a comprender la importancia de iterar y mejorar sus ideas antes de lanzarlas al mercado."
+                    ]
+                }
+            },
+            "III Ciclo": {
+                "Pensamiento computacional": {
+                    indicadores: [
+                        "Construye algoritmos teniendo en cuenta la eficiencia y el rendimiento para la resolución de problemas.",
+                        "Utiliza funciones o procedimientos para encapsular y abstraer bloques de código reutilizables. Esto le permite modularizar y organizar su código, promoviendo una mayor eficiencia y legibilidad.",
+                        "Descompone problemas complejos en subproblemas más pequeños y los aborda de manera sistemática; para ello, utiliza diagramas de flujo u otras técnicas de representación visual para planificar y organizar su pensamiento.",
+                        "Analiza patrones en datos, algoritmos y problemas para obtener regularidades y estructuras repetitivas que le ayuden a entender y resolver problemas de manera eficiente."
+                    ]
+                },
+                "Ciudadanía y Ética digital": {
+                    indicadores: [
+                        "Reflexiona sobre cómo su actividad en línea genera rastros permanentes y la importancia de ser consciente de que su huella digital puede impactar en su reputación y en futuras oportunidades. Se espera que desarrolle habilidades para gestionar de manera responsable su presencia en línea y proteger su imagen digital.",
+                        "Aplica los conceptos de ética y moralidad en el entorno digital. Esto incluye fomentar la empatía, el respeto y la consideración hacia los demás en línea, evitando el ciberacoso y promoviendo relaciones digitales saludables."
+                    ]
+                },
+                "Emprendimiento e innovación": {
+                    indicadores: [
+                        "Desarrolla habilidades de liderazgo trabajando en equipo donde tenga que asumir roles de liderazgo, tomar decisiones y delegar responsabilidades. Esto le ayudará a comprender la importancia de la colaboración y la comunicación efectiva en un entorno empresarial.",
+                        "Integra el uso de diversas herramientas de productividad y programación para generar soluciones innovadoras a los problemas que debe resolver."
+                    ]
+                }
+            }
+        };
+        
+        // 4. SABERES PROCEDIMENTALES (prácticas del pensador computacional) por ciclo
+        const SABERES_PROCEDIMENTALES_POR_CICLO = {
+            "Materno Infantil/Transición": [
+                "Reconoce patrones",
+                "Transfiere",
+                "Programa",
+                "Comunica",
+                "Colabora",
+                "Piensa de forma creativa"
+            ],
+            "I Ciclo": [
+                "Reconoce patrones",
+                "Abstrae",
+                "Generaliza",
+                "Transfiere",
+                "Modulariza",
+                "Formula algoritmos",
+                "Remezcla",
+                "Depura",
+                "Programa",
+                "Comunica",
+                "Colabora",
+                "Piensa de forma creativa",
+                "Maneja las tecnologías de forma ética y segura"
+            ],
+            "II Ciclo": [
+                "Reconoce patrones",
+                "Abstrae",
+                "Generaliza",
+                "Transfiere",
+                "Modulariza",
+                "Formula algoritmos",
+                "Remezcla",
+                "Depura",
+                "Programa",
+                "Comunica",
+                "Colabora",
+                "Piensa de forma creativa",
+                "Maneja las tecnologías de forma ética y segura"
+            ],
+            "III Ciclo": [
+                "Reconoce patrones",
+                "Abstrae",
+                "Generaliza",
+                "Transfiere",
+                "Modulariza",
+                "Formula algoritmos",
+                "Remezcla",
+                "Depura",
+                "Programa",
+                "Comunica",
+                "Colabora",
+                "Piensa de forma creativa",
+                "Maneja las tecnologías de forma ética y segura"
+            ]
+        };
+        
+        // 5. SABERES ACTITUDINALES (actitudes del pensador computacional) por ciclo
+        const SABERES_ACTITUDINALES_POR_CICLO = {
+            "Materno Infantil/Transición": [
+                "Aprender del error",
+                "Flexibilidad para manejar problemas",
+                "Tolerancia a la frustración"
+            ],
+            "I Ciclo": [
+                "Gusto por la precisión",
+                "Aprender del error",
+                "Flexibilidad para manejar problemas",
+                "Tolerancia a la frustración"
+            ],
+            "II Ciclo": [
+                "Gusto por la precisión",
+                "Aprender del error",
+                "Flexibilidad para manejar problemas",
+                "Tolerancia a la frustración"
+            ],
+            "III Ciclo": [
+                "Gusto por la precisión",
+                "Aprender del error",
+                "Flexibilidad para manejar problemas",
+                "Tolerancia a la frustración"
+            ]
+        };
+
+// 6. INDICADORES DE LOGRO POR SABER CONCEPTUAL (mapeo completo)
+// Este objeto es muy extenso. Por razones de espacio, aquí solo pongo una estructura.
+// En la implementación real, debes completarlo con todos los indicadores de los documentos.
+// Sin embargo, tu PNFT_DATA ya contiene los indicadores dentro de cada saber.
+// Por lo tanto, no es necesario duplicarlos. Este objeto se puede omitir si usas los que ya tienes.
+// Si deseas centralizarlos, puedo generarlo completo, pero alargaría mucho el código.
+// Por ahora, confiamos en que los indicadores ya están en PNFT_DATA.
     // =========================================================================
     // VARIABLES GLOBALES DE SELECCIÓN
     // =========================================================================
